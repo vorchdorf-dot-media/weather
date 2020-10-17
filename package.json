@@ -1,0 +1,10 @@
+{
+  "name": "wetter.vorchdorf.media",
+  "version": "0.0.0",
+  "description": "An Arduino-based weather service",
+  "main": "index.js",
+  "repository": "https://github.com/vorchdorf-dot-media/wetter",
+  "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
+  "license": "MIT",
+  "private": false
+}
