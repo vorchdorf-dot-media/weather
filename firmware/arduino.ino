@@ -20,6 +20,13 @@
 */
 
 #include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
+
+// Basic setup:
+// ------------
+// REQUIRES the following Arduino libraries:
+// - NTPClient Library: https://github.com/arduino-libraries/NTPClient
+#include <NTPClient.h>
 
 // DS18B20:
 // --------
@@ -39,16 +46,32 @@
 #include <DHT_U.h>
 
 /*
------------------------------------
------- config section below -------
----- adjust to fit your setup -----
------------------------------------
+-------------------------------------------------------------------------------
+---------------------------- CONFIG SECTION BELOW -----------------------------
+-------------------------- ADJUST TO FIT YOUR SETUP ---------------------------
+-------------------------------------------------------------------------------
 */
 #define SERIAL_BAUDRATE 115200
+#define INTERVAL 30 // interval in minutes
+
+/* change LED pin to custom pin, if desired  */
+#define LED LED_BUILTIN
 
 /* WIFI setup */
-#define WIFI_SSID ""     // your wifi SSID
-#define WIFI_PASSWORD "" // your wifi password
+//#define OFFLINE                   // uncomment to not use WiFi at all
+//#define STATIC_IP                 // uncomment to use static IP config (see below)
+#define WIFI_SSID ""              // your wifi SSID
+#define WIFI_PASSWORD ""          // your wifi password
+#define NTP_SERVER "pool.ntp.org" // NTP pool for correct time
+
+#ifdef STATIC_IP
+/* WiFi config to use static IP */
+IPAddress localIP(192, 168, 1, 251);
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress dns1(1, 1, 1, 1);
+IPAddress dns2(1, 0, 0, 1);
+#endif
 
 /* uncomment to enable DS18B20 */
 //#define DS18B20 D2  // DS18B20 data PIN
@@ -58,12 +81,12 @@
 //#define DHTTYPE DHT11
 
 /*
------------------------------------
-------------- WARNING! ------------
------------------------------------
--------- source code below --------
-------- change at own risk! -------
------------------------------------
+-------------------------------------------------------------------------------
+----------------------------------- WARNING! ----------------------------------
+-------------------------------------------------------------------------------
+------------------------------ SOURCE CODE BELOW ------------------------------
+----------------------------- CHANGE AT OWN RISK! -----------------------------
+-------------------------------------------------------------------------------
 */
 
 #ifdef DS18B20
@@ -75,11 +98,48 @@ DallasTemperature sensor(&oneWire);
 DHT_Unified dht(DHTPIN, DHTTYPE);
 #endif
 
+#ifndef OFFLINE
+/* WiFi & NTP setup configuration */
+const char *ssid = WIFI_SSID;
+const char *pass = WIFI_PASSWORD;
+const char *ntpServer = NTP_SERVER;
+WiFiUDP udpClient;
+NTPClient ntpClient(udpClient, ntpServer);
+#endif
+
 // the setup function runs once when you press reset or power the board
 void setup()
 {
+  pinMode(LED, OUTPUT);
   Serial.begin(SERIAL_BAUDRATE);
   Serial.println("Booting up Arduino weather client...");
+
+#ifndef OFFLINE
+  Serial.print("Connecting to WiFi SSID: ");
+  Serial.println(ssid);
+
+#ifdef STATIC_IP
+  Serial.println("Use static IP config...");
+  WiFi.config(localIP, gateway, subnet, dns1, dns2);
+#endif
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, pass);
+
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("Connected!");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  ntpClient.begin();
+  ntpClient.setTimeOffset(0); // set timezone to UTC
+#endif
 }
 
 // the loop function runs over and over again forever
@@ -110,5 +170,23 @@ void loop()
   Serial.println("No DHT11 PIN defined. Skipping DHT11...");
 #endif
 
+  digitalWrite(LED, HIGH);
+  delay(2000);
+#ifndef OFFLINE
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("No WiFi connection...");
+    return;
+  }
+
+  ntpClient.update();
+  int h = ntpClient.getHours();
+  int m = ntpClient.getMinutes();
+  int s = ntpClient.getSeconds();
+  Serial.printf("Current UTC time is: %i:%i:%i\n", h, m, s);
+#else
+  Serial.println("Device is in OFFLINE mode! Cannot send data to remote server!");
+#endif
+  digitalWrite(LED, LOW);
   delay(2000);
 }
