@@ -73,6 +73,10 @@ IPAddress dns1(1, 1, 1, 1);
 IPAddress dns2(1, 0, 0, 1);
 #endif
 
+#define API_HOST ""  // API host to send POST request to, e.g. jsonplaceholder.typicode.com
+#define API_PATH ""  // path of the API host, e.g. /api
+#define API_PORT 443 // HTTPS port of the API service
+
 /* uncomment to enable DS18B20 */
 //#define DS18B20 D2  // DS18B20 data PIN
 
@@ -107,6 +111,31 @@ WiFiUDP udpClient;
 NTPClient ntpClient(udpClient, ntpServer);
 #endif
 
+#ifndef OFFLINE
+/*
+ * (Re-) connects WiFi if connection was lost
+ * to ensure network availbility when querying
+ * for NTP and pushing data to server
+*/
+void connect()
+{
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    WiFi.reconnect();
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      delay(500);
+      Serial.print(".");
+    }
+
+    Serial.println("");
+    Serial.println("Connected!");
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+  }
+}
+#endif
+
 // the setup function runs once when you press reset or power the board
 void setup()
 {
@@ -126,25 +155,112 @@ void setup()
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, pass);
 
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println("");
-  Serial.println("Connected!");
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
+  connect();
 
   ntpClient.begin();
   ntpClient.setTimeOffset(0); // set timezone to UTC
 #endif
 }
 
+/*
+ * Calculates the delay until next cycle in ms.
+ * Uses zero-based minute clock, so that
+ * interval is run independent of power cycles.
+ * E.g: 15min interval is run at 15, 30, 45 and 0 minutes
+ */
+unsigned long interval()
+{
+#ifndef OFFLINE
+  ntpClient.update();
+  int h = ntpClient.getHours();
+  int m = ntpClient.getMinutes();
+  int s = ntpClient.getSeconds();
+  Serial.printf("Current UTC time is: %ih %imin %is\n", h, m, s); // print current UTC time
+
+  unsigned long i = INTERVAL * 60 * 1000;            // calculate INTERVAL in minutes
+  unsigned long gap = i - ((m * 60 + s) * 1000) % i; // calculate delay until next interval start
+  Serial.printf("Next cycle starts in %ld seconds.\n", (unsigned long)gap / 1000);
+  return gap;
+#else
+  Serial.println("Device is in OFFLINE mode! Cannot send data to remote server!");
+  return INTERVAL * 60 * 1000;
+#endif
+}
+
+#ifndef OFFLINE
+// TODO: check function parameters
+void request()
+{
+  const char *host = API_HOST;
+  const char *path = API_PATH;
+  WiFiClientSecure client;
+
+  client.setInsecure();     // Need to do this, because SSL certificates can't be auto-updated...
+  client.setTimeout(15000); // set timeout of 15 seconds
+  delay(500);
+
+  Serial.printf("Connecting to API endpoint: %s\n", host);
+  byte r = 0;
+  while (!client.connect(host, API_PORT) && r < 30)
+  {
+    delay(100);
+    Serial.print(".");
+    r++;
+  }
+  Serial.println("");
+
+  if (r == 30)
+  {
+    Serial.println("Connection FAILED!");
+    return;
+  }
+  else
+  {
+    Serial.println("Connected!");
+  }
+
+  // TODO: enhance body
+  unsigned int len = 0;
+  String body = "";
+
+  String req = "POST " + API_PATH + " HTTP/1.1\r\n" +
+               "Host: " + API_HOST + "\r\n" +
+               "User-Agent: Arduino Weather Client - " + (const char *)__VERSION__ + "\r\n" +
+               "Content-Type: application/json; charset=UTF-8\r\n" +
+               "Content-Length: " + len + "\r\n\r\n" +
+               body + "\r\n" +
+               "Connection: close\r\n\r\n";
+
+  client.print(req);
+
+  Serial.println("Request sent.\n\n-----------------\n\n");
+  while (client.connected())
+  {
+    String line = client.readStringUntil("\n");
+    if (line == "\r")
+    {
+      break;
+    }
+    Serial.println(line);
+  }
+  while (client.available())
+  {
+    String line = client.readStringUntil("\n");
+    Serial.println(line);
+  }
+  Serial.println("\n-----------------\n\n");
+}
+#endif
+
 // the loop function runs over and over again forever
 void loop()
 {
+#ifndef OFFLINE
+  connect();
+#endif
+
+  delay(interval());
+
   Serial.println("Requesting temperature...");
 
 #ifdef DS18B20
@@ -170,23 +286,8 @@ void loop()
   Serial.println("No DHT11 PIN defined. Skipping DHT11...");
 #endif
 
-  digitalWrite(LED, HIGH);
-  delay(2000);
 #ifndef OFFLINE
-  if (WiFi.status() != WL_CONNECTED)
-  {
-    Serial.println("No WiFi connection...");
-    return;
-  }
-
-  ntpClient.update();
-  int h = ntpClient.getHours();
-  int m = ntpClient.getMinutes();
-  int s = ntpClient.getSeconds();
-  Serial.printf("Current UTC time is: %i:%i:%i\n", h, m, s);
-#else
-  Serial.println("Device is in OFFLINE mode! Cannot send data to remote server!");
+  connect();
+  request();
 #endif
-  digitalWrite(LED, LOW);
-  delay(2000);
 }
