@@ -74,7 +74,7 @@ IPAddress dns2(1, 0, 0, 1);
 #endif
 
 #define API_HOST ""  // API host to send POST request to, e.g. jsonplaceholder.typicode.com
-#define API_PATH ""  // path of the API host, e.g. /api
+#define API_PATH ""  // path of the API host, without leading /, e.g. api
 #define API_PORT 443 // HTTPS port of the API service
 
 /* uncomment to enable DS18B20 */
@@ -191,15 +191,15 @@ unsigned long interval()
 // TODO: check function parameters
 void request()
 {
-  const char *host = API_HOST;
-  const char *path = API_PATH;
+  String host = API_HOST;
+  String path = API_PATH;
   WiFiClientSecure client;
 
   client.setInsecure();     // Need to do this, because SSL certificates can't be auto-updated...
   client.setTimeout(15000); // set timeout of 15 seconds
   delay(500);
 
-  Serial.printf("Connecting to API endpoint: %s\n", host);
+  Serial.printf("Connecting to API endpoint: %s\n", host.c_str());
   byte r = 0;
   while (!client.connect(host, API_PORT) && r < 30)
   {
@@ -223,8 +223,8 @@ void request()
   unsigned int len = 0;
   String body = "";
 
-  String req = "POST " + API_PATH + " HTTP/1.1\r\n" +
-               "Host: " + API_HOST + "\r\n" +
+  String req = "POST /" + path + " HTTP/1.1\r\n" +
+               "Host: " + host + "\r\n" +
                "User-Agent: Arduino Weather Client - " + (const char *)__VERSION__ + "\r\n" +
                "Content-Type: application/json; charset=UTF-8\r\n" +
                "Content-Length: " + len + "\r\n\r\n" +
@@ -236,7 +236,7 @@ void request()
   Serial.println("Request sent.\n\n-----------------\n\n");
   while (client.connected())
   {
-    String line = client.readStringUntil("\n");
+    String line = client.readStringUntil('\n');
     if (line == "\r")
     {
       break;
@@ -245,7 +245,7 @@ void request()
   }
   while (client.available())
   {
-    String line = client.readStringUntil("\n");
+    String line = client.readStringUntil('\n');
     Serial.println(line);
   }
   Serial.println("\n-----------------\n\n");
