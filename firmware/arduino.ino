@@ -20,6 +20,7 @@
 */
 
 #include <ESP8266WiFi.h>
+#include <Hash.h>
 #include <WiFiUdp.h>
 
 // Basic setup:
@@ -51,11 +52,7 @@
 -------------------------- ADJUST TO FIT YOUR SETUP ---------------------------
 -------------------------------------------------------------------------------
 */
-#define SERIAL_BAUDRATE 115200
-#define INTERVAL 30 // interval in minutes
-
-/* change LED pin to custom pin, if desired  */
-#define LED LED_BUILTIN
+#define TOKEN "" // universal identifier for this unit, mandatory!
 
 /* WIFI setup */
 //#define OFFLINE                   // uncomment to not use WiFi at all
@@ -73,12 +70,18 @@ IPAddress dns1(1, 1, 1, 1);
 IPAddress dns2(1, 0, 0, 1);
 #endif
 
-#define API_HOST ""  // API host to send POST request to, e.g. jsonplaceholder.typicode.com
-#define API_PATH ""  // path of the API host, without leading /, e.g. api
-#define API_PORT 443 // HTTPS port of the API service
+#define SERIAL_BAUDRATE 115200
+#define INTERVAL 30 // interval in minutes
+
+/* change LED pin to custom pin, if desired  */
+#define LED LED_BUILTIN
+
+#define API_HOST "postman-echo.com" // API host to send POST request to, e.g. jsonplaceholder.typicode.com
+#define API_PATH "post"             // path of the API host, without leading /, e.g. api
+#define API_PORT 443                // HTTPS port of the API service
 
 /* uncomment to enable DS18B20 */
-//#define DS18B20 D2  // DS18B20 data PIN
+#define DS18B20 D2 // DS18B20 data PIN
 
 /* uncomment to enable DHT11 */
 //#define DHTPIN D1 // DHT11 data PIN
@@ -189,7 +192,7 @@ unsigned long interval()
 
 #ifndef OFFLINE
 // TODO: check function parameters
-void request()
+void request(String hash)
 {
   String host = API_HOST;
   String path = API_PATH;
@@ -221,7 +224,8 @@ void request()
 
   // TODO: enhance body
   unsigned int len = 0;
-  String body = "";
+  String body = "{\"query\": \"mutation createData { createData( hash: \"" + hash + "\") { id } }\"}";
+  len = body.length();
 
   String req = "POST /" + path + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
@@ -233,34 +237,33 @@ void request()
 
   client.print(req);
 
-  Serial.println("Request sent.\n\n-----------------\n\n");
+  Serial.println("Request sent.\n\n-----------------\n");
   while (client.connected())
   {
     String line = client.readStringUntil('\n');
     if (line == "\r")
     {
+      Serial.println("\n-----------------\nHeaders received.\n-----------------\n");
       break;
     }
     Serial.println(line);
   }
-  while (client.available())
-  {
-    String line = client.readStringUntil('\n');
-    Serial.println(line);
-  }
-  Serial.println("\n-----------------\n\n");
+  String line = client.readStringUntil('\n');
+  Serial.println(line);
+  Serial.println("\n-----------------\n");
 }
 #endif
 
 // the loop function runs over and over again forever
 void loop()
 {
+  digitalWrite(LED, LOW);
+  String hashbase(TOKEN);
 #ifndef OFFLINE
   connect();
 #endif
-
   delay(interval());
-
+  digitalWrite(LED, HIGH);
   Serial.println("Requesting temperature...");
 
 #ifdef DS18B20
@@ -271,8 +274,9 @@ void loop()
   Serial.print(tt);
   Serial.println(" ms.");
 
-  Serial.print("Temperature is: ");
-  Serial.println(sensor.getTempCByIndex(0));
+  float ds18b20Temp = sensor.getTempCByIndex(0);
+  Serial.printf("Temperature is: %d\n", ds18b20Temp);
+  hashbase += ds18b20Temp;
 #else
   Serial.println("No DS18B20 PIN defined. Skipping DS18B20...");
 #endif
@@ -288,6 +292,13 @@ void loop()
 
 #ifndef OFFLINE
   connect();
-  request();
+  hashbase += ntpClient.getFormattedTime();
+#endif
+
+  String hash(sha1(hashbase));
+  Serial.printf("SHA1 identifier for this cycle: %s\n", hash.c_str());
+
+#ifndef OFFLINE
+  request(hash);
 #endif
 }
