@@ -76,12 +76,12 @@ IPAddress dns2(1, 0, 0, 1);
 /* change LED pin to custom pin, if desired  */
 #define LED LED_BUILTIN
 
-#define API_HOST "postman-echo.com" // API host to send POST request to, e.g. jsonplaceholder.typicode.com
+#define API_HOST "postman-echo.com" // API host to send POST request to, e.g. postman-echo.com
 #define API_PATH "post"             // path of the API host, without leading /, e.g. api
 #define API_PORT 443                // HTTPS port of the API service
 
 /* uncomment to enable DS18B20 */
-#define DS18B20 D2 // DS18B20 data PIN
+//#define DS18B20 D2 // DS18B20 data PIN
 
 /* uncomment to enable DHT11 */
 //#define DHTPIN D1 // DHT11 data PIN
@@ -178,7 +178,7 @@ unsigned long interval()
   int h = ntpClient.getHours();
   int m = ntpClient.getMinutes();
   int s = ntpClient.getSeconds();
-  Serial.printf("Current UTC time is: %ih %imin %is\n", h, m, s); // print current UTC time
+  Serial.printf("Current UTC time is: %02i:%02i:%02i\n", h, m, s); // print current UTC time
 
   unsigned long i = INTERVAL * 60 * 1000;            // calculate INTERVAL in minutes
   unsigned long gap = i - ((m * 60 + s) * 1000) % i; // calculate delay until next interval start
@@ -275,7 +275,7 @@ void loop()
   Serial.println(" ms.");
 
   float ds18b20Temp = sensor.getTempCByIndex(0);
-  Serial.printf("Temperature is: %d\n", ds18b20Temp);
+  Serial.printf("Temperature is: %6.2f°C\n", ds18b20Temp);
   hashbase += ds18b20Temp;
 #else
   Serial.println("No DS18B20 PIN defined. Skipping DS18B20...");
