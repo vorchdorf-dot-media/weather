@@ -16,35 +16,8 @@
   This software is licensed under the MIT License.
   https://saschazar.mit-license.org
 
-  https://github.com/vorchdorf-dot-media/wetter
+  https://github.com/vorchdorf-dot-media/weather
 */
-
-#include <ESP8266WiFi.h>
-#include <Hash.h>
-#include <WiFiUdp.h>
-
-// Basic setup:
-// ------------
-// REQUIRES the following Arduino libraries:
-// - NTPClient Library: https://github.com/arduino-libraries/NTPClient
-#include <NTPClient.h>
-
-// DS18B20:
-// --------
-// REQUIRES the following Arduino libraries:
-// - OneWire Library: https://github.com/PaulStoffregen/OneWire
-// - DallasTemperature Library: https://github.com/milesburton/Arduino-Temperature-Control-Library
-#include <OneWire.h>
-#include <DallasTemperature.h>
-
-// DHT11:
-// --------
-// REQUIRES the following Arduino libraries:
-// - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
-// - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
-#include <Adafruit_Sensor.h>
-#include <DHT.h>
-#include <DHT_U.h>
 
 /*
 -------------------------------------------------------------------------------
@@ -52,23 +25,20 @@
 -------------------------- ADJUST TO FIT YOUR SETUP ---------------------------
 -------------------------------------------------------------------------------
 */
+
 #define TOKEN "" // universal identifier for this unit, mandatory!
 
-/* WIFI setup */
+/* Basic WiFi setup:
+ * ------------
+ * REQUIRES the following Arduino libraries:
+ * - NTPClient Library: https://github.com/arduino-libraries/NTPClient
+ */
+
 //#define OFFLINE                   // uncomment to not use WiFi at all
-//#define STATIC_IP                 // uncomment to use static IP config (see below)
+//#define STATIC_IP                 // uncomment to use static IP config (see STATIC_IP config below)
 #define WIFI_SSID ""              // your wifi SSID
 #define WIFI_PASSWORD ""          // your wifi password
 #define NTP_SERVER "pool.ntp.org" // NTP pool for correct time
-
-#ifdef STATIC_IP
-/* WiFi config to use static IP */
-IPAddress localIP(192, 168, 1, 251);
-IPAddress gateway(192, 168, 1, 1);
-IPAddress subnet(255, 255, 255, 0);
-IPAddress dns1(1, 1, 1, 1);
-IPAddress dns2(1, 0, 0, 1);
-#endif
 
 #define SERIAL_BAUDRATE 115200
 #define INTERVAL 30 // interval in minutes
@@ -80,11 +50,21 @@ IPAddress dns2(1, 0, 0, 1);
 #define API_PATH "post"             // path of the API host, without leading /, e.g. api
 #define API_PORT 443                // HTTPS port of the API service
 
-/* uncomment to enable DS18B20 */
-//#define DS18B20 D2 // DS18B20 data PIN
+/* DS18B20:
+ * --------
+ * REQUIRES the following Arduino libraries:
+ * - OneWire Library: https://github.com/PaulStoffregen/OneWire
+ * - DallasTemperature Library: https://github.com/milesburton/Arduino-Temperature-Control-Library
+ */
+//#define DS18B20 D2 // uncomment to enable DS18B20 data PIN
 
-/* uncomment to enable DHT11 */
-//#define DHTPIN D1 // DHT11 data PIN
+/* DHT11:
+ * --------
+ * REQUIRES the following Arduino libraries:
+ * - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
+ * - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
+ */
+//#define DHTPIN D1 // uncomment to enable DHT11 data PIN
 //#define DHTTYPE DHT11
 
 /*
@@ -96,22 +76,41 @@ IPAddress dns2(1, 0, 0, 1);
 -------------------------------------------------------------------------------
 */
 
-#ifdef DS18B20
-OneWire oneWire(DS18B20);
-DallasTemperature sensor(&oneWire);
-#endif
-
-#ifdef DHTPIN
-DHT_Unified dht(DHTPIN, DHTTYPE);
-#endif
-
 #ifndef OFFLINE
+#include <ESP8266WiFi.h>
+#include <Hash.h>
+#include <WiFiUdp.h>
+#include <NTPClient.h>
+
+#ifdef STATIC_IP
+/* WiFi config to use static IP */
+IPAddress localIP(192, 168, 1, 251);
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress dns1(1, 1, 1, 1);
+IPAddress dns2(1, 0, 0, 1);
+#endif
+
 /* WiFi & NTP setup configuration */
 const char *ssid = WIFI_SSID;
 const char *pass = WIFI_PASSWORD;
 const char *ntpServer = NTP_SERVER;
 WiFiUDP udpClient;
 NTPClient ntpClient(udpClient, ntpServer);
+#endif
+
+#ifdef DS18B20
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+OneWire oneWire(DS18B20);
+DallasTemperature sensor(&oneWire);
+#endif
+
+#ifdef DHTPIN
+#include <DHT.h>
+
+DHT dht(DHTPIN, DHTTYPE);
 #endif
 
 #ifndef OFFLINE
@@ -255,6 +254,10 @@ void setup()
   ntpClient.begin();
   ntpClient.setTimeOffset(0); // set timezone to UTC
 #endif
+
+#ifdef DHTPIN
+  dht.begin();
+#endif
 }
 
 // the loop function runs over and over again forever
@@ -270,12 +273,9 @@ void loop()
   Serial.println("Requesting temperature...");
 
 #ifdef DS18B20
-  unsigned long t = millis();
+  unsigned long ds18b20_t = millis();
   sensor.requestTemperatures();
-  unsigned long tt = millis() - t;
-  Serial.print("DS18B20 done! Request lasted ");
-  Serial.print(tt);
-  Serial.println(" ms.");
+  Serial.printf("DS18B20 done! Request lasted %i ms.\n", millis() - ds18b20_t);
 
   float ds18b20Temp = sensor.getTempCByIndex(0);
   Serial.printf("Temperature is: %6.2f°C\n", ds18b20Temp);
@@ -285,10 +285,17 @@ void loop()
 #endif
 
 #ifdef DHTPIN
-  sensors_event_t event;
-  dht.temperature().getEvent(&event);
-  // TODO: initialize DHT11 using dht.begin()
-  // read ALL the data
+  unsigned long dht_t = millis();
+  float humidity = dht.readHumidity();
+  float dhtTemp = dht.readTemperature();
+  float feels = dht.computeHeatIndex(dhtTemp, humidity, false);
+  Serial.printf("DHT done! Request lasted %i ms.\n", millis() - dht_t);
+
+  Serial.printf("Temperature is: %6.2f°C (feels like %6.2f°C)\n", dhtTemp, feels);
+  Serial.printf("Humidity is: %6.2f%%\n", humidity);
+  hashbase += humidity;
+  hashbase += dhtTemp;
+  hashbase += feels;
 #else
   Serial.println("No DHT11 PIN defined. Skipping DHT11...");
 #endif
