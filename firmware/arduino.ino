@@ -64,15 +64,15 @@
  * - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
  * - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
  */
-//#define DHTPIN D1 // uncomment to enable DHT11 data PIN
-//#define DHTTYPE DHT11
+// #define DHTPIN D1 // uncomment to enable DHT11 data PIN
+// #define DHTTYPE DHT11
 
 /* SD Card:
  * --------
  * REQUIRES the following Arduino libraries:
  * - SdFat Library: Should be already included (https://github.com/earlephilhower/ESP8266SdFat)
  */
-//#define SD_CS_PIN SS
+// #define SD_CS_PIN SS
 
 /*
 -------------------------------------------------------------------------------
@@ -126,8 +126,9 @@ DHT dht(DHTPIN, DHTTYPE);
 #include <SdFat.h>
 
 using namespace sdfat;
+
 SdFat SD;
-File csv;
+sdfat::File csv;
 #endif
 
 #ifndef OFFLINE
@@ -371,7 +372,7 @@ void loop()
   t = millis();
   weather.humidity = dht.readHumidity();
   weather.temperature2 = dht.readTemperature();
-  weather.feels = dht.computeHeatIndex(dhtTemp, humidity, false);
+  weather.feels = dht.computeHeatIndex(weather.temperature2, weather.humidity, false);
   Serial.printf("DHT done! Request lasted %i ms.\n", millis() - t);
 
   Serial.printf("Temperature is: %6.2f°C (feels like %6.2f°C)\n", weather.temperature2, weather.feels);
