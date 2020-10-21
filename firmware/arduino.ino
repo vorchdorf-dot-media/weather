@@ -67,6 +67,13 @@
 //#define DHTPIN D1 // uncomment to enable DHT11 data PIN
 //#define DHTTYPE DHT11
 
+/* SD Card:
+ * --------
+ * REQUIRES the following Arduino libraries:
+ * - SdFat Library: https://github.com/greiman/SdFat or its fork https://github.com/adafruit/SdFat
+ */
+//#define SD_CHIP_SELECT SS
+
 /*
 -------------------------------------------------------------------------------
 ----------------------------------- WARNING! ----------------------------------
@@ -126,14 +133,18 @@ void connect()
     WiFi.reconnect();
     while (WiFi.status() != WL_CONNECTED)
     {
-      delay(500);
       Serial.print(".");
+      digitalWrite(LED, HIGH);
+      delay(250);
+      digitalWrite(LED, LOW);
+      delay(250);
     }
 
     Serial.println("");
     Serial.println("Connected!");
     Serial.print("IP Address: ");
     Serial.println(WiFi.localIP());
+    delay(500);
   }
 }
 #endif
@@ -166,7 +177,7 @@ unsigned long interval()
 
 #ifndef OFFLINE
 // TODO: check function parameters
-void request(String hash)
+void request(String hash, float ds18b20Temp, float dhtTemp, float humidity, float feels)
 {
   String host = API_HOST;
   String path = API_PATH;
@@ -199,7 +210,7 @@ void request(String hash)
 
   // Client is connected to API_HOST, no form POST request
   // TODO: enhance body
-  String body = "{\"query\": \"mutation createData { createData( hash: \"" + hash + "\") { id } }\"}";
+  String body = "{\"query\": \"mutation createEntry { createEntry(hash: \"" + hash + "\", temperature: [" + ds18b20Temp + ", " + dhtTemp + "], humidity: " + humidity + ", feels: " + feels + ") { id } }\"}";
   unsigned int len = body.length();
 
   String req = "POST /" + path + " HTTP/1.1\r\n" +
@@ -264,6 +275,19 @@ void setup()
 void loop()
 {
   digitalWrite(LED, LOW);
+
+  /* Initialize variables for temperature & humidity
+   * with invalid values, for checking whether a measured
+   * value is present later on.
+   * -274°C is invalid, as it's below 0K,
+   * -1.0% humidity is also invalid.
+   */
+  float ds18b20Temp = -274.0;
+  float dhtTemp = -274.0;
+  float feels = -274.0;
+  float humidity = -1.0;
+
+  unsigned long t = 0;
   String hashbase(TOKEN);
 #ifndef OFFLINE
   connect();
@@ -273,11 +297,11 @@ void loop()
   Serial.println("Requesting temperature...");
 
 #ifdef DS18B20
-  unsigned long ds18b20_t = millis();
+  t = millis();
   sensor.requestTemperatures();
-  Serial.printf("DS18B20 done! Request lasted %i ms.\n", millis() - ds18b20_t);
+  Serial.printf("DS18B20 done! Request lasted %i ms.\n", millis() - t);
 
-  float ds18b20Temp = sensor.getTempCByIndex(0);
+  ds18b20Temp = sensor.getTempCByIndex(0);
   Serial.printf("Temperature is: %6.2f°C\n", ds18b20Temp);
   hashbase += ds18b20Temp;
 #else
@@ -285,11 +309,11 @@ void loop()
 #endif
 
 #ifdef DHTPIN
-  unsigned long dht_t = millis();
-  float humidity = dht.readHumidity();
-  float dhtTemp = dht.readTemperature();
-  float feels = dht.computeHeatIndex(dhtTemp, humidity, false);
-  Serial.printf("DHT done! Request lasted %i ms.\n", millis() - dht_t);
+  t = millis();
+  humidity = dht.readHumidity();
+  dhtTemp = dht.readTemperature();
+  feels = dht.computeHeatIndex(dhtTemp, humidity, false);
+  Serial.printf("DHT done! Request lasted %i ms.\n", millis() - t);
 
   Serial.printf("Temperature is: %6.2f°C (feels like %6.2f°C)\n", dhtTemp, feels);
   Serial.printf("Humidity is: %6.2f%%\n", humidity);
@@ -309,6 +333,6 @@ void loop()
   Serial.printf("SHA1 identifier for this cycle: %s\n", hash.c_str());
 
 #ifndef OFFLINE
-  request(hash);
+  request(hash, ds18b20Temp, dhtTemp, humidity, feels);
 #endif
 }
