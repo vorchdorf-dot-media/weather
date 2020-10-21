@@ -70,9 +70,9 @@
 /* SD Card:
  * --------
  * REQUIRES the following Arduino libraries:
- * - SdFat Library: https://github.com/greiman/SdFat or its fork https://github.com/adafruit/SdFat
+ * - SdFat Library: Should be already included (https://github.com/earlephilhower/ESP8266SdFat)
  */
-//#define SD_CHIP_SELECT SS
+//#define SD_CS_PIN SS
 
 /*
 -------------------------------------------------------------------------------
@@ -82,6 +82,7 @@
 ----------------------------- CHANGE AT OWN RISK! -----------------------------
 -------------------------------------------------------------------------------
 */
+#include "temperature.h"
 
 #ifndef OFFLINE
 #include <ESP8266WiFi.h>
@@ -118,6 +119,15 @@ DallasTemperature sensor(&oneWire);
 #include <DHT.h>
 
 DHT dht(DHTPIN, DHTTYPE);
+#endif
+
+#ifdef SD_CS_PIN
+#include <SPI.h>
+#include <SdFat.h>
+
+using namespace sdfat;
+SdFat SD;
+File csv;
 #endif
 
 #ifndef OFFLINE
@@ -177,7 +187,7 @@ unsigned long interval()
 
 #ifndef OFFLINE
 // TODO: check function parameters
-void request(String hash, float ds18b20Temp, float dhtTemp, float humidity, float feels)
+void request(WeatherData *weather)
 {
   String host = API_HOST;
   String path = API_PATH;
@@ -210,7 +220,8 @@ void request(String hash, float ds18b20Temp, float dhtTemp, float humidity, floa
 
   // Client is connected to API_HOST, no form POST request
   // TODO: enhance body
-  String body = "{\"query\": \"mutation createEntry { createEntry(hash: \"" + hash + "\", temperature: [" + ds18b20Temp + ", " + dhtTemp + "], humidity: " + humidity + ", feels: " + feels + ") { id } }\"}";
+  String hash(weather->hash);
+  String body = "{\"query\": \"mutation createEntry { createEntry(hash: \"" + hash + "\", temperature: [" + weather->temperature + ", " + weather->temperature2 + "], humidity: " + weather->humidity + ", feels: " + weather->feels + ") { id } }\"}";
   unsigned int len = body.length();
 
   String req = "POST /" + path + " HTTP/1.1\r\n" +
@@ -238,6 +249,40 @@ void request(String hash, float ds18b20Temp, float dhtTemp, float humidity, floa
   String line = client.readStringUntil('\n');
   Serial.println(line);
   Serial.println("\n-----------------\n");
+}
+#endif
+
+#ifdef SD_CS_PIN
+void writeToSD(WeatherData *weather)
+{
+  Serial.println("Writing data to SD card...");
+  const char *filename = "LOG.CSV";
+  if (!SD.exists(filename))
+  {
+    csv = SD.open(filename, FILE_WRITE);
+    if (!csv)
+    {
+      Serial.println("Failed to write log to SD card!");
+      return;
+    }
+    csv.println("token;timestamp;hash;temperature;temperature2;humidity;feels");
+    csv.close();
+    delay(500);
+  }
+  csv = SD.open(filename, FILE_WRITE);
+  if (!csv)
+  {
+    Serial.println("Failed to write log to SD card!");
+    return;
+  }
+  String token(weather->token);
+  String timestamp(weather->timestamp);
+  String hash(weather->hash);
+  String dump(token + ";" + timestamp + ";" + hash + ";" + weather->temperature + ";" + weather->temperature2 + ";" + weather->humidity + ";" + weather->feels);
+  csv.println(dump.c_str());
+  csv.close();
+  Serial.println("Succeeded!");
+  delay(500);
 }
 #endif
 
@@ -269,6 +314,18 @@ void setup()
 #ifdef DHTPIN
   dht.begin();
 #endif
+
+#ifdef SD_CS_PIN
+  Serial.print("Initializing SD card...");
+  if (!SD.begin(SD_CS_PIN))
+  {
+    Serial.println("FAILED!");
+  }
+  else
+  {
+    Serial.println("done!");
+  }
+#endif
 }
 
 // the loop function runs over and over again forever
@@ -276,19 +333,21 @@ void loop()
 {
   digitalWrite(LED, LOW);
 
+  String hashbase(TOKEN);
+  unsigned long t = 0;
   /* Initialize variables for temperature & humidity
    * with invalid values, for checking whether a measured
    * value is present later on.
    * -274°C is invalid, as it's below 0K,
    * -1.0% humidity is also invalid.
    */
-  float ds18b20Temp = -274.0;
-  float dhtTemp = -274.0;
-  float feels = -274.0;
-  float humidity = -1.0;
+  WeatherData weather;
+  weather.token = hashbase.c_str();
+  weather.temperature = -274.0;
+  weather.temperature2 = -274.0;
+  weather.feels = -274.0;
+  weather.humidity = -1.0;
 
-  unsigned long t = 0;
-  String hashbase(TOKEN);
 #ifndef OFFLINE
   connect();
 #endif
@@ -301,38 +360,43 @@ void loop()
   sensor.requestTemperatures();
   Serial.printf("DS18B20 done! Request lasted %i ms.\n", millis() - t);
 
-  ds18b20Temp = sensor.getTempCByIndex(0);
-  Serial.printf("Temperature is: %6.2f°C\n", ds18b20Temp);
-  hashbase += ds18b20Temp;
+  weather.temperature = sensor.getTempCByIndex(0);
+  Serial.printf("Temperature is: %6.2f°C\n", weather.temperature);
+  hashbase += weather.temperature;
 #else
   Serial.println("No DS18B20 PIN defined. Skipping DS18B20...");
 #endif
 
 #ifdef DHTPIN
   t = millis();
-  humidity = dht.readHumidity();
-  dhtTemp = dht.readTemperature();
-  feels = dht.computeHeatIndex(dhtTemp, humidity, false);
+  weather.humidity = dht.readHumidity();
+  weather.temperature2 = dht.readTemperature();
+  weather.feels = dht.computeHeatIndex(dhtTemp, humidity, false);
   Serial.printf("DHT done! Request lasted %i ms.\n", millis() - t);
 
-  Serial.printf("Temperature is: %6.2f°C (feels like %6.2f°C)\n", dhtTemp, feels);
-  Serial.printf("Humidity is: %6.2f%%\n", humidity);
-  hashbase += humidity;
-  hashbase += dhtTemp;
-  hashbase += feels;
+  Serial.printf("Temperature is: %6.2f°C (feels like %6.2f°C)\n", weather.temperature2, weather.feels);
+  Serial.printf("Humidity is: %6.2f%%\n", weather.humidity);
+  hashbase += weather.humidity;
+  hashbase += weather.temperature2;
+  hashbase += weather.feels;
 #else
   Serial.println("No DHT11 PIN defined. Skipping DHT11...");
 #endif
 
 #ifndef OFFLINE
   connect();
-  hashbase += ntpClient.getFormattedTime();
+  weather.timestamp = ntpClient.getFormattedTime().c_str();
+  hashbase += weather.timestamp;
 #endif
 
-  String hash(sha1(hashbase));
-  Serial.printf("SHA1 identifier for this cycle: %s\n", hash.c_str());
+  weather.hash = sha1(hashbase).c_str();
+  Serial.printf("SHA1 identifier for this cycle: %s\n", weather.hash);
 
 #ifndef OFFLINE
-  request(hash, ds18b20Temp, dhtTemp, humidity, feels);
+  request(&weather);
+#endif
+
+#ifdef SD_CS_PIN
+  writeToSD(&weather);
 #endif
 }
