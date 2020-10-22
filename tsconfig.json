@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "baseUrl": "./",
+    "declaration": false,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "dist",
+    "paths": {},
+    "removeComments": true,
+    "rootDir": "./",
+    "sourceMap": false,
+    "target": "ESNext"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules/*", "dist/*"]
+}
