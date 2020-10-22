@@ -64,15 +64,15 @@
  * - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
  * - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
  */
-// #define DHTPIN D1 // uncomment to enable DHT11 data PIN
-// #define DHTTYPE DHT11
+//#define DHTPIN D1 // uncomment to enable DHT11 data PIN
+//#define DHTTYPE DHT11
 
 /* SD Card:
  * --------
  * REQUIRES the following Arduino libraries:
  * - SdFat Library: Should be already included (https://github.com/earlephilhower/ESP8266SdFat)
  */
-// #define SD_CS_PIN SS
+//#define SD_CS_PIN SS
 
 /*
 -------------------------------------------------------------------------------
@@ -277,9 +277,8 @@ void writeToSD(WeatherData *weather)
     return;
   }
   String token(weather->token);
-  String timestamp(weather->timestamp);
   String hash(weather->hash);
-  String dump(token + ";" + timestamp + ";" + hash + ";" + weather->temperature + ";" + weather->temperature2 + ";" + weather->humidity + ";" + weather->feels);
+  String dump(token + ";" + weather->timestamp + ";" + hash + ";" + weather->temperature + ";" + weather->temperature2 + ";" + weather->humidity + ";" + weather->feels);
   csv.println(dump.c_str());
   csv.close();
   Serial.println("Succeeded!");
@@ -386,7 +385,7 @@ void loop()
 
 #ifndef OFFLINE
   connect();
-  weather.timestamp = ntpClient.getFormattedTime().c_str();
+  weather.timestamp = ntpClient.getEpochTime();
   hashbase += weather.timestamp;
 #endif
 
