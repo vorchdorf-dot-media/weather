@@ -89,6 +89,7 @@
 #include <Hash.h>
 #include <WiFiUdp.h>
 #include <NTPClient.h>
+#include <base64.h>
 
 #ifdef STATIC_IP
 /* WiFi config to use static IP */
@@ -219,15 +220,21 @@ void request(WeatherData *weather)
     Serial.println("Connected!");
   }
 
-  // Client is connected to API_HOST, no form POST request
-  // TODO: enhance body
+  // Client is connected to API_HOST, now form GraphQL Mutation
   String hash(weather->hash);
-  String body = "{\"query\": \"mutation createEntry { createEntry(hash: \"" + hash + "\", temperature: [" + weather->temperature + ", " + weather->temperature2 + "], humidity: " + weather->humidity + ", feels: " + weather->feels + ") { id } }\"}";
+  String body = "{\"query\": \"mutation createEntry { createEntry(hash: \"" + hash + "\", timestamp: " + weather->timestamp + ", temperature: [" + weather->temperature + ", " + weather->temperature2 + "], humidity: " + weather->humidity + ", feels: " + weather->feels + ") { id } }\"}";
   unsigned int len = body.length();
 
+  // Form Basic authentication string
+  String user(weather->token);
+  String pass(weather->hash);
+  String userpass = user + ":" + pass;
+  String encoded = base64::encode((const uint8_t *)userpass.c_str(), userpass.length());
+
+  // Put it all together and form complete POST request
   String req = "POST /" + path + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
-               "Authorization: " + (const char *)TOKEN + "\r\n" +
+               "Authorization: Basic" + encoded + "\r\n" +
                "User-Agent: Arduino Weather Client - " + (const char *)__VERSION__ + "\r\n" +
                "Content-Type: application/json; charset=UTF-8\r\n" +
                "Content-Length: " + len + "\r\n\r\n" +
