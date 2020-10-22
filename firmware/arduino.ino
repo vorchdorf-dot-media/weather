@@ -323,10 +323,18 @@ void setup()
 #endif
 
 #ifdef SD_CS_PIN
+  pinMode(SD_CS_PIN, OUTPUT);
   Serial.print("Initializing SD card...");
   if (!SD.begin(SD_CS_PIN))
   {
     Serial.println("FAILED!");
+    while (true)
+    {
+      digitalWrite(LED, HIGH);
+      delay(250);
+      digitalWrite(LED, LOW);
+      delay(250);
+    }
   }
   else
   {
