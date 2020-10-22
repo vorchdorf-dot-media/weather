@@ -229,7 +229,7 @@ void request(WeatherData *weather)
   String user(weather->token);
   String pass(weather->hash);
   String userpass = user + ":" + pass;
-  String encoded = base64::encode((const uint8_t *)userpass.c_str(), userpass.length());
+  String encoded = base64::encode((const uint8_t *)userpass.c_str(), userpass.length(), false);
 
   // Put it all together and form complete POST request
   String req = "POST /" + path + " HTTP/1.1\r\n" +
