@@ -234,7 +234,7 @@ void request(WeatherData *weather)
   // Put it all together and form complete POST request
   String req = "POST /" + path + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
-               "Authorization: Basic" + encoded + "\r\n" +
+               "Authorization: Basic " + encoded + "\r\n" +
                "User-Agent: Arduino Weather Client - " + (const char *)__VERSION__ + "\r\n" +
                "Content-Type: application/json; charset=UTF-8\r\n" +
                "Content-Length: " + len + "\r\n\r\n" +
