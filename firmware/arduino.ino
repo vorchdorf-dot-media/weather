@@ -5,9 +5,10 @@
 
   This sketch requires the following parts:
 
-  - ESP8266 NodeMcu compatible board (I use the D1 Mini)
+  - ESP8266 NodeMcu compatible board (I use the Wemos D1 Mini)
   - DS18B20 OneWire temperature sensor
-  - DHT11 temperature, humidity & pressure sensor
+  - DHT11 temperature & humidity sensor
+  - MicroSD SPI board (optional, for redundant data storage)
   - 2x 4.7k resistors (pull-up for DS18B20 and DHT11)
 
   created 17 Oct 2020
@@ -82,6 +83,12 @@
 ----------------------------- CHANGE AT OWN RISK! -----------------------------
 -------------------------------------------------------------------------------
 */
+
+/* version identifier */
+#define MAJOR_VERSION 1
+#define MINOR_VERSION 0
+#define PATCH_VERSION 0
+
 #include "temperature.h"
 
 #ifndef OFFLINE
@@ -171,6 +178,7 @@ unsigned long interval()
 {
 #ifndef OFFLINE
   ntpClient.update();
+  delay(500);
   int h = ntpClient.getHours();
   int m = ntpClient.getMinutes();
   int s = ntpClient.getSeconds();
@@ -221,21 +229,18 @@ void request(WeatherData *weather)
   }
 
   // Client is connected to API_HOST, now form GraphQL Mutation
-  String hash(weather->hash);
-  String body = "{\"query\": \"mutation createEntry { createEntry(hash: \"" + hash + "\", timestamp: " + weather->timestamp + ", temperature: [" + weather->temperature + ", " + weather->temperature2 + "], humidity: " + weather->humidity + ", feels: " + weather->feels + ") { id } }\"}";
+  String body = "{\"query\": \"mutation createEntry { createEntry(hash: \"" + weather->hash + "\", timestamp: " + weather->timestamp + ", temperature: [" + weather->temperature + ", " + weather->temperature2 + "], humidity: " + weather->humidity + ", feels: " + weather->feels + ") { id } }\"}";
   unsigned int len = body.length();
 
   // Form Basic authentication string
-  String user(weather->token);
-  String pass(weather->hash);
-  String userpass = user + ":" + pass;
+  String userpass = weather->token + ":" + weather->hash;
   String encoded = base64::encode((const uint8_t *)userpass.c_str(), userpass.length(), false);
 
   // Put it all together and form complete POST request
   String req = "POST /" + path + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
                "Authorization: Basic " + encoded + "\r\n" +
-               "User-Agent: Arduino Weather Client - " + (const char *)__VERSION__ + "\r\n" +
+               "User-Agent: Arduino Weather Client - " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION + "\r\n" +
                "Content-Type: application/json; charset=UTF-8\r\n" +
                "Content-Length: " + len + "\r\n\r\n" +
                body + "\r\n" +
@@ -263,14 +268,14 @@ void request(WeatherData *weather)
 #ifdef SD_CS_PIN
 void writeToSD(WeatherData *weather)
 {
-  Serial.println("Writing data to SD card...");
+  Serial.print("Writing data to SD card...");
   const char *filename = "LOG.CSV";
   if (!SD.exists(filename))
   {
     csv = SD.open(filename, FILE_WRITE);
     if (!csv)
     {
-      Serial.println("Failed to write log to SD card!");
+      Serial.println("FAILED!");
       return;
     }
     csv.println("token;timestamp;hash;temperature;temperature2;humidity;feels");
@@ -280,12 +285,10 @@ void writeToSD(WeatherData *weather)
   csv = SD.open(filename, FILE_WRITE);
   if (!csv)
   {
-    Serial.println("Failed to write log to SD card!");
+    Serial.println("FAILED!");
     return;
   }
-  String token(weather->token);
-  String hash(weather->hash);
-  String dump(token + ";" + weather->timestamp + ";" + hash + ";" + weather->temperature + ";" + weather->temperature2 + ";" + weather->humidity + ";" + weather->feels);
+  String dump(weather->token + ";" + weather->timestamp + ";" + weather->hash + ";" + weather->temperature + ";" + weather->temperature2 + ";" + weather->humidity + ";" + weather->feels);
   csv.println(dump.c_str());
   csv.close();
   Serial.println("Succeeded!");
@@ -312,10 +315,17 @@ void setup()
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, pass);
 
-  connect();
-
   ntpClient.begin();
   ntpClient.setTimeOffset(0); // set timezone to UTC
+
+  connect();
+
+  while (!ntpClient.getHours() && !ntpClient.getMinutes())
+  {
+    delay(500);
+    ntpClient.update();
+  }
+  Serial.printf("Clock successfully initialized! Current UTC time is: %02i:%02i:%02i\n", ntpClient.getHours(), ntpClient.getMinutes(), ntpClient.getSeconds());
 #endif
 
 #ifdef DHTPIN
@@ -405,7 +415,7 @@ void loop()
 #endif
 
   weather.hash = sha1(hashbase).c_str();
-  Serial.printf("SHA1 identifier for this cycle: %s\n", weather.hash);
+  Serial.printf("SHA1 identifier for this cycle: %s\n", weather.hash.c_str());
 
 #ifndef OFFLINE
   request(&weather);

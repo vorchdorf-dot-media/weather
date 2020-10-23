@@ -20,10 +20,10 @@ typedef struct WeatherData
   unsigned long timestamp;
 
   /* calculated hash of current data */
-  const char *hash;
+  String hash;
 
   /* token for authenticating on remote API service */
-  const char *token;
+  String token;
 
   /* temperature data taken from DS18B20 sensor */
   float temperature;
