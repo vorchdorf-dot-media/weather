@@ -9,7 +9,6 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "dist",
-    "paths": {},
     "removeComments": true,
     "rootDir": "./",
     "sourceMap": false,
