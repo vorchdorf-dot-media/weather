@@ -1,16 +1,34 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { nanoid } from 'nanoid';
 
-const EntrySchema = new Schema({
+export interface EntrySchema {
+  _id: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  station: string;
+  hash: string;
+  timestamp: Date;
+  temperature: number;
+  temperature2?: number;
+  humidity?: number;
+  feels?: number;
+}
+
+export const EntrySchema: Schema<EntrySchema> = new Schema({
   _id: {
     default: () => nanoid(),
     type: String,
   },
   createdAt: {
-    default: Date.now(),
+    default: Date.now,
     type: Date,
   },
   updatedAt: Date,
+  station: {
+    ref: 'Station',
+    required: true,
+    type: String,
+  },
   hash: {
     required: true,
     type: String,
@@ -28,4 +46,4 @@ const EntrySchema = new Schema({
   feels: Number,
 });
 
-export default EntrySchema;
+export default model('Entry', EntrySchema);

@@ -1,12 +1,14 @@
-import { APIGatewayProxyEvent, Context } from 'aws-lambda';
+import { APIGatewayProxyEvent } from 'aws-lambda';
 import { ApolloServer } from 'apollo-server-lambda';
 
+import connect from '../db';
 import resolvers from './resolvers';
 import typeDefs from './types';
 
 const server = new ApolloServer({
-  context: ({ event: { headers } }: { event: APIGatewayProxyEvent }) => ({
-    headers,
+  context: async ({ event: { headers } }: { event: APIGatewayProxyEvent }) => ({
+      db: await connect(),
+      headers,
   }),
   resolvers,
   typeDefs,
