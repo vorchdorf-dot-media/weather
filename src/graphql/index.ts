@@ -7,9 +7,10 @@ import typeDefs from './types';
 
 const server = new ApolloServer({
   context: async ({ event: { headers } }: { event: APIGatewayProxyEvent }) => ({
-      db: await connect(),
-      headers,
+    db: await connect(),
+    headers,
   }),
+  playground: process.env.CONTEXT !== 'production',
   resolvers,
   typeDefs,
 });

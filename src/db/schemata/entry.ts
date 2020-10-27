@@ -16,6 +16,7 @@ export interface EntrySchema {
 
 export const EntrySchema: Schema<EntrySchema> = new Schema({
   _id: {
+    alias: 'id',
     default: () => nanoid(),
     type: String,
   },
@@ -39,7 +40,7 @@ export const EntrySchema: Schema<EntrySchema> = new Schema({
   },
   temperature: {
     required: true,
-    type: Number
+    type: Number,
   },
   temperature2: Number,
   humididty: Number,

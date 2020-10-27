@@ -8,6 +8,7 @@ const nanoid = customAlphabet(BASE_58, ID_SHORT);
 export interface AddressSchema {
   city?: string;
   country?: string;
+  street?: string;
   zip?: string;
 }
 
@@ -22,12 +23,13 @@ export interface StationSchema {
   createdAt: Date;
   updatedAt?: Date;
   name: string;
-  address?: AddressSchema,
-  coordinates?: CoordinatesSchema,
+  address?: AddressSchema;
+  coordinates?: CoordinatesSchema;
 }
 
 const StationSchema: Schema<StationSchema> = new Schema({
   _id: {
+    alias: 'id',
     default: () => nanoid(),
     type: String,
   },
@@ -39,10 +41,12 @@ const StationSchema: Schema<StationSchema> = new Schema({
   name: {
     required: true,
     type: String,
+    unique: true,
   },
   address: {
     city: String,
     country: String,
+    street: String,
     zip: String,
   },
   coordinates: {
