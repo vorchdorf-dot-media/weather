@@ -401,8 +401,8 @@ void loop()
 
   Serial.printf("Temperature is: %6.2f°C (feels like %6.2f°C)\n", weather.temperature2, weather.feels);
   Serial.printf("Humidity is: %6.2f%%\n", weather.humidity);
-  hashbase += weather.humidity;
   hashbase += weather.temperature2;
+  hashbase += weather.humidity;
   hashbase += weather.feels;
 #else
   Serial.println("No DHT11 PIN defined. Skipping DHT11...");

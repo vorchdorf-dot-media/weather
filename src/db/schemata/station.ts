@@ -12,6 +12,11 @@ export interface AddressSchema {
   zip?: string;
 }
 
+export interface ConfigSchema {
+  temperature?: 'IN' | 'OUT';
+  temperatur2?: 'IN' | 'OUT';
+}
+
 export interface CoordinatesSchema {
   height?: number;
   latitutde: number;
@@ -23,8 +28,10 @@ export interface StationSchema {
   createdAt: Date;
   updatedAt?: Date;
   name: string;
+  email: string;
   address?: AddressSchema;
   coordinates?: CoordinatesSchema;
+  config?: ConfigSchema;
 }
 
 const StationSchema: Schema<StationSchema> = new Schema({
@@ -43,6 +50,10 @@ const StationSchema: Schema<StationSchema> = new Schema({
     type: String,
     unique: true,
   },
+  email: {
+    required: true,
+    type: String,
+  },
   address: {
     city: String,
     country: String,
@@ -53,6 +64,16 @@ const StationSchema: Schema<StationSchema> = new Schema({
     height: Number,
     latitude: Number,
     longitude: Number,
+  },
+  config: {
+    temperature: {
+      default: () => 'OUT',
+      type: String,
+    },
+    temperature2: {
+      default: () => 'OUT',
+      type: String,
+    },
   },
 });
 

@@ -1,6 +1,11 @@
 import { gql } from 'apollo-server-lambda';
 
 const types = gql`
+  enum TemperatureConfig {
+    IN
+    OUT
+  }
+
   type Address {
     city: String
     country: String
@@ -27,38 +32,37 @@ const types = gql`
     feels: Float
   }
 
-  type EntryInput {
-    id: ID!
-    station: StationInput
-    hash: String
-    timestamp: Int
-    temperature: Float!
-    temperature2: Float
-    humidity: Float
-    feels: Float
-  }
-
   type Station {
-    id: ID
+    id: ID!
     createdAt: Int
     updatedAt: Int
     name: String!
+    email: String!
     address: Address
     coordinates: Coordinates
+    config: StationConfig
+  }
+
+  type StationConfig {
+    temperature: TemperatureConfig
+    temperature2: TemperatureConfig
   }
 
   type StationInput {
-    id: ID!
     createdAt: Int
     updatedAt: Int
     name: String!
+    email: String!
     address: Address
     coordinates: Coordinates
+    config: StationConfig
   }
 
   type Query {
     entry(station: ID!): Entry
     entries(station: ID!, from: Int!, to: Int): [Entry]
+    station(id: ID!): Station
+    stations(): [Station]
   }
 
   type Mutation {
@@ -68,7 +72,10 @@ const types = gql`
       temperature: [Float]
       humidity: Float
       feels: Float
-    ): EntryInput!
+    ): Entry!
+    createStation(
+      station: StationInput!
+    ): Station!
   }
 `;
 

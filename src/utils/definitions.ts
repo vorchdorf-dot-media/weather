@@ -6,6 +6,14 @@ export interface StringObject {
   [key: string]: string;
 }
 
+export interface EntryInput {
+  hash: string;
+  timestamp: number;
+  temperature: number[];
+  humidity: number;
+  feels: number;
+}
+
 export enum AUTH_SCOPE {
   UNAUTHENTICATED,
   STATION,
