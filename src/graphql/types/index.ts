@@ -36,8 +36,8 @@ const types = gql`
     id: ID!
     createdAt: Int
     updatedAt: Int
-    name: String!
-    email: String!
+    name: String
+    email: String
     address: Address
     coordinates: Coordinates
     config: StationConfig
@@ -48,21 +48,39 @@ const types = gql`
     temperature2: TemperatureConfig
   }
 
-  type StationInput {
+  input AddressInput {
+    city: String
+    country: String
+    street: String
+    zip: String
+  }
+
+  input CoordinatesInput {
+    height: Float
+    latitutde: Float
+    longitude: Float
+  }
+
+  input StationConfigInput {
+    temperature: TemperatureConfig
+    temperature2: TemperatureConfig
+  }
+
+  input StationInput {
     createdAt: Int
     updatedAt: Int
     name: String!
     email: String!
-    address: Address
-    coordinates: Coordinates
-    config: StationConfig
+    address: AddressInput
+    coordinates: CoordinatesInput
+    config: StationConfigInput
   }
 
   type Query {
     entry(station: ID!): Entry
     entries(station: ID!, from: Int!, to: Int): [Entry]
     station(id: ID!): Station
-    stations(): [Station]
+    stations: [Station]
   }
 
   type Mutation {
@@ -73,9 +91,7 @@ const types = gql`
       humidity: Float
       feels: Float
     ): Entry!
-    createStation(
-      station: StationInput!
-    ): Station!
+    createStation(station: StationInput!): Station!
   }
 `;
 
