@@ -1,5 +1,9 @@
 import { Schema, model } from 'mongoose';
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
+
+import { BASE_58, ID_LONG } from '../../utils/definitions';
+
+const nanoid = customAlphabet(BASE_58, ID_LONG);
 
 export interface EntrySchema {
   _id: string;
@@ -16,7 +20,6 @@ export interface EntrySchema {
 
 export const EntrySchema: Schema<EntrySchema> = new Schema({
   _id: {
-    alias: 'id',
     default: () => nanoid(),
     type: String,
   },
@@ -43,8 +46,10 @@ export const EntrySchema: Schema<EntrySchema> = new Schema({
     type: Number,
   },
   temperature2: Number,
-  humididty: Number,
+  humidity: Number,
   feels: Number,
 });
+
+EntrySchema.set('toJSON', { virtuals: true });
 
 export default model('Entry', EntrySchema);

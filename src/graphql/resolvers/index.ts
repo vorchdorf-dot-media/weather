@@ -18,12 +18,7 @@ export const Mutation = {
     context: { headers: StringObject }
   ): Promise<EntrySchema> => {
     const { authorization } = context.headers || {};
-    const {
-      hash,
-      temperature: [temperature, temperature2] = [],
-      humidity,
-      feels,
-    } = args;
+    const { temperature: [temperature, temperature2] = [] } = args;
 
     if ((await scope(authorization)) !== AUTH_SCOPE.STATION) {
       throw new AuthenticationError('Unauthorized');
@@ -36,13 +31,11 @@ export const Mutation = {
     }
 
     const entry = await Entry.create({
-      hash,
+      ...args,
       station,
       temperature,
       temperature2,
-      humidity,
-      feels,
-    });
+    }).then(e => e.populate('station'));
 
     return entry.toJSON();
   },
@@ -71,7 +64,10 @@ export const Query = {
     const { station } = args;
 
     const [entry] =
-      (await Entry.find({ station }).sort('-timestamp').limit(1)) || [];
+      (await Entry.find({ station })
+        .sort('-timestamp')
+        .limit(1)
+        .populate('station')) || [];
     return entry && entry.toJSON();
   },
   entries: async (
@@ -83,11 +79,12 @@ export const Query = {
     const entries = await Entry.find({
       $and: [
         { station },
-        { $gt: { timestamp: from } },
-        { $lte: { timestamp: to } },
+        { timestamp: { $gt: from } },
+        { timestamp: { $lte: to } },
       ],
-    });
-    return entries.length && entries.map(e => e.toJSON());
+    }).populate('station');
+
+    return entries.length ? entries.map(e => e.toJSON()) : [];
   },
   station: async (
     parent: any,

@@ -36,7 +36,6 @@ export interface StationSchema {
 
 const StationSchema: Schema<StationSchema> = new Schema({
   _id: {
-    alias: 'id',
     default: () => nanoid(),
     type: String,
   },
@@ -76,5 +75,7 @@ const StationSchema: Schema<StationSchema> = new Schema({
     },
   },
 });
+
+StationSchema.set('toJSON', { virtuals: true });
 
 export default model('Station', StationSchema);
