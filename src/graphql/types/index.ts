@@ -21,11 +21,11 @@ const types = gql`
 
   type Entry {
     id: ID
-    createdAt: Int
-    updatedAt: Int
+    createdAt: String
+    updatedAt: String
     station: Station
     hash: String
-    timestamp: Int
+    timestamp: String
     temperature: Float!
     temperature2: Float
     humidity: Float
@@ -34,8 +34,8 @@ const types = gql`
 
   type Station {
     id: ID!
-    createdAt: Int
-    updatedAt: Int
+    createdAt: String
+    updatedAt: String
     name: String
     email: String
     address: Address
@@ -67,8 +67,6 @@ const types = gql`
   }
 
   input StationInput {
-    createdAt: Int
-    updatedAt: Int
     name: String!
     email: String!
     address: AddressInput

@@ -34,48 +34,57 @@ export interface StationSchema {
   config?: ConfigSchema;
 }
 
-const StationSchema: Schema<StationSchema> = new Schema({
-  _id: {
-    default: () => nanoid(),
-    type: String,
-  },
-  createdAt: {
-    default: Date.now,
-    type: Date,
-  },
-  updatedAt: Date,
-  name: {
-    required: true,
-    type: String,
-    unique: true,
-  },
-  email: {
-    required: true,
-    type: String,
-  },
-  address: {
-    city: String,
-    country: String,
-    street: String,
-    zip: String,
-  },
-  coordinates: {
-    height: Number,
-    latitude: Number,
-    longitude: Number,
-  },
-  config: {
-    temperature: {
-      default: () => 'OUT',
+const StationSchema: Schema<StationSchema> = new Schema(
+  {
+    _id: {
+      default: () => nanoid(),
       type: String,
     },
-    temperature2: {
-      default: () => 'OUT',
+    name: {
+      required: true,
+      type: String,
+      unique: true,
+    },
+    email: {
+      required: true,
       type: String,
     },
+    address: {
+      city: String,
+      country: String,
+      street: String,
+      zip: String,
+    },
+    coordinates: {
+      height: Number,
+      latitude: Number,
+      longitude: Number,
+    },
+    config: {
+      temperature: {
+        default: () => 'OUT',
+        type: String,
+      },
+      temperature2: {
+        default: () => 'OUT',
+        type: String,
+      },
+    },
   },
-});
+  {
+    timestamps: { createdAt: true, updatedAt: true },
+    toJSON: {
+      getters: true,
+      virtuals: true,
+    },
+  }
+);
 
-StationSchema.set('toJSON', { virtuals: true });
+StationSchema.path('createdAt').get((value: number) =>
+  new Date(value).toISOString()
+);
+StationSchema.path('updatedAt').get((value: number) =>
+  new Date(value).toISOString()
+);
 
 export default model('Station', StationSchema);

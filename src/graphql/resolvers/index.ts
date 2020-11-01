@@ -18,7 +18,7 @@ export const Mutation = {
     context: { headers: StringObject }
   ): Promise<EntrySchema> => {
     const { authorization } = context.headers || {};
-    const { temperature: [temperature, temperature2] = [] } = args;
+    const { temperature: [temperature, temperature2] = [], timestamp } = args;
 
     if ((await scope(authorization)) !== AUTH_SCOPE.STATION) {
       throw new AuthenticationError('Unauthorized');
@@ -35,7 +35,8 @@ export const Mutation = {
       station,
       temperature,
       temperature2,
-    }).then(e => e.populate('station'));
+      timestamp: new Date(timestamp * 1000), // MongoDB needs epoch time in milliseconds to fit in Date type
+    }).then(e => e.populate('station').execPopulate());
 
     return entry.toJSON();
   },
@@ -79,8 +80,8 @@ export const Query = {
     const entries = await Entry.find({
       $and: [
         { station },
-        { timestamp: { $gt: from } },
-        { timestamp: { $lte: to } },
+        { timestamp: { $gt: new Date(from) } },
+        { timestamp: { $lte: new Date(to) } },
       ],
     }).populate('station');
 

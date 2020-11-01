@@ -18,38 +18,52 @@ export interface EntrySchema {
   feels?: number;
 }
 
-export const EntrySchema: Schema<EntrySchema> = new Schema({
-  _id: {
-    default: () => nanoid(),
-    type: String,
+export const EntrySchema: Schema<EntrySchema> = new Schema(
+  {
+    _id: {
+      default: () => nanoid(),
+      type: String,
+    },
+    station: {
+      ref: 'Station',
+      required: true,
+      type: String,
+    },
+    hash: {
+      required: true,
+      type: String,
+      unique: true,
+    },
+    timestamp: {
+      required: true,
+      type: Date,
+      unique: true,
+    },
+    temperature: {
+      required: true,
+      type: Number,
+    },
+    temperature2: Number,
+    humidity: Number,
+    feels: Number,
   },
-  createdAt: {
-    default: Date.now,
-    type: Date,
-  },
-  updatedAt: Date,
-  station: {
-    ref: 'Station',
-    required: true,
-    type: String,
-  },
-  hash: {
-    required: true,
-    type: String,
-  },
-  timestamp: {
-    required: true,
-    type: Date,
-  },
-  temperature: {
-    required: true,
-    type: Number,
-  },
-  temperature2: Number,
-  humidity: Number,
-  feels: Number,
-});
+  {
+    timestamps: { createdAt: true, updatedAt: true },
+    toJSON: {
+      getters: true,
+      virtuals: true,
+    },
+  }
+);
 
-EntrySchema.set('toJSON', { virtuals: true });
+EntrySchema.path('timestamp').get((value: number) =>
+  new Date(value).toISOString()
+);
+EntrySchema.path('createdAt').get((value: number) =>
+  new Date(value).toISOString()
+);
+EntrySchema.path('updatedAt').get((value: number) =>
+  new Date(value).toISOString()
+);
 
 export default model('Entry', EntrySchema);
