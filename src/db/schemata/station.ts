@@ -19,7 +19,7 @@ export interface ConfigSchema {
 
 export interface CoordinatesSchema {
   height?: number;
-  latitutde: number;
+  latitude: number;
   longitude: number;
 }
 

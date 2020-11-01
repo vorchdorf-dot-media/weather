@@ -57,7 +57,7 @@ const types = gql`
 
   input CoordinatesInput {
     height: Float
-    latitutde: Float
+    latitude: Float
     longitude: Float
   }
 
