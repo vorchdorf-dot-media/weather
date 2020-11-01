@@ -80,11 +80,11 @@ const StationSchema: Schema<StationSchema> = new Schema(
   }
 );
 
-StationSchema.path('createdAt').get((value: number) =>
-  new Date(value).toISOString()
+StationSchema.path('createdAt').get(
+  (value: number) => value && new Date(value).toISOString()
 );
-StationSchema.path('updatedAt').get((value: number) =>
-  new Date(value).toISOString()
+StationSchema.path('updatedAt').get(
+  (value: number) => value && new Date(value).toISOString()
 );
 
 export default model('Station', StationSchema);

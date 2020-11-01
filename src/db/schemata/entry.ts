@@ -56,14 +56,14 @@ export const EntrySchema: Schema<EntrySchema> = new Schema(
   }
 );
 
-EntrySchema.path('timestamp').get((value: number) =>
-  new Date(value).toISOString()
+EntrySchema.path('timestamp').get(
+  (value: number) => value && new Date(value).toISOString()
 );
-EntrySchema.path('createdAt').get((value: number) =>
-  new Date(value).toISOString()
+EntrySchema.path('createdAt').get(
+  (value: number) => value && new Date(value).toISOString()
 );
-EntrySchema.path('updatedAt').get((value: number) =>
-  new Date(value).toISOString()
+EntrySchema.path('updatedAt').get(
+  (value: number) => value && new Date(value).toISOString()
 );
 
 export default model('Entry', EntrySchema);
