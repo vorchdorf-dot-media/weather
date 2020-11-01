@@ -15,7 +15,7 @@ const types = gql`
 
   type Coordinates {
     height: Float
-    latitutde: Float
+    latitude: Float
     longitude: Float
   }
 
