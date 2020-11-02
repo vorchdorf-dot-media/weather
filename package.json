@@ -10,7 +10,9 @@
   "scripts": {
     "start:functions": "NODE_ENV=development netlify-lambda serve --config ./webpack.functions.js src/functions",
     "build:functions": "netlify-lambda build src/lambda",
-    "test:lint": "eslint . --ext .ts"
+    "test:lint": "eslint . --ext .ts",
+    "test:jest": "jest --coverage",
+    "test": "npm run test:lint && npm run test:jest"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

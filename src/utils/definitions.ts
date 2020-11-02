@@ -1,5 +1,5 @@
 export interface RandomObject {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface StringObject {

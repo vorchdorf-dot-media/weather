@@ -13,7 +13,7 @@ import {
 
 export const Mutation = {
   createEntry: async (
-    parent: any,
+    _parent: unknown,
     args: EntryInput,
     context: { headers: StringObject }
   ): Promise<EntrySchema> => {
@@ -41,7 +41,7 @@ export const Mutation = {
     return entry.toJSON();
   },
   createStation: async (
-    parent: any,
+    _parent: unknown,
     args: { station: RandomObject } = { station: {} },
     context: { headers: StringObject }
   ): Promise<StationSchema> => {
@@ -61,7 +61,10 @@ export const Mutation = {
 };
 
 export const Query = {
-  entry: async (parent: any, args: RandomObject = {}): Promise<EntrySchema> => {
+  entry: async (
+    _parent: unknown,
+    args: RandomObject = {}
+  ): Promise<EntrySchema> => {
     const { station } = args;
 
     const [entry] =
@@ -72,8 +75,8 @@ export const Query = {
     return entry && entry.toJSON();
   },
   entries: async (
-    parent: any,
-    args: RandomObject = {}
+    _parent: unknown,
+    args: { station: string; from: string; to?: string }
   ): Promise<EntrySchema[]> => {
     const { station, from, to = Date.now() } = args;
 
@@ -88,7 +91,7 @@ export const Query = {
     return entries.length ? entries.map(e => e.toJSON()) : [];
   },
   station: async (
-    parent: any,
+    _parent: unknown,
     args: RandomObject = {}
   ): Promise<StationSchema> => {
     const { id } = args;
@@ -96,10 +99,7 @@ export const Query = {
     const station = await Station.findById(id);
     return station.toJSON();
   },
-  stations: async (
-    parent: any,
-    args: RandomObject = {}
-  ): Promise<StationSchema[]> => {
+  stations: async (): Promise<StationSchema[]> => {
     const stations = await Station.find({});
     return stations.length && stations.map(s => s.toJSON());
   },
