@@ -6,8 +6,8 @@ import { BASE_58, ID_LONG } from '../../utils/definitions';
 const nanoid = customAlphabet(BASE_58, ID_LONG);
 
 export interface EntrySchema {
-  _id: string;
-  createdAt: Date;
+  _id?: string;
+  createdAt?: Date;
   updatedAt?: Date;
   station: string;
   hash: string;

@@ -1,14 +1,19 @@
 import mongoose, { connect, connection } from 'mongoose';
 
+import { isTest } from '../utils/definitions';
+
 if (
   !process.env.MONGO_USER ||
   !process.env.MONGO_PASSWORD ||
   !process.env.MONGO_URL
 ) {
-  throw new Error('No sufficient MongoDB credentials set!');
+  throw new Error('Insufficient MongoDB credentials set!');
 }
 
-const CONNECTION = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URL}?retryWrites=true&w=majority&ssl=true&authSource=admin`;
+const CONNECTION = isTest()
+  ? process.env.MONGO_URL
+  : `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URL}?retryWrites=true&w=majority&ssl=true&authSource=admin`;
+
 const client = async (): Promise<typeof mongoose> =>
   connect(CONNECTION, {
     useNewUrlParser: true,

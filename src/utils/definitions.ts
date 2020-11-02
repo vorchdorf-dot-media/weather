@@ -26,3 +26,5 @@ export const BASE_58 =
 export const ID_SHORT = 8;
 
 export const ID_LONG = 24;
+
+export const isTest = (): boolean => process.env.NODE_ENV === 'test';

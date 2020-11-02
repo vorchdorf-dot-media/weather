@@ -24,8 +24,8 @@ export interface CoordinatesSchema {
 }
 
 export interface StationSchema {
-  _id: string;
-  createdAt: Date;
+  _id?: string;
+  createdAt?: Date;
   updatedAt?: Date;
   name: string;
   email: string;

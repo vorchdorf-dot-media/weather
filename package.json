@@ -11,13 +11,14 @@
     "start:functions": "NODE_ENV=development netlify-lambda serve --config ./webpack.functions.js src/functions",
     "build:functions": "netlify-lambda build src/lambda",
     "test:lint": "eslint . --ext .ts",
-    "test:jest": "jest --coverage",
+    "test:jest": "jest --coverage --maxWorkers 4",
     "test": "npm run test:lint && npm run test:jest"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
+    "@shelf/jest-mongodb": "^1.2.3",
     "@types/aws-lambda": "^8.10.64",
     "@types/basic-auth": "^1.1.3",
     "@types/jest": "^26.0.15",
