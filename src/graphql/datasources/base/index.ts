@@ -65,7 +65,7 @@ abstract class MongooseDataSource<
     >;
   }
 
-  protected async update(props: TProps): Promise<Document> {
+  protected async update(props: RandomObject): Promise<Document> {
     const { id, createdAt, updatedAt, __v, ...other } = props;
     await this.connection();
     return this.model
@@ -92,7 +92,7 @@ abstract class MongooseDataSource<
     }
   }
 
-  async getOne(filter: TProps): Promise<TProps> {
+  async getOne(filter: RandomObject): Promise<TProps> {
     try {
       const result = await this.findOne({ $and: filter });
       if (!result) {
@@ -107,7 +107,7 @@ abstract class MongooseDataSource<
     }
   }
 
-  async getMany(filter: TProps): Promise<TProps[]> {
+  async getMany(filter: RandomObject): Promise<TProps[]> {
     try {
       const result = await this.find({ $or: filter });
       if (!result) {
@@ -157,7 +157,7 @@ abstract class MongooseDataSource<
     }
   }
 
-  async updateOne(props: TProps): Promise<TProps> {
+  async updateOne(props: RandomObject): Promise<TProps> {
     try {
       const result = await this.update(props);
       return result.toJSON();
