@@ -7,7 +7,7 @@ import { StationDataSource } from '../../datasources';
 export const StationMutation = {
   async createStation(
     _parent: unknown,
-    args: StationSchema,
+    { station }: { station: StationSchema },
     {
       dataSources: { stations },
       headers: { authorization },
@@ -18,7 +18,7 @@ export const StationMutation = {
       throw new AuthenticationError('Insufficient user privileges.');
     }
 
-    return stations.createOne(args);
+    return stations.createOne(station);
   },
 };
 

@@ -37,14 +37,14 @@ abstract class MongooseDataSource<
     return this.model
       .find(filter)
       .sort({ createdAt: 'desc' })
-      .then(this.populateModel) as Promise<Document[]>;
+      .then(this.populateModel.bind(this)) as Promise<Document[]>;
   }
 
   protected async findOne(filter: RandomObject): Promise<Document> {
     await this.connection();
-    return this.model.findOne(filter).then(this.populateModel) as Promise<
-      Document
-    >;
+    return this.model
+      .findOne(filter)
+      .then(this.populateModel.bind(this)) as Promise<Document>;
   }
 
   protected async findById(id: string): Promise<Document> {
@@ -53,16 +53,16 @@ abstract class MongooseDataSource<
 
   protected async create(props: TProps): Promise<Document> {
     await this.connection();
-    return this.model.create(props).then(this.populateModel) as Promise<
-      Document
-    >;
+    return this.model
+      .create(props)
+      .then(this.populateModel.bind(this)) as Promise<Document>;
   }
 
   protected async delete(id: string): Promise<Document> {
     await this.connection();
-    return this.model.findByIdAndDelete(id).then(this.populateModel) as Promise<
-      Document
-    >;
+    return this.model
+      .findByIdAndDelete(id)
+      .then(this.populateModel.bind(this)) as Promise<Document>;
   }
 
   protected async update(props: RandomObject): Promise<Document> {
@@ -74,7 +74,7 @@ abstract class MongooseDataSource<
         { $set: other, $inc: { __v: 1 } },
         { new: true, upsert: false }
       )
-      .then(this.populateModel) as Promise<Document>;
+      .then(this.populateModel.bind(this)) as Promise<Document>;
   }
 
   async getById(id: string): Promise<TProps> {

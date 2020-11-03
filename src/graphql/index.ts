@@ -1,16 +1,14 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { ApolloServer } from 'apollo-server-lambda';
+import { ApolloServer, Config } from 'apollo-server-lambda';
 import { DataSources } from 'apollo-server-core/src/graphqlOptions';
 
-import connect from '../db';
 import { EntryDataSource, StationDataSource } from './datasources';
 import resolvers from './resolvers';
 import typeDefs from './types';
 import { RandomObject } from '../utils/definitions';
 
-const server = new ApolloServer({
+export const config: Config = {
   context: async ({ event: { headers } }: { event: APIGatewayProxyEvent }) => ({
-    db: await connect(),
     headers,
   }),
   dataSources: (): DataSources<RandomObject> => ({
@@ -20,6 +18,8 @@ const server = new ApolloServer({
   playground: process.env.CONTEXT !== 'production',
   resolvers,
   typeDefs,
-});
+};
+
+const server = new ApolloServer(config);
 
 export default server.createHandler();
