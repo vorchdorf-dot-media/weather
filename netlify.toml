@@ -1,4 +1,13 @@
 [build]
-  command = "npm run build"
-  functions = "functions"
+  command = "#"
+  functions = "src/functions"
   publish = "build"
+
+[[plugins]]
+  package = 'netlify-plugin-contextual-env'
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
