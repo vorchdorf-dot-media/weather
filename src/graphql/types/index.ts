@@ -76,7 +76,7 @@ const types = gql`
 
   type Query {
     entry(station: ID!): Entry
-    entries(station: ID!, from: Int!, to: Int): [Entry]
+    entries(station: ID!, from: String!, to: String): [Entry]
     station(id: ID!): Station
     stations: [Station]
   }

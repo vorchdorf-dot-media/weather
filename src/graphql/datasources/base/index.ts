@@ -41,9 +41,11 @@ abstract class MongooseDataSource<
   }
 
   protected async findOne(filter: RandomObject): Promise<Document> {
+    const { id, ...other } = filter;
+    const sanitized = Object.assign({}, other, id && { _id: id });
     await this.connection();
     return this.model
-      .findOne(filter)
+      .findOne(sanitized)
       .then(this.populateModel.bind(this)) as Promise<Document>;
   }
 
@@ -94,7 +96,7 @@ abstract class MongooseDataSource<
 
   async getOne(filter: RandomObject): Promise<TProps> {
     try {
-      const result = await this.findOne({ $and: filter });
+      const result = await this.findOne(filter);
       if (!result) {
         throw new Error(
           `No ${this.name} entry found using filter: ${JSON.stringify(filter)}`
@@ -109,7 +111,7 @@ abstract class MongooseDataSource<
 
   async getMany(filter: RandomObject): Promise<TProps[]> {
     try {
-      const result = await this.find({ $or: filter });
+      const result = await this.find(filter);
       if (!result) {
         throw new Error(
           `No ${this.name} data found using filter: ${JSON.stringify(filter)}`

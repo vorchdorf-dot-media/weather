@@ -38,7 +38,6 @@ export const EntrySchema: Schema<EntrySchema> = new Schema(
     timestamp: {
       required: true,
       type: Date,
-      unique: true,
     },
     temperature: {
       required: true,

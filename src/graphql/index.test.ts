@@ -1,7 +1,15 @@
 import { ApolloServerTestClient } from 'apollo-server-testing';
+import day from 'dayjs';
 import { Document } from 'mongoose';
 
-import { CREATE_ENTRY, CREATE_STATION, GET_ENTRY } from './queries';
+import {
+  CREATE_ENTRY,
+  CREATE_STATION,
+  GET_ENTRIES,
+  GET_ENTRY,
+  GET_STATION,
+  GET_STATIONS,
+} from './queries';
 import connect from '../db';
 import { Station } from '../db/schemata';
 import { StationSchema } from '../db/schemata/station';
@@ -56,6 +64,19 @@ describe('Apollo GraphQL Server', () => {
       expect(errors).not.toBeDefined();
       expect(createStation).toHaveProperty('email', TEST_STATION.email);
       expect(createStation).toHaveProperty('name', TEST_STATION.name);
+    });
+
+    it('fetches a Station', async () => {
+      const {
+        data: { station },
+        errors,
+      } = await client.query({
+        query: GET_STATION,
+        variables: { id: createStation.id },
+      });
+
+      expect(errors).not.toBeDefined();
+      expect(station).toEqual(createStation);
     });
 
     it('fails to create entry without Station credentials', async () => {
@@ -135,6 +156,93 @@ describe('Apollo GraphQL Server', () => {
 
       expect(errors).not.toBeDefined();
       expect(entry.hash).toEqual(ENTRY_HASH);
+    });
+
+    it('fetches available Entries', async () => {
+      const from = day().subtract(1, 'day').format('YYYY-MM-DD');
+
+      const {
+        data: { entries },
+        errors,
+      } = await client.query({
+        query: GET_ENTRIES,
+        variables: { station: station.id, from },
+      });
+
+      expect(errors).not.toBeDefined();
+      expect(entries.length).toBeGreaterThan(0);
+    });
+
+    it('fetches available Entries too far in the past', async () => {
+      const from = day().subtract(1, 'month').format('YYYY-MM-DD');
+      const to = day().subtract(1, 'day').format('YYYY-MM-DD');
+
+      const {
+        data: { entries },
+        errors,
+      } = await client.query({
+        query: GET_ENTRIES,
+        variables: { station: station.id, from, to },
+      });
+
+      expect(errors).not.toBeDefined();
+      expect(entries).toHaveLength(0);
+    });
+
+    it('fails to create Entry with invalid hash', async () => {
+      const { data, errors } = await client.mutate({
+        mutation: CREATE_ENTRY,
+        variables: { ...ENTRY_DATA, hash: Buffer.from('asdf').toString('hex') },
+      });
+
+      expect(data).toBeNull();
+      expect(errors).toBeDefined();
+    });
+  });
+
+  describe('with unauthenticated user', () => {
+    let client: ApolloServerTestClient;
+
+    beforeAll(() => {
+      client = createTestServer({
+        context: {
+          headers: {},
+        },
+      });
+    });
+
+    it('fetches available Stations', async () => {
+      const {
+        data: { stations },
+        errors,
+      } = await client.query({
+        query: GET_STATIONS,
+      });
+
+      expect(errors).not.toBeDefined();
+      expect(stations.length).toBeGreaterThan(0);
+    });
+
+    it('fails to create a new Station', async () => {
+      const {
+        data,
+        errors: [
+          {
+            extensions: { code },
+          },
+        ],
+      } = await client.mutate({
+        mutation: CREATE_STATION,
+        variables: {
+          station: {
+            email: 'unauthenticatedStationCreate@mail.com',
+            name: 'unauthenticatedStationCreate',
+          },
+        },
+      });
+
+      expect(data).toBeNull();
+      expect(code).toEqual('UNAUTHENTICATED');
     });
   });
 });

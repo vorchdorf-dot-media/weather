@@ -80,9 +80,33 @@ export const GET_ENTRY = gql`
   }
 `;
 
+export const GET_ENTRIES = gql`
+  query entries($station: ID!, $from: String!, $to: String) {
+    entries(station: $station, from: $from, to: $to) {
+      ${entry}
+    }
+  }
+`;
+
 export const CREATE_STATION = gql`
   mutation createStation($station: StationInput!) {
     createStation(station: $station) {
+      ${station}
+    }
+  }
+`;
+
+export const GET_STATION = gql`
+  query station($id: ID!) {
+    station(id: $id) {
+      ${station}
+    }
+  }
+`;
+
+export const GET_STATIONS = gql`
+  query stations {
+    stations {
       ${station}
     }
   }

@@ -35,11 +35,11 @@ export const StationQuery = {
 
   async stations(
     _parent: unknown,
-    args = {},
+    _args: unknown,
     {
       dataSources: { stations },
     }: { dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema[]> {
-    return stations.getMany(args);
+    return stations.getMany({});
   },
 };

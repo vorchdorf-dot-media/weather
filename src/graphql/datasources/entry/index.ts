@@ -38,8 +38,8 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
         .find({
           $and: [
             { station },
-            { $gt: { timestamp: new Date(from) } },
-            { $lte: { timestamp: new Date(to) } },
+            { timestamp: { $gt: new Date(from) } },
+            { timestamp: { $lte: new Date(to) } },
           ],
         })
         .sort({ timestamp: 'desc' })
