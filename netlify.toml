@@ -1,6 +1,6 @@
 [build]
   command = "#"
-  functions = "src/functions"
+  functions = "functions"
   publish = "build"
 
 [[plugins]]

@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "start:functions": "NODE_ENV=development netlify-lambda serve --config ./webpack.functions.js src/functions",
-    "build:functions": "netlify-lambda build src/lambda",
+    "build:functions": "netlify-lambda build src/functions",
     "test:lint": "eslint . --ext .ts",
     "test:jest": "jest --coverage --maxWorkers 4",
     "test": "npm run test:lint && npm run test:jest"
