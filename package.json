@@ -9,8 +9,9 @@
   "private": false,
   "scripts": {
     "install": "lerna bootstrap",
-    "prestart": "yarn build",
-    "start": "netlify dev",
+    "dev": "netlify dev",
+    "prestart": "NODE_ENV=production yarn build",
+    "start": "yarn dev",
     "build": "lerna exec yarn build",
     "test:lint": "eslint . --ext .ts",
     "test:jest": "jest --coverage --maxWorkers 4",

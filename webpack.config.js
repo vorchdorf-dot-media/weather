@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-const { EnvironmentPlugin } = require('webpack');
+const { EnvironmentPlugin, HotModuleReplacementPlugin } = require('webpack');
 const ESlintPlugin = require('eslint-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
 
@@ -11,6 +11,7 @@ const devPlugins = [
   new DotenvPlugin({
     path: resolve(__dirname, './.env'),
   }),
+  new HotModuleReplacementPlugin(),
 ];
 
 module.exports = {
@@ -43,7 +44,7 @@ module.exports = {
   plugins: [
     new EnvironmentPlugin(Object.keys(process.env)),
     new ESlintPlugin({
-      extensions: ['js', 'ts'],
+      extensions: ['.js', '.ts'],
       files: ['!node_modules/'],
     }),
   ].concat(isLocal ? devPlugins : []),
@@ -52,4 +53,8 @@ module.exports = {
     mainFields: ['module', 'main'],
   },
   stats: true,
+  watch: isLocal && !isProd,
+  watchOptions: {
+    ignored: ['**/*.test.ts', 'node_modules/**'],
+  },
 };
