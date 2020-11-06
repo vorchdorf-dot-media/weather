@@ -1,12 +1,17 @@
 const { resolve } = require('path');
 const { EnvironmentPlugin } = require('webpack');
+const ESlintPlugin = require('eslint-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
 
 const isLocal = !process.env.CONTEXT;
 const isProd =
   process.env.CONTEXT === 'production' || process.env.NODE_ENV === 'production';
 
-const devPlugins = [new DotenvPlugin()];
+const devPlugins = [
+  new DotenvPlugin({
+    path: resolve(__dirname, './.env'),
+  }),
+];
 
 module.exports = {
   mode: isProd ? 'production' : 'development',
@@ -35,9 +40,13 @@ module.exports = {
       },
     ],
   },
-  plugins: [new EnvironmentPlugin(Object.keys(process.env))].concat(
-    isLocal ? devPlugins : []
-  ),
+  plugins: [
+    new EnvironmentPlugin(Object.keys(process.env)),
+    new ESlintPlugin({
+      extensions: ['js', 'ts'],
+      files: ['!node_modules/'],
+    }),
+  ].concat(isLocal ? devPlugins : []),
   resolve: {
     extensions: ['.wasm', '.mjs', '.js', '.json', '.ts'],
     mainFields: ['module', 'main'],
