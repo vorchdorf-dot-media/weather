@@ -5,7 +5,7 @@ import {
   createTestClient,
 } from 'apollo-server-testing';
 
-import { config } from '../graphql';
+import { config } from '../apollo';
 
 export const generateHash = ({
   station,

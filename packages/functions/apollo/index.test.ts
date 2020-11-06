@@ -1,5 +1,5 @@
 import { ApolloServerTestClient } from 'apollo-server-testing';
-import day from 'dayjs';
+import * as day from 'dayjs';
 import { Document } from 'mongoose';
 
 import {

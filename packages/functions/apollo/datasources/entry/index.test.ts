@@ -1,5 +1,5 @@
-import { StationSchema } from 'src/db/schemata/station';
-import { EntryDataSource, StationDataSource } from '../';
+import { StationSchema } from '../../../db/schemata/station';
+import { EntryDataSource, StationDataSource } from '..';
 
 describe('Entry DataSource', () => {
   let entry: EntryDataSource;

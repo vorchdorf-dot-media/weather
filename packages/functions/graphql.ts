@@ -6,7 +6,7 @@ import {
   Context,
 } from 'aws-lambda';
 
-import graphQlHandler from '../graphql';
+import graphQlHandler from './apollo';
 
 export const handler: APIGatewayProxyHandler = (
   event: APIGatewayEvent,

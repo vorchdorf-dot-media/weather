@@ -8,12 +8,11 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "outDir": "dist",
     "removeComments": true,
     "rootDir": "./",
     "sourceMap": false,
     "target": "ESNext"
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules/*", "dist/*"]
+  "exclude": ["node_modules"]
 }
