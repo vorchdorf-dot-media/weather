@@ -1,0 +1,14 @@
+{
+  "bundler": "webpack",
+  "shimport": null,
+  "assets": {
+    "about": "d68dbc77d2100ea6a452/about.about.js",
+    "blog": "d68dbc77d2100ea6a452/blog.blog.js",
+    "blog_$slug": "d68dbc77d2100ea6a452/blog_$slug.blog_$slug.js",
+    "index": "d68dbc77d2100ea6a452/index.index.js",
+    "main": "d68dbc77d2100ea6a452/main.js"
+  },
+  "css": {
+    "main": null
+  }
+}

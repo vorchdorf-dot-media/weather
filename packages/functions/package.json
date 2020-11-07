@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "dev": "webpack",
     "build": "webpack"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 [build]
   command = "npm run build"
   functions = "functions"
-  publish = "build"
+  publish = "dist"
 
 [[plugins]]
   package = 'netlify-plugin-contextual-env'

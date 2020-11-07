@@ -1,0 +1,32 @@
+{
+  "name": "website",
+  "description": "Svelte website for Arduino-powered weather logging service",
+  "version": "0.0.0",
+  "repository": "https://github.com/vorchdorf-dot-media/weather",
+  "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "sapper dev",
+    "build": "sapper export ../../dist",
+    "validate": "svelte-check --ignore src/node_modules/@sapper"
+  },
+  "dependencies": {
+    "compression": "^1.7.1",
+    "polka": "next",
+    "sirv": "^1.0.0"
+  },
+  "devDependencies": {
+    "sapper": "^0.28.0",
+    "svelte": "^3.17.3",
+    "file-loader": "^6.0.0",
+    "svelte-loader": "^2.9.0",
+    "webpack-modules": "^1.0.0",
+    "ts-loader": "^8.0.4",
+    "@tsconfig/svelte": "^1.0.10",
+    "@types/compression": "^1.7.0",
+    "@types/polka": "^0.5.1",
+    "svelte-check": "^1.0.46",
+    "svelte-preprocess": "^4.3.0"
+  }
+}
