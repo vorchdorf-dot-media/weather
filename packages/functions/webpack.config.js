@@ -33,7 +33,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(m?js|ts)$/i,
+        test: /\.(js|ts)$/i,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -58,12 +58,12 @@ module.exports = {
   plugins: [
     new EnvironmentPlugin(Object.keys(process.env)),
     new ESlintPlugin({
-      extensions: ['.js', '.ts'],
+      extensions: ['.mjs', '.js', '.ts'],
       files: ['!node_modules/'],
     }),
   ].concat(isLocal ? devPlugins : []),
   resolve: {
-    extensions: ['.wasm', '.mjs', '.js', '.json', '.ts'],
+    extensions: ['.wasm', '.js', '.json', '.ts'], // '.mjs removed because of webpack 5 Can't resolve error
     mainFields: ['module', 'main'],
   },
   stats: true,
@@ -73,7 +73,6 @@ module.exports = {
   context: path.resolve(__dirname),
   entry,
   output: {
-    filename: '[name].js',
     libraryTarget: 'commonjs',
     path: path.resolve(__dirname, '../../functions'),
   },
