@@ -17,14 +17,16 @@
     "apollo-server-testing": "^2.19.0",
     "babel-loader": "^8.1.0",
     "dayjs": "^1.9.4",
-    "dotenv-webpack": "^5.0.1",
-    "encoding": "^0.1.13"
+    "dotenv-webpack": "^4.0.0",
+    "encoding": "^0.1.13",
+    "eslint-webpack-plugin": "^2.2.1",
+    "globby": "^11.0.1"
   },
   "dependencies": {
     "apollo-datasource": "^0.7.2",
     "apollo-server-lambda": "^2.18.2",
     "basic-auth": "^2.0.1",
-    "graphql": "^15.4.0",
+    "graphql": "^15.3.0",
     "mongoose": "^5.10.10",
     "nanoid": "^3.1.15"
   }

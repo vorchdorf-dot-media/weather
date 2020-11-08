@@ -1,6 +1,6 @@
 # Custom entries
 __sapper__
-functions/*
+/functions
 globalConfig.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/vscode,node,c++,react

@@ -14,7 +14,7 @@ const node = process.env.AWS_LAMBDA_JS_RUNTIME
 
 const devPlugins = [
   new DotenvPlugin({
-    path: path.resolve(__dirname, './.env'),
+    path: path.resolve(__dirname, '../../', './.env'),
   }),
   new HotModuleReplacementPlugin(),
 ];
@@ -33,7 +33,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|ts)$/i,
+        test: /\.(m?js|ts)$/i,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -63,7 +63,7 @@ module.exports = {
     }),
   ].concat(isLocal ? devPlugins : []),
   resolve: {
-    extensions: ['.wasm', '.js', '.json', '.ts'], // '.mjs removed because of webpack 5 Can't resolve error
+    extensions: ['.wasm', '.mjs', '.js', '.json', '.ts'],
     mainFields: ['module', 'main'],
   },
   stats: true,
@@ -73,6 +73,7 @@ module.exports = {
   context: path.resolve(__dirname),
   entry,
   output: {
+    filename: '[name].js',
     libraryTarget: 'commonjs',
     path: path.resolve(__dirname, '../../functions'),
   },
