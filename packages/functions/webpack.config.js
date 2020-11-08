@@ -9,11 +9,8 @@ const isProd =
   process.env.CONTEXT === 'production' || process.env.NODE_ENV === 'production';
 
 const node = process.env.AWS_LAMBDA_JS_RUNTIME
-  ? process.env.AWS_LAMBDA_JS_RUNTIME.replace(/^nodejs/, '').replace(
-      /\.x/,
-      '.0.0'
-    )
-  : '12.0.0';
+  ? process.env.AWS_LAMBDA_JS_RUNTIME.replace(/^nodejs/, '').replace(/\.x/, '')
+  : '12';
 
 const devPlugins = [
   new DotenvPlugin({
