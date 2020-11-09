@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "compression": "^1.7.1",
+    "http-proxy-middleware": "^1.0.6",
     "polka": "next",
     "sirv": "^1.0.0"
   },
