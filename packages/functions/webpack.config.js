@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const globby = require('globby');
 const { EnvironmentPlugin, HotModuleReplacementPlugin } = require('webpack');
@@ -7,10 +8,6 @@ const DotenvPlugin = require('dotenv-webpack');
 const isLocal = !process.env.CONTEXT;
 const isProd =
   process.env.CONTEXT === 'production' || process.env.NODE_ENV === 'production';
-
-const node = process.env.AWS_LAMBDA_JS_RUNTIME
-  ? process.env.AWS_LAMBDA_JS_RUNTIME.replace(/^nodejs/, '').replace(/\.x/, '')
-  : '12';
 
 const devPlugins = [
   new DotenvPlugin({
@@ -39,17 +36,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             cacheDirectory: true,
-            presets: [
-              '@babel/preset-typescript',
-              [
-                '@babel/preset-env',
-                {
-                  targets: {
-                    node,
-                  },
-                },
-              ],
-            ],
+            babelrc: true,
           },
         },
       },

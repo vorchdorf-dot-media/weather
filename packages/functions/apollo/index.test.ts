@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApolloServerTestClient } from 'apollo-server-testing';
 import * as day from 'dayjs';
 import { Document } from 'mongoose';
