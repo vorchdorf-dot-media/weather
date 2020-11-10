@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "install": "lerna bootstrap",
-    "prestart": "netlify build --context staging --debug",
+    "prestart": "netlify build --context branch-deploy --debug",
     "start": "netlify dev",
     "dev:build": "lerna exec yarn dev",
     "dev:serve": "netlify dev",

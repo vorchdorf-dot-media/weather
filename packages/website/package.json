@@ -25,6 +25,7 @@
     "sapper": "^0.28.0",
     "svelte": "^3.17.3",
     "svelte-check": "^1.0.46",
+    "svelte-i18n": "^3.2.5",
     "svelte-loader": "^2.9.0",
     "svelte-preprocess": "^4.3.0",
     "ts-loader": "^8.0.4",

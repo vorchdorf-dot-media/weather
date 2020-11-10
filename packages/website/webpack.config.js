@@ -12,6 +12,8 @@ const dev = mode === 'development';
 const alias = {
   svelte: path.resolve('node_modules', 'svelte'),
   assets: path.resolve('src', 'assets'),
+  components: path.resolve('src', 'components'),
+  routes: path.resolve('src', 'routes'),
 };
 const extensions = ['.mjs', '.js', '.ts', '.json', '.svelte', '.html'];
 const mainFields = ['svelte', 'module', 'browser', 'main'];

@@ -4,6 +4,8 @@ import compression from 'compression';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import * as sapper from '@sapper/server';
 
+import { middleware as i18nMiddleware } from './i18n';
+
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 
@@ -16,6 +18,7 @@ polka() // You can also use Express
   )
   .use(
     compression({ threshold: 0 }),
+    i18nMiddleware(),
     sirv('static', { dev }),
     sapper.middleware()
   )
