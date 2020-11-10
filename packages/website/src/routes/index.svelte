@@ -1,9 +1,10 @@
 <script>
+	import { _ } from 'svelte-i18n';
 	import successkid from 'assets/successkid.jpg';
 </script>
 
 <style>
-	h1, figure, p {
+	figure, p {
 		text-align: center;
 		margin: 0 auto;
 	}
@@ -23,7 +24,7 @@
 	<title>Sapper project template</title>
 </svelte:head>
 
-<h1>Great success!</h1>
+<h1>{$_('index.title')}</h1>
 
 <figure>
 	<img alt="Success Kid" src="{successkid}">
