@@ -6,8 +6,10 @@
     "module": "ESNext",
     "paths": {
       "assets/*": ["src/assets/*"],
-      "components/*": ["src/components/*"]
-    }
+      "components/*": ["src/components/*"],
+      "routes/*": ["src/routes/*"]
+    },
+    "resolveJsonModule": true
   },
   "include": ["src/**/*", "src/node_modules/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "static/*"]

@@ -1,13 +1,21 @@
 {
   "name": "website",
-  "description": "Svelte website for Arduino-powered weather logging service",
+  "description": "This website contains temperature & humidity data collected from Arduino-compatible micro controllers.",
   "version": "0.0.0",
   "repository": "https://github.com/vorchdorf-dot-media/weather",
-  "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
+  "author": {
+    "name": "Sascha Zarhuber",
+    "email": "sascha.zarhuber@gmail.com",
+    "url": "https://weather.sascha.app"
+  },
+  "manifest": {
+    "name": "Arduino Temperature Tracker",
+    "short_name": "Temperature"
+  },
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "sapper dev",
+    "dev": "URL=\"http://localhost:3000\" sapper dev",
     "build": "sapper export ../../dist",
     "test": "svelte-check --ignore src/node_modules/@sapper"
   },
