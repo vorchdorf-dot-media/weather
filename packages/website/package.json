@@ -1,5 +1,5 @@
 {
-  "name": "website",
+  "name": "@saschazar/weather-app-website",
   "description": "This website contains temperature & humidity data collected from Arduino-compatible micro controllers.",
   "version": "0.0.0",
   "repository": "https://github.com/vorchdorf-dot-media/weather",
@@ -26,6 +26,7 @@
     "sirv": "^1.0.0"
   },
   "devDependencies": {
+    "@saschazar/weather-app-functions": "*",
     "@tsconfig/svelte": "^1.0.10",
     "@types/compression": "^1.7.0",
     "@types/polka": "^0.5.1",

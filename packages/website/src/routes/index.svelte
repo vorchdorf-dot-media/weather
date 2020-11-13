@@ -1,16 +1,30 @@
-<script>
+<script lang="ts">
 	import { _ } from 'svelte-i18n';
+	import type { EntrySchema } from '@saschazar/weather-app-functions/db/schemata/entry';
 	
 	import SEO from 'components/SEO/SEO.svelte';
-	import pkg from '../../package.json';
+	import TemperatureCard from 'components/Card/TemperatureCard.svelte';
+
+	const entry: EntrySchema = {
+		temperature: 22.6,
+		temperature2: 22.73,
+		humidity: 60,
+		feels: 22.8,
+		timestamp: new Date(),
+		hash: 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3',
+		station: {
+			name: 'Einsiedling 1',
+			email: 'test@mail.com',
+			config: {
+				temperature: 'OUT',
+				temperature2: 'OUT',
+			}
+		}
+	};
 </script>
 
-<style>
-</style>
-
 <svelte:head>
-	<SEO title={$_('index.title')} description={$_('index.description')} />
+	<SEO title={String($_('index.title'))} description={String($_('index.description'))} />
 </svelte:head>
 
-<h1>{$_('index.headline')}</h1>
-
+<TemperatureCard variant="primary" data={entry} />

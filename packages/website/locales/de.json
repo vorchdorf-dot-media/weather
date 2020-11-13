@@ -1,7 +1,13 @@
 {
+  "config": {
+    "IN": "Innen",
+    "OUT": "Außen"
+  },
+  "feels": "Gefühlt",
+  "humidity": "Luftfeuchtigkeit",
   "index": {
-    "title": "Großer Erfolg!",
-    "headline": "Großer Erfolg!",
+    "title": "Temperature Tracker",
     "description": "Diese Website enthält gesammelte Temperatur- und Feuchtigkeitsdaten von unterschiedlichen Arduino-kompatiblen Microcontrollern."
-  }
+  },
+  "temperature": "Temperatur"
 }

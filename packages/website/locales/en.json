@@ -1,7 +1,13 @@
 {
+  "config": {
+    "IN": "Inside",
+    "OUT": "Outside"
+  },
+  "feels": "Feels like",
+  "humidity": "Humidity",
   "index": {
-    "title": "Great Success!",
-    "headline": "Great Success!",
+    "title": "Temperature Tracker",
     "description": "This website contains temperature & humidity data collected from Arduino-compatible micro controllers."
-  }
+  },
+  "temperature": "Temperature"
 }

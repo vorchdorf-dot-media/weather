@@ -6,7 +6,7 @@
   "repository": "https://github.com/vorchdorf-dot-media/weather",
   "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "install": "lerna bootstrap",
     "prestart": "netlify build --context branch-deploy --debug",

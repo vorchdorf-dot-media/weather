@@ -93,6 +93,13 @@ small,
   font-size: 0.833rem;
 }
 
+sub,
+sup {
+  font-size: 0.5em;
+  font-weight: var(--font-weight);
+  opacity: 0.667;
+}
+
 p {
   font-size: 22.8571px;
   line-height: 40px;

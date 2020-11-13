@@ -1,11 +1,14 @@
 {
-  "name": "functions",
+  "name": "@saschazar/weather-app-functions",
   "version": "0.0.0",
   "description": "Lambda functions for Arduino-powered weather logging service",
   "repository": "https://github.com/vorchdorf-dot-media/weather",
   "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
   "license": "MIT",
   "private": false,
+  "files": [
+    "src/**"
+  ],
   "scripts": {
     "dev": "webpack --progress --watch",
     "build": "webpack --progress",

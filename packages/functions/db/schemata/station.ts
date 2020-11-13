@@ -14,7 +14,7 @@ export interface AddressSchema {
 
 export interface ConfigSchema {
   temperature?: 'IN' | 'OUT';
-  temperatur2?: 'IN' | 'OUT';
+  temperature2?: 'IN' | 'OUT';
 }
 
 export interface CoordinatesSchema {

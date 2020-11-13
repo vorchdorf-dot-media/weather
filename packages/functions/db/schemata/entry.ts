@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose';
 import { customAlphabet } from 'nanoid';
 
 import { BASE_58, ID_LONG } from '../../utils/definitions';
+import { StationSchema } from './station';
 
 const nanoid = customAlphabet(BASE_58, ID_LONG);
 
@@ -10,7 +11,7 @@ export interface EntrySchema {
   id?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  station: string;
+  station: string | StationSchema;
   hash: string;
   timestamp: Date;
   temperature: number;

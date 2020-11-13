@@ -14,6 +14,7 @@ const alias = {
   assets: path.resolve('src', 'assets'),
   components: path.resolve('src', 'components'),
   routes: path.resolve('src', 'routes'),
+  utils: path.resolve('src', 'utils'),
 };
 const extensions = ['.mjs', '.js', '.ts', '.json', '.svelte', '.html'];
 const mainFields = ['svelte', 'module', 'browser', 'main'];
