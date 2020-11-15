@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { _ } from 'svelte-i18n';
+  import { _, locale } from 'svelte-i18n';
   import type { EntrySchema } from '@saschazar/weather-app-functions/db/schemata/entry';
   import type { StationSchema } from '@saschazar/weather-app-functions/db/schemata/station';
 
@@ -10,6 +10,7 @@
   export let data: EntrySchema;
 
   const {
+    timestamp,
     temperature,
     temperature2,
     humidity,
@@ -18,11 +19,21 @@
   } = data;
 
   const {
+      name,
+      id,
       config: {
         temperature: temperatureConfig,
         temperature2: temperature2Config
       }
     } = station as StationSchema;
+
+  const updated = timestamp && 
+    new Intl.DateTimeFormat($locale, {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false
+    })
+    .format(new Date((timestamp as unknown) as string));
 </script>
 
 <style lang="scss">
@@ -35,23 +46,54 @@
     }
   }
 
+  .header,
+  .footer {
+    flex: 1 0 auto;
+    width: 100%;
+  }
+
+  .header {
+    border-bottom: 1px solid HSL(var(--color-main), 0.25);
+    margin-bottom: var(--space-m);
+    text-transform: uppercase;
+  }
+
+  .header,
+  .footer,
+  .label {
+    letter-spacing: var(--letter-spacing);
+  }
+
+  .footer,
+  .data,
+  .label {
+    text-align: right;
+  }
+
   .data,
   .label {
     display: block;
     width: 100%;
-    text-align: right;
   }
 
 	.data {
     font-size: 2.5rem;
   }
 
+  .footer,
   .label {
-    opacity: 0.667;
+    opacity: 0.875;
   }
 </style>
 
 <Card {variant}>
+    {#if name}
+    <div class="container header">
+      <span role="heading" aria-level="2" aria-label="{$_('station.latestEntry')}: {name}">
+        <strong>{name}</strong>
+      </span>
+    </div>
+    {/if}
     {#if temperature}
       <div class="container">
         <small class="label">{$_(`config.${temperatureConfig}`)}:</small><span class="data">{temperature}<sup>°C</sup></span>
@@ -68,4 +110,10 @@
         <small class="label">{$_('humidity')}:</small><span class="data">{humidity}<sup>%</sup></span>
       </div>
     {/if}
+    {#if updated}
+    <small class="container footer">
+      {$_('station.lastUpdated')}: {updated}
+    </small>
+    {/if}
 </Card>
+

@@ -10,7 +10,7 @@
 		temperature2: 22.73,
 		humidity: 60,
 		feels: 22.8,
-		timestamp: new Date(),
+		timestamp: new Date('2020-11-15T18:36:27.764Z'),
 		hash: 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3',
 		station: {
 			name: 'Einsiedling 1',

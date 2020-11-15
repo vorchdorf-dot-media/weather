@@ -9,5 +9,9 @@
     "title": "Temperature Tracker",
     "description": "Diese Website enthält gesammelte Temperatur- und Feuchtigkeitsdaten von unterschiedlichen Arduino-kompatiblen Microcontrollern."
   },
-  "temperature": "Temperatur"
+  "temperature": "Temperatur",
+  "station": {
+    "latestEntry": "Aktuellster Eintrag von:",
+    "lastUpdated": "Letztes Update"
+  }
 }

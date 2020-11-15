@@ -1,3 +1,11 @@
+<script context="module">
+	import { isLoading, waitLocale } from 'svelte-i18n';
+
+	export async function preload() {
+		return waitLocale();
+	}
+</script>
+
 <script lang="ts">
 	import Header from 'components/Header/Header.svelte';
 
@@ -15,8 +23,12 @@
 	{/if}
 </svelte:head>
 
+{#if $isLoading}
+<span>Loading...</span>
+{:else}
 <Header {segment}/>
 
 <main>
 	<slot></slot>
 </main>
+{/if}

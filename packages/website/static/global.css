@@ -46,6 +46,8 @@
   --breakpoint-m: 1200px;
   --breakpoint-l: 1600px;
 
+  --letter-spacing: 2px;
+
   --space-s: 0.5rem;
   --space-m: 1rem;
   --space-l: 2rem;
@@ -108,7 +110,7 @@ sub,
 sup {
   font-size: 0.5em;
   font-weight: var(--font-weight);
-  opacity: 0.667;
+  opacity: 0.875;
 }
 
 p {
