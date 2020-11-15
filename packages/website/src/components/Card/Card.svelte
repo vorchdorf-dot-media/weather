@@ -4,15 +4,14 @@
 
 <style>
   section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 1.5rem;
-    row-gap: 1rem;
-    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
     border-radius: 8px;
     box-shadow: 0 5px 10px 0px HSL(var(--bg), 0.666);
-    padding: 1rem;
-    margin: 0.5rem;
+    padding: var(--space-m);
+    margin: var(--space-s);
     background-color: HSL(var(--bg, var(--color-primary-offset)));
     color: HSL(var(--fg, var(--color-main)));
   }

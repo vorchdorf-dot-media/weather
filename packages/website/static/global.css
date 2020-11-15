@@ -11,14 +11,16 @@
   --color-secondary-offset: 47, 73%, 72%;
 }
 
-.theme-dark {
-  --color-main: 30, 10%, 96%;
-  --color-bg: 77, 12%, 11%;
-  --color-grey: 203, 7%, 64%;
-  --color-primary: 186, 73%, 72%;
-  --color-primary-offset: 187, 73%, 28%;
-  --color-secondary: 18, 84%, 56%;
-  --color-secondary-offset: 18, 85%, 28%;
+@media screen {
+  .theme-dark {
+    --color-main: 30, 10%, 96%;
+    --color-bg: 77, 12%, 11%;
+    --color-grey: 203, 7%, 64%;
+    --color-primary: 186, 73%, 72%;
+    --color-primary-offset: 187, 73%, 28%;
+    --color-secondary: 18, 84%, 56%;
+    --color-secondary-offset: 18, 85%, 28%;
+  }
 }
 
 @media screen and (prefers-color-scheme: dark) {
@@ -38,6 +40,15 @@
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --font-weight: 400;
   --font-weight-max: 700;
+
+  --breakpoint-xs: 375px;
+  --breakpoint-s: 768px;
+  --breakpoint-m: 1200px;
+  --breakpoint-l: 1600px;
+
+  --space-s: 0.5rem;
+  --space-m: 1rem;
+  --space-l: 2rem;
 }
 
 body {
@@ -51,7 +62,7 @@ body {
   box-sizing: border-box;
 }
 
-body {
+body * {
   box-sizing: inherit;
 }
 

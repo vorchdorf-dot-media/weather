@@ -25,23 +25,47 @@
     } = station as StationSchema;
 </script>
 
-<style>
+<style lang="scss">
+  .container {
+    flex: 1;
+    padding: var(--space-s);
+
+    @media screen and (min-width: 768px) {
+      padding: var(--space-m);
+    }
+  }
+
+  .data,
+  .label {
+    display: block;
+    width: 100%;
+    text-align: right;
+  }
+
 	.data {
-		font-size: 2.5rem;
-		justify-self: right;
-	}
+    font-size: 2.5rem;
+  }
+
+  .label {
+    opacity: 0.667;
+  }
 </style>
 
 <Card {variant}>
-	<div>
-    {$_(`config.${temperatureConfig}`)} <span class="data">{temperature}<sup>°C</sup></span>
-    <br />
-    {$_(`config.${temperature2Config}`)} <span class="data">{temperature2}<sup>°C</sup></span>
-    </div>
-    <div>
-      {$_('feels')} <span class="data">{feels}<sup>°C</sup></span>
-    </div>
-    <div>
-      {$_('humidity')} <span class="data">{humidity}<sup>%</sup></span>
-    </div>
+    {#if temperature}
+      <div class="container">
+        <small class="label">{$_(`config.${temperatureConfig}`)}:</small><span class="data">{temperature}<sup>°C</sup></span>
+      </div>
+    {/if}
+    {#if temperature2}
+      <div class="container">
+        <small class="label">{$_(`config.${temperature2Config}`)}:</small><span class="data">{temperature2}<sup>°C</sup></span>
+      </div>
+      <div class="container">
+        <small class="label">{$_('feels')}:</small><span class="data">{feels}<sup>°C</sup></span>
+      </div>
+      <div class="container">
+        <small class="label">{$_('humidity')}:</small><span class="data">{humidity}<sup>%</sup></span>
+      </div>
+    {/if}
 </Card>
