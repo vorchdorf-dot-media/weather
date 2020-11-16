@@ -2,6 +2,4 @@
   export let segment: string;
 </script>
 
-<nav>
-<span>{segment}</span>
-</nav>
+<nav><span>{segment}</span></nav>

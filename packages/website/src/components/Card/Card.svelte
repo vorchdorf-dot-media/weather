@@ -1,7 +1,3 @@
-<script lang="ts">
-  export let variant: 'grey' | 'primary' | 'secondary';
-</script>
-
 <style>
   section {
     display: flex;
@@ -30,6 +26,10 @@
   }
 </style>
 
-<section class={variant}>
-  <slot></slot>
+<script lang="ts">
+  export let variant: 'grey' | 'primary' | 'secondary';
+</script>
+
+<section class="{variant}">
+  <slot />
 </section>
