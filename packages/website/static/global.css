@@ -48,6 +48,8 @@
 
   --letter-spacing: 2px;
 
+  --size-touch: 44px;
+
   --space-s: 0.5rem;
   --space-m: 1rem;
   --space-l: 2rem;
@@ -135,6 +137,7 @@ p::after {
 
 a {
   color: inherit;
+  fill: currentColor;
 }
 
 code {
@@ -144,6 +147,13 @@ code {
   background-color: #f0f0f0;
   padding: 0.2em 0.4em;
   border-radius: 2px;
+}
+
+svg {
+  min-width: 1em;
+  min-height: 1em;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 @media (min-width: 400px) {

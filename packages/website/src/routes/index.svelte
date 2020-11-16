@@ -13,6 +13,7 @@
     timestamp: new Date('2020-11-15T18:36:27.764Z'),
     hash: 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3',
     station: {
+      id: 'qFE2124',
       name: 'Einsiedling 1',
       email: 'test@mail.com',
       config: {
@@ -31,3 +32,7 @@
 </svelte:head>
 
 <TemperatureCard variant="primary" data="{entry}" />
+<TemperatureCard
+  variant="secondary"
+  data="{{ temperature: entry.temperature, timestamp: entry.timestamp, station: entry.station }}"
+/>

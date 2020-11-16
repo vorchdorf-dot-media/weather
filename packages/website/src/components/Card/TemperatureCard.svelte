@@ -1,4 +1,29 @@
 <style lang="scss">
+  a {
+    transition: opacity 200ms ease-in;
+    flex: 0 0 auto;
+    display: block;
+    border-radius: 9999px;
+    padding: var(--space-s);
+    color: HSL(var(--bg));
+    background-color: HSL(var(--fg));
+    height: var(--size-touch);
+    width: var(--size-touch);
+    opacity: 0.667;
+
+    @media (hover: none) {
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus,
+    &:hover {
+      opacity: 1;
+    }
+  }
   .container {
     flex: 1;
     padding: var(--space-m);
@@ -11,6 +36,10 @@
   }
 
   .header {
+    display: flex;
+    align-items: flex-end;
+    align-self: start;
+    justify-content: space-between;
     border-bottom: 1px solid HSL(var(--color-main), 0.25);
     margin-bottom: var(--space-m);
     text-transform: uppercase;
@@ -42,6 +71,10 @@
   .label {
     opacity: 0.875;
   }
+
+  .footer {
+    align-self: end;
+  }
 </style>
 
 <script lang="ts">
@@ -49,7 +82,10 @@
   import type { EntrySchema } from '@saschazar/weather-app-functions/db/schemata/entry';
   import type { StationSchema } from '@saschazar/weather-app-functions/db/schemata/station';
 
+  import ArrowUpRighticon from 'assets/icons/arrow-up-right.svg';
   import Card from 'components/Card/Card.svelte';
+
+  export let segment: string;
 
   export let variant: 'grey' | 'primary' | 'secondary';
 
@@ -92,6 +128,9 @@
       >
         <strong>{name}</strong>
       </span>
+      {#if id && segment !== id}
+        <a rel="prefetch" href="/stations/{id}">{@html ArrowUpRighticon}</a>
+      {/if}
     </div>
   {/if}
   {#if temperature}

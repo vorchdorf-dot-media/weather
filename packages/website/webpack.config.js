@@ -22,6 +22,20 @@ const fileLoaderRule = {
   test: /\.(png|jpe?g|gif)$/i,
   use: ['file-loader'],
 };
+const svgLoaderRule = {
+  test: /\.svg$/i,
+  use: [
+    {
+      loader: 'svg-inline-loader',
+    },
+    {
+      loader: 'svgo-loader',
+      options: {
+        externalConfig: 'svgo.config.json',
+      },
+    },
+  ],
+};
 
 module.exports = {
   client: {
@@ -47,6 +61,7 @@ module.exports = {
           },
         },
         fileLoaderRule,
+        svgLoaderRule,
       ],
     },
     mode,
@@ -87,6 +102,7 @@ module.exports = {
           },
         },
         fileLoaderRule,
+        svgLoaderRule,
       ],
     },
     mode,

@@ -1,5 +1,7 @@
 <style>
   section {
+    --fg: var(--color-main);
+
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
