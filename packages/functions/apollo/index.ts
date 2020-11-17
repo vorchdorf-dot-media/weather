@@ -6,11 +6,15 @@ import { EntryDataSource, StationDataSource } from './datasources';
 import resolvers from './resolvers';
 import typeDefs from './types';
 import { RandomObject } from '../utils/definitions';
+import connect from '../db';
 
 export const config: Config = {
-  context: async ({ event: { headers } }: { event: APIGatewayProxyEvent }) => ({
-    headers,
-  }),
+  context: async ({ event: { headers } }: { event: APIGatewayProxyEvent }) => {
+    await connect();
+    return {
+      headers,
+    };
+  },
   dataSources: (): DataSources<RandomObject> => ({
     entries: new EntryDataSource(),
     stations: new StationDataSource(),

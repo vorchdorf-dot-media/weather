@@ -10,6 +10,7 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
   }
 
   async getLatest(station: string): Promise<EntrySchema> {
+    await this.connection();
     try {
       const [entry] = (await this.model
         .find({ station })
@@ -18,13 +19,13 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
         .then(this.populateModel.bind(this))) as Document[];
       if (!entry) {
         throw new Error(
-          `Failed to fetch latest ${this.model} entry from station ID: ${station}.`
+          `Failed to fetch latest ${this.name} entry from station ID: ${station}.`
         );
       }
       return entry.toJSON();
     } catch (e) {
       console.error(e);
-      throw new Error(`Failed to fetch latest ${this.model} data entry.`);
+      throw new Error(`Failed to fetch latest ${this.name} data entry.`);
     }
   }
 
@@ -33,6 +34,7 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
     from: string,
     to: string | number = Date.now()
   ): Promise<EntrySchema[]> {
+    await this.connection();
     try {
       const results = (await this.model
         .find({
