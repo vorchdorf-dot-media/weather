@@ -10,9 +10,13 @@
 </script>
 
 <script lang="ts">
+  import { setClient } from '@urql/svelte';
   import Header from 'components/Header/Header.svelte';
+  import client from 'utils/graphql';
 
-  export let segment: string;
+  export let segment;
+
+  setClient(client);
 
   const production = process.env.CONTEXT === 'production';
 </script>

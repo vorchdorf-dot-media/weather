@@ -1,27 +1,28 @@
 <script lang="ts">
+  import { operationStore, query } from '@urql/svelte';
   import { _ } from 'svelte-i18n';
-  import type { EntrySchema } from '@saschazar/weather-app-functions/db/schemata/entry';
 
   import SEO from 'components/SEO/SEO.svelte';
   import TemperatureCard from 'components/Card/TemperatureCard.svelte';
+  import { GET_LATEST_ENTRY, GET_STATIONS } from 'utils/queries';
 
-  const entry: EntrySchema = {
-    temperature: 22.6,
-    temperature2: 22.73,
-    humidity: 60,
-    feels: 22.8,
-    timestamp: new Date('2020-11-15T18:36:27.764Z'),
-    hash: 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3',
-    station: {
-      id: 'qFE2124',
-      name: 'Einsiedling 1',
-      email: 'test@mail.com',
-      config: {
-        temperature: 'OUT',
-        temperature2: 'OUT',
-      },
-    },
-  };
+  const stations = operationStore(GET_STATIONS);
+  query(stations);
+
+  const entry = operationStore(
+    GET_LATEST_ENTRY,
+    { station: undefined },
+    { pause: true }
+  );
+  query(entry);
+
+  stations.subscribe(({ data = {} }) => {
+    const { stations: [{ id = null } = {}] = [] } = data;
+    if (id) {
+      $entry.variables.station = id;
+      $entry.context.pause = false;
+    }
+  });
 </script>
 
 <svelte:head>
@@ -31,8 +32,10 @@
   />
 </svelte:head>
 
-<TemperatureCard variant="primary" data="{entry}" />
-<TemperatureCard
-  variant="secondary"
-  data="{{ temperature: entry.temperature, timestamp: entry.timestamp, station: entry.station }}"
-/>
+{#if $entry.fetching || !$entry.data}
+  <div>Loading...</div>
+{:else if $entry.error}
+  <div>{$entry.error.message}</div>
+{:else}
+  <TemperatureCard variant="primary" data="{$entry.data.entry}" />
+{/if}
