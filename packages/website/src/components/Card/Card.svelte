@@ -2,6 +2,7 @@
   section {
     --fg: var(--color-main);
 
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
@@ -12,6 +13,7 @@
     margin: var(--space-s);
     background-color: HSL(var(--bg, var(--color-primary-offset)));
     color: HSL(var(--fg, var(--color-main)));
+    overflow: hidden;
   }
 
   .grey {

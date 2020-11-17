@@ -2,6 +2,7 @@
   import { operationStore, query } from '@urql/svelte';
   import { _ } from 'svelte-i18n';
 
+  import LoadingCard from 'components/Card/LoadingCard.svelte';
   import SEO from 'components/SEO/SEO.svelte';
   import TemperatureCard from 'components/Card/TemperatureCard.svelte';
   import { GET_LATEST_ENTRY, GET_STATIONS } from 'utils/queries';
@@ -33,7 +34,7 @@
 </svelte:head>
 
 {#if $entry.fetching || !$entry.data}
-  <div>Loading...</div>
+  <LoadingCard variant="primary" />
 {:else if $entry.error}
   <div>{$entry.error.message}</div>
 {:else}

@@ -13,5 +13,6 @@
   "station": {
     "latestEntry": "Aktuellster Eintrag von:",
     "lastUpdated": "Letztes Update"
-  }
+  },
+  "loading": "Lädt..."
 }
