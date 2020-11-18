@@ -14,5 +14,14 @@
     "latestEntry": "Latest entry of",
     "lastUpdated": "Last update"
   },
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "actions": {
+    "showMore": "Show more"
+  },
+  "stations": {
+    "entry": {
+      "error": "Failed to fetch latest temperature entry."
+    },
+    "statistics": "Statistics"
+  }
 }

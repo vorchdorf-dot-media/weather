@@ -14,5 +14,14 @@
     "latestEntry": "Aktuellster Eintrag von:",
     "lastUpdated": "Letztes Update"
   },
-  "loading": "Lädt..."
+  "loading": "Lädt...",
+  "actions": {
+    "showMore": "Mehr anzeigen"
+  },
+  "stations": {
+    "entry": {
+      "error": "Fehler bei Abruf der aktuellsten Temperaturdaten."
+    },
+    "statistics": "Statistiken"
+  }
 }

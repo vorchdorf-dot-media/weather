@@ -35,11 +35,19 @@
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
   }
+
+  .svg-container {
+    display: inline-block;
+    margin-bottom: var(--space-m);
+    height: var(--space-l);
+    width: 100%;
+  }
 </style>
 
 <script lang="ts">
   import { _ } from 'svelte-i18n';
 
+  import ActivityIcon from 'assets/icons/activity.svg';
   import Card from 'components/Card/Card.svelte';
 
   export let height = '200px';
@@ -72,6 +80,10 @@
       </defs>
       <rect fill="url(#grad-2)"></rect>
     </svg>
-    <span role="heading" aria-level="2">{$_('loading')}</span>
+    <span role="heading" aria-level="2">
+      <div class="svg-container" aria-hidden>
+        {@html ActivityIcon}
+      </div>
+      {$_('loading')}</span>
   </div>
 </Card>

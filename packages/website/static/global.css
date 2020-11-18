@@ -156,6 +156,30 @@ svg {
   max-width: 100%;
 }
 
+button {
+  transition: border-color 200ms ease-in, background-color 200ms ease-in,
+    color 200ms ease-in;
+  display: inline-flex;
+  align-items: center;
+  border: 3px solid HSL(var(--color-bg));
+  border-radius: 9999px;
+  box-shadow: 0 5px 10px -2px HSL(var(--color-bg), 0.333);
+  padding: var(--space-s) var(--space-m);
+  font-size: 1em;
+  color: HSL(var(--color-bg));
+  background-color: HSL(var(--color-main), 0.667);
+  letter-spacing: var(--letter-spacing);
+  text-transform: uppercase;
+}
+
+button:focus,
+button:hover {
+  border-color: HSL(var(--color-bg));
+  background-color: HSL(var(--color-main));
+  color: inherit;
+  outline: none;
+}
+
 @media (min-width: 400px) {
   body {
     font-size: 16px;

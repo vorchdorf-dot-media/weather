@@ -11,6 +11,8 @@
 
 <script lang="ts">
   import { setClient } from '@urql/svelte';
+
+  import LoadingCard from 'components/Card/LoadingCard.svelte';
   import Header from 'components/Header/Header.svelte';
   import client from 'utils/graphql';
 
@@ -28,7 +30,7 @@
 </svelte:head>
 
 {#if $isLoading}
-  <span>Loading...</span>
+  <LoadingCard variant="grey" height="100vh" />
 {:else}
   <Header segment="{segment}" />
 
