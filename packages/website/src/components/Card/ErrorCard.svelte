@@ -3,6 +3,11 @@
     font-size: 0.875em;
   }
 
+  code {
+    display: block;
+    text-align: left;
+  }
+
   [role='heading'] {
     font-size: 1.25rem;
   }

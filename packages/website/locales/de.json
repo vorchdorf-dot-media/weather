@@ -22,6 +22,9 @@
     "entry": {
       "error": "Fehler bei Abruf der aktuellsten Temperaturdaten."
     },
-    "statistics": "Statistiken"
+    "statistics": "Statistiken",
+    "entries": {
+      "error": "Fehler bei Abruf der Temperaturdaten."
+    }
   }
 }

@@ -74,16 +74,23 @@
 
   .footer {
     align-self: end;
+
+    span {
+      display: inline-block;
+      height: 1em;
+    }
   }
 </style>
 
 <script lang="ts">
-  import { _, locale } from 'svelte-i18n';
+  import { _, date, number, time } from 'svelte-i18n';
   import type { EntrySchema } from '@saschazar/weather-app-functions/db/schemata/entry';
   import type { StationSchema } from '@saschazar/weather-app-functions/db/schemata/station';
 
+  import AlertIcon from 'assets/icons/alert.svg';
   import ArrowUpRighticon from 'assets/icons/arrow-up-right.svg';
   import Card from 'components/Card/Card.svelte';
+  import { DAY } from 'utils/constants';
 
   export let segment: string;
 
@@ -108,14 +115,6 @@
       temperature2: temperature2Config,
     },
   } = station as StationSchema;
-
-  const updated =
-    timestamp &&
-    new Intl.DateTimeFormat($locale, {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: false,
-    }).format(new Date((timestamp as unknown) as string));
 </script>
 
 <Card variant="{variant}">
@@ -137,29 +136,34 @@
     <div class="container">
       <small class="label">{$_(`config.${temperatureConfig}`)}:</small><span
         class="data"
-      >{temperature}<sup>°C</sup></span>
+      >{$number(temperature, { format: 'compactShort' })}<sup>°C</sup></span>
     </div>
   {/if}
   {#if temperature2}
     <div class="container">
       <small class="label">{$_(`config.${temperature2Config}`)}:</small><span
         class="data"
-      >{temperature2}<sup>°C</sup></span>
+      >{$number(temperature2, { format: 'compactShort' })}<sup>°C</sup></span>
     </div>
     <div class="container">
-      <small class="label">{$_('feels')}:</small><span class="data">{feels}<sup
-        >°C</sup></span>
+      <small class="label">{$_('feels')}:</small><span
+        class="data"
+      >{$number(feels, { format: 'compactShort' })}<sup>°C</sup></span>
     </div>
     <div class="container">
       <small class="label">{$_('humidity')}:</small><span
         class="data"
-      >{humidity}<sup>%</sup></span>
+      >{$number(humidity, { format: 'compactShort' })}<sup>%</sup></span>
     </div>
   {/if}
-  {#if updated}
+  {#if timestamp}
     <small class="container footer">
       {$_('station.lastUpdated')}:
-      {updated}
+      {#if new Date(timestamp).valueOf() < Date.now() - DAY}
+        <span>{@html AlertIcon}</span>
+        {$date(new Date(timestamp), { format: 'medium' })}
+      {/if}
+      {$time(new Date(timestamp), { format: 'short' })}
     </small>
   {/if}
 </Card>

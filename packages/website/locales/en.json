@@ -22,6 +22,9 @@
     "entry": {
       "error": "Failed to fetch latest temperature entry."
     },
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "entries": {
+      "error": "Failed to fetch temperature entries."
+    }
   }
 }

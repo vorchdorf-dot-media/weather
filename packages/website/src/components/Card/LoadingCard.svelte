@@ -1,4 +1,10 @@
 <style lang="scss">
+  @keyframes dash {
+    to {
+      stroke-dashoffset: 92;
+    }
+  }
+
   svg {
     --gradient: var(--color-main);
 
@@ -30,6 +36,7 @@
     position: absolute;
     font-size: var(--space-m);
     letter-spacing: var(--letter-spacing);
+    text-align: center;
     text-transform: uppercase;
     top: 50%;
     left: 50%;
@@ -41,6 +48,11 @@
     margin-bottom: var(--space-m);
     height: var(--space-l);
     width: 100%;
+
+    :global(path) {
+      animation: dash 2s linear infinite;
+      stroke-dasharray: 46;
+    }
   }
 </style>
 
