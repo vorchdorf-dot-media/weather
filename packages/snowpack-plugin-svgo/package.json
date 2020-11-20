@@ -18,6 +18,7 @@
     "url": "git+https://github.com/vorchdorf-dot-media/weather.git"
   },
   "scripts": {
+    "build": "echo \"No build step needed...\" && exit 0",
     "test": "echo \"Error: run tests from root\" && exit 0"
   },
   "bugs": {
