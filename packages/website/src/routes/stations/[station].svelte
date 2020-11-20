@@ -18,10 +18,10 @@
   import { _ } from 'svelte-i18n';
   import ErrorCard from 'components/Card/ErrorCard.svelte';
   import LoadingCard from 'components/Card/LoadingCard.svelte';
+  import Separator from 'components/Separator/Separator.svelte';
   import TemperatureCard from 'components/Card/TemperatureCard.svelte';
   import { DAY } from 'utils/constants';
   import { GET_ENTRIES, GET_LATEST_ENTRY } from 'utils/queries';
-  import Separator from 'components/Separator/Separator.svelte';
 
   export let station: string;
 

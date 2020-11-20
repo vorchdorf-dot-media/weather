@@ -21,7 +21,7 @@ const INIT_OPTIONS = {
 let current: string = null;
 
 locales.forEach(locale =>
-  register(locale, () => import(`../locales/${locale}.json`))
+  register(locale, () => import(`locales/${locale}.json`))
 );
 
 $locale.subscribe((locale: string): void => {

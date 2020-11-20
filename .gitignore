@@ -1,4 +1,5 @@
 # Custom entries
+.svelte
 __sapper__
 /functions
 globalConfig.json

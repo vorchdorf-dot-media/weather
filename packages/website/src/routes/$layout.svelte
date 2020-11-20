@@ -2,9 +2,33 @@
 </style>
 
 <script context="module">
-  import { isLoading, waitLocale } from 'svelte-i18n';
+  import {
+    addMessages,
+    init,
+    getLocaleFromNavigator,
+    isLoading,
+    waitLocale,
+  } from 'svelte-i18n';
+
+  import en from 'locales/en.json';
+  import de from 'locales/de.json';
+
+  const INIT_OPTIONS = {
+    fallbackLocale: 'en',
+    initialLocale: null,
+    loadingDelay: 200,
+    formats: {},
+    warnOnMissingMessages: true,
+  };
+
+  addMessages('en', en);
+  addMessages('de', de);
 
   export async function preload() {
+    init({
+      ...INIT_OPTIONS,
+      initialLocale: getLocaleFromNavigator(),
+    });
     return waitLocale();
   }
 </script>

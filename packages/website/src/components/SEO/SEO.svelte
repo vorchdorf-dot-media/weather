@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { stores } from '@sapper/app';
-
   import CardImage from 'assets/images/card-image.jpg';
   import seo from 'components/SEO/seo.json';
   import { contents } from 'routes/manifest.json.ts';
@@ -9,8 +7,7 @@
   export let title: string = contents.name;
   export let image: string = `${contents.homepage_url}/${CardImage}`;
 
-  const { page } = stores();
-  $: url = `${contents.homepage_url}${$page.path}`;
+  $: url = `${contents.homepage_url}`;
 </script>
 
 <title>{title}</title>

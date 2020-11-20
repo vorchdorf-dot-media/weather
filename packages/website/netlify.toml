@@ -1,0 +1,7 @@
+# This file is only used for building Svelte for Netlify,
+# the production netlify.toml is in the root directory
+
+[build]
+  command = "yarn build"
+  functions = "../../functions"
+  publish = "../../dist"
