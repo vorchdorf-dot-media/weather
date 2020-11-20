@@ -27,6 +27,7 @@
     "sirv": "^1.0.0"
   },
   "devDependencies": {
+    "@saschazar/snowpack-plugin-svgo": "*",
     "@saschazar/weather-app-functions": "*",
     "@snowpack/plugin-optimize": "^0.2.9",
     "@snowpack/plugin-typescript": "^1.0.0",

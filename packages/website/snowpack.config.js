@@ -24,6 +24,7 @@ module.exports = {
     ...base.plugins,
     ['@snowpack/plugin-typescript'],
     ['@snowpack/plugin-optimize', { minifyJS: false, preloadModules: true }],
+    ['@saschazar/snowpack-plugin-svgo'],
   ],
   proxy: {
     '/api/graphql': '/.netlify/functions/graphql',

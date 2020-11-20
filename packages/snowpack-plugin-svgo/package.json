@@ -1,0 +1,29 @@
+{
+  "name": "@saschazar/snowpack-plugin-svgo",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Sascha Zarhuber <sascha.zarhuber@gmail.com>",
+  "homepage": "https://github.com/vorchdorf-dot-media/weather#readme",
+  "license": "ISC",
+  "main": "lib/snowpack-plugin-svgo.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vorchdorf-dot-media/weather.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 0"
+  },
+  "bugs": {
+    "url": "https://github.com/vorchdorf-dot-media/weather/issues"
+  },
+  "peerDependencies": {
+    "svgo": "^1.3.2"
+  }
+}
