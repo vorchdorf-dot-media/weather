@@ -1,4 +1,6 @@
-import type { IncomingMessage, ServerResponse } from 'http';
+const {
+  env: { URL },
+} = import.meta as any;
 
 export const contents = {
   author: 'Sascha Zarhuber',
@@ -9,7 +11,7 @@ export const contents = {
   description: 'Test',
   default_locale: 'en',
   display: 'standalone',
-  homepage_url: process.env.URL,
+  homepage_url: URL,
   icons: [
     {
       src: '/icons/rounded-icon-192.png',
@@ -41,8 +43,12 @@ export const contents = {
   theme_color: '#587B7E',
 };
 
-export const get = (_req: IncomingMessage, res: ServerResponse): void => {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-
-  return res.end(JSON.stringify(contents));
-};
+export const get = (): {
+  headers: { [key: string]: string };
+  body: unknown;
+} => ({
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: contents,
+});

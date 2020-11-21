@@ -44,7 +44,7 @@
 
   setClient(client);
 
-  const production = process.env.CONTEXT === 'production';
+  const production = import.meta.env.CONTEXT === 'production';
 </script>
 
 <svelte:head>
