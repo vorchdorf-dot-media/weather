@@ -1,4 +1,4 @@
-import { AuthenticationError } from 'apollo-server-lambda';
+import { AuthenticationError } from 'apollo-server-micro';
 import { StationSchema } from '../../../db/schemata/station';
 import { scope } from '../../../utils/authorization';
 import { AUTH_SCOPE, StringObject } from '../../../utils/definitions';

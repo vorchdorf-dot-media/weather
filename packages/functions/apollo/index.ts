@@ -1,5 +1,5 @@
-import { APIGatewayProxyEvent } from 'aws-lambda';
-import { ApolloServer, Config } from 'apollo-server-lambda';
+import { IncomingMessage } from 'http';
+import { ApolloServer, Config } from 'apollo-server-micro';
 import { DataSources } from 'apollo-server-core/src/graphqlOptions';
 
 import { EntryDataSource, StationDataSource } from './datasources';
@@ -9,7 +9,7 @@ import { RandomObject } from '../utils/definitions';
 import connect from '../db';
 
 export const config: Config = {
-  context: async ({ event: { headers } }: { event: APIGatewayProxyEvent }) => {
+  context: async ({ headers }: IncomingMessage) => {
     await connect();
     return {
       headers,
@@ -26,4 +26,4 @@ export const config: Config = {
 
 const server = new ApolloServer(config);
 
-export default server.createHandler();
+export default server.createHandler({ path: '/api/graphql' });

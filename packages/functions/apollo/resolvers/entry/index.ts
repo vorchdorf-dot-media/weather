@@ -1,4 +1,4 @@
-import { AuthenticationError } from 'apollo-server-lambda';
+import { AuthenticationError } from 'apollo-server-micro';
 
 import { EntrySchema } from '../../../db/schemata/entry';
 import { scope, validateHash } from '../../../utils/authorization';

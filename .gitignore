@@ -1,7 +1,6 @@
 # Custom entries
-.svelte
-__sapper__
-/functions
+out_functions
+out_publish
 globalConfig.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/vscode,node,c++,react

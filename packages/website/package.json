@@ -1,52 +1,36 @@
 {
-  "name": "@saschazar/weather-app-website",
-  "description": "This website contains temperature & humidity data collected from Arduino-compatible micro controllers.",
+  "name": "website",
   "version": "0.0.0",
+  "description": "Website sources for Arduino-powered weather logging service",
   "repository": "https://github.com/vorchdorf-dot-media/weather",
-  "author": {
-    "name": "Sascha Zarhuber",
-    "email": "sascha.zarhuber@gmail.com",
-    "url": "https://weather.sascha.app"
-  },
-  "manifest": {
-    "name": "Arduino Temperature Tracker",
-    "short_name": "Temperature"
-  },
+  "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
   "license": "MIT",
-  "private": false,
   "scripts": {
-    "dev": "URL=\"http://localhost:3000\" svelte dev",
-    "build": "svelte build",
-    "test": "echo \"No test configured\" && exit 0"
-  },
-  "browserslist": "> 2%, maintained node versions, last 2 Firefox versions, last 2 Chrome versions, last 2 Safari versions, last 2 iOS versions, not IE 11, not op_mini all",
-  "dependencies": {
-    "compression": "^1.7.1",
-    "http-proxy-middleware": "^1.0.6",
-    "polka": "next",
-    "sirv": "^1.0.0"
+    "dev": "next",
+    "build:build": "ANALYZE=true next build",
+    "build:netlify": "next-on-netlify",
+    "build:push": "mv -v out_publish ../../ && mv -v out_functions ../../",
+    "build": "run-s build:*",
+    "test": "eslint . --ext .ts,.tsx,.js"
   },
   "devDependencies": {
-    "@saschazar/snowpack-plugin-svgo": "*",
-    "@saschazar/weather-app-functions": "*",
-    "@snowpack/plugin-optimize": "^0.2.9",
-    "@snowpack/plugin-typescript": "^1.0.0",
-    "@sveltejs/adapter-netlify": "^0.0.11",
-    "@sveltejs/kit": "0.0.25",
-    "@sveltejs/snowpack-config": "0.0.5",
-    "@tsconfig/svelte": "^1.0.10",
-    "@types/compression": "^1.7.0",
-    "@types/polka": "^0.5.1",
-    "@urql/svelte": "^1.1.3",
-    "graphql": "^15.4.0",
-    "node-sass": "^5.0.0",
-    "sapper": "^0.28.0",
-    "snowpack-plugin-url-loader": "^1.0.0",
-    "svelte": "^3.29.0",
-    "svelte-check": "^1.0.46",
-    "svelte-i18n": "^3.2.5",
-    "svelte-preprocess": "^4.0.0",
-    "svgo": "^1.3.2",
-    "tslib": "^2.0.0"
+    "@next/bundle-analyzer": "^10.0.2",
+    "@types/node": "^14.14.9",
+    "@types/react": "^17.0.0",
+    "next-compose-plugins": "^2.2.1",
+    "next-on-netlify": "^2.6.3",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "@prefresh/next": "^1.3.0",
+    "apollo-server-micro": "^2.19.0",
+    "functions": "file:../functions",
+    "next": "^10.0.0",
+    "next-plugin-preact": "^3.0.3",
+    "preact": "^10.5.5",
+    "preact-render-to-string": "^5.1.11",
+    "react": "npm:@preact/compat@^0.0.3",
+    "react-dom": "npm:@preact/compat@^0.0.3",
+    "react-ssr-prepass": "npm:preact-ssr-prepass@^1.1.2"
   }
 }

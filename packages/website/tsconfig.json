@@ -1,32 +1,29 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es2017",
-    /**
-			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
-			to enforce using `import type` instead of `import` for Types.
-			*/
-    "importsNotUsedAsValues": "error",
-    "isolatedModules": true,
-    /**
-			To have warnings/errors of the Svelte compiler at the correct position,
-			enable source maps by default.
-			*/
-    "sourceMap": true,
-    "esModuleInterop": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": {
-      "assets": ["src/assets/*"],
-      "components": ["src/components/*"],
-      "locales": ["locales/*"],
-      "routes": ["src/routes/*"],
-      "utils": ["src/utils/*"]
-    }
+    "isolatedModules": true,
+    "jsx": "preserve"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/*", ".svelte", "static/*"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

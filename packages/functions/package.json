@@ -1,21 +1,22 @@
 {
-  "name": "@saschazar/weather-app-functions",
+  "name": "functions",
   "version": "0.0.0",
   "description": "Lambda functions for Arduino-powered weather logging service",
   "repository": "https://github.com/vorchdorf-dot-media/weather",
   "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
   "license": "MIT",
   "private": false,
-  "files": [
-    "src/**"
-  ],
+  "directories": {
+    "lib": "dist"
+  },
   "scripts": {
-    "dev": "webpack --progress --watch",
-    "build": "webpack --progress",
+    "dev": "tsc -w",
+    "build:clean": "rm -rf dist",
+    "build:transpile": "tsc",
+    "build": "run-s build:**",
     "test": "eslint . --ext .ts,.js,.mjs"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.64",
     "@types/basic-auth": "^1.1.3",
     "@types/mongoose": "^5.7.36",
     "apollo-server-testing": "^2.19.0",
@@ -28,7 +29,7 @@
   },
   "dependencies": {
     "apollo-datasource": "^0.7.2",
-    "apollo-server-lambda": "^2.18.2",
+    "apollo-server-micro": "^2.19.0",
     "basic-auth": "^2.0.1",
     "graphql": "^15.3.0",
     "mongoose": "^5.10.10",

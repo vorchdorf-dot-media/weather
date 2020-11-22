@@ -1,5 +1,5 @@
 import { createHash } from 'crypto';
-import { ApolloServer, Config } from 'apollo-server-lambda';
+import { ApolloServer, Config } from 'apollo-server-micro';
 import {
   ApolloServerTestClient,
   createTestClient,

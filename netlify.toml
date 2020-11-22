@@ -1,13 +1,7 @@
 [build]
-  command = "npm run build"
-  functions = "functions"
-  publish = "dist"
+  command = "yarn build"
+  functions = "out_functions"
+  publish = "out_publish"
 
 [[plugins]]
   package = 'netlify-plugin-contextual-env'
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-  force = true

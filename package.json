@@ -7,15 +7,17 @@
   "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "install": "lerna bootstrap",
     "prestart": "netlify build --context branch-deploy --debug",
     "start": "netlify dev",
-    "dev:build": "lerna exec yarn dev",
-    "dev:serve": "netlify dev",
-    "dev": "run-p dev:**",
-    "build": "lerna exec yarn build",
-    "test:packages": "lerna exec yarn test",
+    "dev": "lerna run dev --parallel",
+    "prebuild": "rm -rf out_publish && rm -rf out_functions",
+    "build": "lerna run build",
+    "test:packages": "lerna run test --parallel",
     "test:jest": "jest --coverage --maxWorkers 4",
     "test": "run-s test:**"
   },
