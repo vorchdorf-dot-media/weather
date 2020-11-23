@@ -1,9 +1,17 @@
 {
   "name": "website",
   "version": "0.0.0",
-  "description": "Website sources for Arduino-powered weather logging service",
+  "description": "This website shows recorded data from an Arduino-powered weather logging service.",
   "repository": "https://github.com/vorchdorf-dot-media/weather",
-  "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
+  "author": {
+    "name": "Sascha Zarhuber",
+    "email": "sascha.zarhuber@gmail.com",
+    "url": "https://weather.sascha.app"
+  },
+  "manifest": {
+    "name": "Arduino Temperature Tracker",
+    "short_name": "Temperature"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "next",
@@ -16,15 +24,17 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^10.0.2",
     "@types/react": "^17.0.0",
-    "next-compose-plugins": "^2.2.1",
+    "babel-plugin-inline-react-svg": "^1.1.2",
     "next-on-netlify": "^2.6.3"
   },
   "dependencies": {
     "@prefresh/next": "^1.3.0",
     "apollo-server-micro": "^2.19.0",
     "functions": "file:../functions",
-    "next": "^10.0.0",
+    "next": "^10.0.3",
+    "next-compose-plugins": "^2.2.1",
     "next-plugin-preact": "^3.0.3",
+    "next-pwa": "^3.1.5",
     "preact": "^10.5.5",
     "preact-render-to-string": "^5.1.11",
     "react": "npm:@preact/compat@^0.0.3",

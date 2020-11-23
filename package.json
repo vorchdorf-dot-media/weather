@@ -11,7 +11,6 @@
     "packages/*"
   ],
   "scripts": {
-    "install": "lerna bootstrap",
     "prestart": "netlify build --context branch-deploy --debug",
     "start": "netlify dev",
     "dev": "lerna run dev --parallel",

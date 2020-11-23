@@ -1,4 +1,19 @@
 {
   "extends": "../../.babelrc",
+  "plugins": [
+    [
+      "inline-react-svg",
+      {
+        "svgo": {
+          "plugins": [
+            {
+              "cleanupIDs": true,
+              "removeViewBox": false
+            }
+          ]
+        }
+      }
+    ]
+  ],
   "presets": ["next/babel"]
 }
