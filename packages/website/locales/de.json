@@ -1,0 +1,10 @@
+{
+  "index": {
+    "headline": "",
+    "title": "Hallo, Welt"
+  },
+  "loading": "Lädt...",
+  "stations": {
+    "title": "Aktuelle Temperaturaufzeichnungen der Station \"{{stations}}\"."
+  }
+}

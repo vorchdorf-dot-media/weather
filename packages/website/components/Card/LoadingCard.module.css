@@ -1,0 +1,50 @@
+@keyframes dash {
+  to {
+    stroke-dashoffset: 92;
+  }
+}
+.loading {
+  --gradient: var(--color-main);
+  position: absolute;
+  background: transparent;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+}
+
+.loading rect {
+  height: 100%;
+  width: 100%;
+}
+.loading stop {
+  stop-color: HSL(var(--gradient), 0.125);
+}
+.loading stop:first-of-type,
+.loading stop:last-of-type {
+  stop-color: HSL(var(--bg));
+}
+
+.heading {
+  display: block;
+  position: absolute;
+  font-size: var(--space-m);
+  letter-spacing: var(--letter-spacing);
+  text-align: center;
+  text-transform: uppercase;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.svgContainer {
+  display: inline-block;
+  margin-bottom: var(--space-m);
+  height: var(--space-l);
+  width: 100%;
+}
+
+.svgContainer path {
+  animation: dash 2s linear infinite;
+  stroke-dasharray: 46;
+}
