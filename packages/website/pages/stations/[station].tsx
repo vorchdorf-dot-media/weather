@@ -1,20 +1,25 @@
+import { Provider } from '@urql/preact';
+import { GetServerSideProps } from 'next';
 import { translate } from 'preact-i18n';
 
-import LoadingCard from 'components/Card/LoadingCard';
+import TemperatureCard from 'components/Card/TemperatureCard';
 import client from 'utils/graphql';
 import { GET_LATEST_ENTRY } from 'utils/queries';
 
-const Station = ({ entry: { station }, title }) => {
+const Station = ({ entry }): JSX.Element => {
   return (
-    <>
-      <h1>{station?.name}</h1>
+    <Provider value={client}>
+      <h1>{entry?.station?.name}</h1>
       <div>Hello World</div>
-      <LoadingCard variant="grey" />
-    </>
+      <TemperatureCard link={false} variant="primary" entry={entry} />
+    </Provider>
   );
 };
 
-export const getServerSideProps = async ({ params: { station }, locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params: { station },
+  locale,
+}) => {
   try {
     const dictionary = (await import(`locales/${locale}.json`)).default;
     const { data, error } = await client

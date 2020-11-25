@@ -6,5 +6,15 @@
   "loading": "Loading...",
   "stations": {
     "title": "Latest temperature records from station \"{{station}}\"."
+  },
+  "temperature": {
+    "config": {
+      "IN": "Inside",
+      "OUT": "Outside"
+    },
+    "feels": "Feels like",
+    "humidity": "Humidity",
+    "lastUpdated": "Last updated",
+    "latestEntry": "Latest entry for \"{{name}}\""
   }
 }

@@ -3,7 +3,7 @@ import { useText } from 'preact-i18n';
 import Card from 'components/Card/Card';
 
 import styles from 'components/Card/LoadingCard.module.css';
-import ActivityIcon from '../../assets/icons/activity.svg';
+import ActivityIcon from 'assets/icons/activity.svg';
 
 const LoadingCard = ({
   height = 150,

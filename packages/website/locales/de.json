@@ -6,5 +6,15 @@
   "loading": "Lädt...",
   "stations": {
     "title": "Aktuelle Temperaturaufzeichnungen der Station \"{{stations}}\"."
+  },
+  "temperature": {
+    "config": {
+      "IN": "Innen",
+      "OUT": "Außen"
+    },
+    "feels": "Gefühlt",
+    "humidity": "Luftfeuchtigkeit",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "latestEntry": "Aktuellster Eintrag für \"{{name}}\""
   }
 }
