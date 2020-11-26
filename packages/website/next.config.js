@@ -26,11 +26,18 @@ module.exports = withPlugins(
     },
     target: 'serverless',
     webpack: config => {
-      config.module.rules.push({
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: 'javascript/auto',
-      });
+      config.module.rules.push(
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto',
+        },
+        {
+          test: /\.svg$/,
+          exclude: /node_modules/,
+          use: ['@svgr/webpack'],
+        }
+      );
       return config;
     },
   }

@@ -1,41 +1,26 @@
 [
   {
-    "provider": "website",
+    "provider": "Website",
     "username": "Sascha Zarhuber",
     "profile": "https://sascha.work"
   },
   {
-    "provider": "twitter",
+    "provider": "Twitter",
     "username": "@saschazar",
     "profile": "https://twitter.com/saschazar"
   },
   {
-    "provider": "github",
+    "provider": "Github",
     "username": "saschazar21",
     "profile": "https://github.com/saschazar21"
   },
   {
-    "provider": "bitbucket",
-    "username": "saschazar21",
-    "profile": "https://bitbucket.org/saschazar21"
-  },
-  {
-    "provider": "codepen",
-    "username": "saschazar21",
-    "profile": "https://codepen.io/saschazar21"
-  },
-  {
-    "provider": "runkit",
-    "username": "saschazar21",
-    "profile": "https://runkit.com/saschazar21"
-  },
-  {
-    "provider": "linkedin",
+    "provider": "LinkedIn",
     "username": "Sascha Zarhuber",
     "profile": "https://linkedin.com/in/sascha-zarhuber"
   },
   {
-    "provider": "xing",
+    "provider": "Xing",
     "username": "Sascha Zarhuber",
     "profile": "https://www.xing.com/profile/Sascha_Zarhuber"
   }

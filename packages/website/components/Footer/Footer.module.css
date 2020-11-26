@@ -1,0 +1,10 @@
+.footer {
+  border-top: 2px solid HSL(var(--color-primary-offset));
+  padding: var(--space-s);
+}
+
+@media screen and (min-width) {
+  .footer {
+    padding: var(--space-m) 0;
+  }
+}

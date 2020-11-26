@@ -4,6 +4,9 @@
     "title": "Hallo, Welt"
   },
   "loading": "Lädt...",
+  "social": {
+    "link": "Besuche {{username}}'s {{provider}}-Profil"
+  },
   "stations": {
     "title": "Aktuelle Temperaturaufzeichnungen der Station \"{{stations}}\"."
   },
