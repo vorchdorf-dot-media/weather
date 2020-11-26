@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { readdirSync } = require('fs');
-const { basename } = require('path');
 const withBundleAnalyzer = require('@next/bundle-analyzer');
 const withPlugins = require('next-compose-plugins');
 const withPreact = require('next-plugin-preact');
 const withPWA = require('next-pwa');
 
-const locales = readdirSync('./locales').map(f => basename(f, '.json'));
+const locales = require('./locales');
 
 module.exports = withPlugins(
   [

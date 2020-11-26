@@ -29,7 +29,7 @@ const SEOBlock = ({
       <meta name="generator" content={`Next ${nextpkg.version}`} />
       <meta name="description" content={description || pkg.description} />
 
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       <link rel="manifest" href="/api/manifest.json" />
       <link rel="icon" type="image/png" href="/favicon.png" />
       <link
