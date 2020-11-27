@@ -12,6 +12,7 @@
     "link": "Besuche {{username}}'s {{provider}}-Profil"
   },
   "stations": {
+    "createdAt": "{{createdAt}} registriert.",
     "title": "Aktuelle Temperaturaufzeichnungen der Station \"{{stations}}\"."
   },
   "temperature": {

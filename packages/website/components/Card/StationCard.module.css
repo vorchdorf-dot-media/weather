@@ -1,0 +1,6 @@
+.heading {
+  display: block;
+  font-size: var(--space-l);
+  letter-spacing: var(--letter-spacing);
+  text-transform: uppercase;
+}

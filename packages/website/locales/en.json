@@ -12,6 +12,7 @@
     "link": "Visit {{username}}'s {{provider}} profile"
   },
   "stations": {
+    "createdAt": "Registered {{createdAt}}.",
     "title": "Latest temperature records from station \"{{station}}\"."
   },
   "temperature": {

@@ -138,6 +138,10 @@ p::after {
   height: 0;
 }
 
+section + section {
+  margin-top: var(--space-m);
+}
+
 a {
   color: inherit;
   fill: currentColor;

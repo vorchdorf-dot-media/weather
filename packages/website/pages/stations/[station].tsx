@@ -3,14 +3,14 @@ import { GetServerSideProps } from 'next';
 import { translate } from 'preact-i18n';
 
 import TemperatureCard from 'components/Card/TemperatureCard';
+import StationCard from 'components/Card/StationCard';
 import client from 'utils/graphql';
 import { GET_LATEST_ENTRY } from 'utils/queries';
 
 const Station = ({ entry }): JSX.Element => {
   return (
     <Provider value={client}>
-      <h1>{entry?.station?.name}</h1>
-      <div>Hello World</div>
+      <StationCard station={entry?.station} aria-level={1} variant="grey" />
       <TemperatureCard link={false} variant="primary" entry={entry} />
     </Provider>
   );

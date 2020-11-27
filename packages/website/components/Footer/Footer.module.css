@@ -12,6 +12,10 @@
   text-align: left;
 }
 
+.footer p a {
+  color: HSL(var(--color-main));
+}
+
 @media screen and (min-width: 768px) {
   .footer {
     padding: var(--space-l) var(--space-m);
