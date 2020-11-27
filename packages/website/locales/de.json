@@ -4,6 +4,10 @@
     "title": "Hallo, Welt"
   },
   "loading": "Lädt...",
+  "site": {
+    "description": "Diese Website zeigt gesammelte Daten von unabhängigen, Arduino-kompatiblen Temperatur-Messstationen. Ihre Inhalte sind zu 100% Open Source.",
+    "visitRepository": "Zum Source Code"
+  },
   "social": {
     "link": "Besuche {{username}}'s {{provider}}-Profil"
   },

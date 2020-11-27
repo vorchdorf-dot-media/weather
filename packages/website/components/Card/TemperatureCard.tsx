@@ -1,15 +1,13 @@
 import classnames from 'classnames';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'preact/hooks';
 import { useText, Text } from 'preact-i18n';
 
 import AlertIcon from 'assets/icons/alert.svg';
 import ArrowUpRightIcon from 'assets/icons/arrow-up-right.svg';
 import Card from 'components/Card/Card';
 import { DAY } from 'utils/constants';
+import useLocale from 'utils/hooks/useLocale';
 
 import styles from 'components/Card/TemperatureCard.module.scss';
 
@@ -33,6 +31,7 @@ const TemperatureCard = ({
   },
 }): JSX.Element => {
   const { locale } = useRouter();
+  const dayjs = useLocale(locale);
   const {
     feelsI18n,
     humidityI18n,
@@ -48,13 +47,6 @@ const TemperatureCard = ({
     tempConfig: `temperature.config.${temperatureConfig}`,
     temp2Config: `temperature.config.${temperature2Config}`,
   });
-
-  dayjs.extend(relativeTime);
-  useEffect(() => {
-    import('dayjs/locale/' + locale).then(({ default: loc }) =>
-      dayjs.locale(loc)
-    );
-  }, [locale]);
 
   const formatNumber = (
     number: number,

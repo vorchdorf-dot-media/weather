@@ -1,12 +1,12 @@
 {
   "name": "website",
   "version": "0.0.0",
-  "description": "This website shows recorded data from an Arduino-powered weather logging service.",
+  "description": "This website shows recorded data from various Arduino-powered weather logging stations.",
   "repository": "https://github.com/vorchdorf-dot-media/weather",
   "author": {
     "name": "Sascha Zarhuber",
     "email": "sascha.zarhuber@gmail.com",
-    "url": "https://weather.sascha.app"
+    "url": "https://sascha.work"
   },
   "manifest": {
     "name": "Arduino Temperature Logging Service",

@@ -41,6 +41,9 @@
   --font-weight: 400;
   --font-weight-max: 700;
 
+  --width-m: 768px;
+  --width-l: 900px;
+
   --breakpoint-xs: 375px;
   --breakpoint-s: 768px;
   --breakpoint-m: 1200px;

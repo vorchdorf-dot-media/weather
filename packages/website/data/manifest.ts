@@ -1,14 +1,14 @@
-import pkg from 'package.json';
+import { author, description, manifest, version } from 'package.json';
 
 export default {
   $schema: 'http://json.schemastore.org/web-manifest',
-  author: pkg.author.name,
+  author: author.name,
   background: {
     persistent: false,
   },
-  short_name: pkg.manifest.short_name,
-  name: pkg.manifest.name,
-  description: pkg.description,
+  short_name: manifest.short_name,
+  name: manifest.name,
+  description: description,
   scope: '/',
   default_locale: 'en',
   display: 'standalone',
@@ -42,5 +42,5 @@ export default {
   theme_color: '#587B7E',
   start_url: '/?utm_source=web_app_manifest',
   orientation: 'any',
-  version: pkg.version,
+  version: version,
 };

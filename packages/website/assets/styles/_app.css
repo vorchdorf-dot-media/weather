@@ -6,4 +6,6 @@
 
 main {
   flex: 1;
+  max-width: var(--width-l);
+  margin: 0 auto;
 }

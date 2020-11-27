@@ -1,7 +1,6 @@
-import React from 'react';
-import nextpkg from 'next/package.json';
+import { version } from 'next/package.json';
 
-import pkg from 'package.json';
+import { author, description as pkgDescription } from 'package.json';
 import socialData from 'data/social.json';
 
 export interface SEOProps {
@@ -25,9 +24,12 @@ const SEOBlock = ({
 
   return (
     <>
-      <meta name="author" content={pkg.author.name} />
-      <meta name="generator" content={`Next ${nextpkg.version}`} />
-      <meta name="description" content={description || pkg.description} />
+      <meta name="author" content={author.name} />
+      <meta name="generator" content={`Next ${version}`} />
+      <meta name="description" content={description || pkgDescription} />
+      {process.env.CONTEXT !== 'production' && (
+        <meta name="robots" content="noindex,nofollow" />
+      )}
 
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       <link rel="manifest" href="/api/manifest.json" />
@@ -42,10 +44,7 @@ const SEOBlock = ({
       <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={name} />
-      <meta
-        property="og:description"
-        content={description || pkg.description}
-      />
+      <meta property="og:description" content={description || pkgDescription} />
       <meta property="og:image" content={image || fallback} />
 
       {/* Twitter Meta Tags */}
@@ -55,7 +54,7 @@ const SEOBlock = ({
       <meta name="twitter:title" content={name} />
       <meta
         name="twitter:description"
-        content={description || pkg.description}
+        content={description || pkgDescription}
       />
       <meta name="twitter:image" content={image || fallback} />
     </>
