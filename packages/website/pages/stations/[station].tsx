@@ -10,7 +10,7 @@ import { GET_LATEST_ENTRY } from 'utils/queries';
 const Station = ({ entry }): JSX.Element => {
   return (
     <Provider value={client}>
-      <StationCard station={entry?.station} aria-level={1} variant="grey" />
+      <StationCard station={entry?.station} aria-level={1} />
       <TemperatureCard link={false} variant="primary" entry={entry} />
     </Provider>
   );
