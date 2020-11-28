@@ -5,10 +5,11 @@ import classnames from 'classnames';
 export interface CardProps {
   children: ReactElement | ReactElement[];
   variant: 'grey' | 'primary' | 'secondary';
+  className?: string;
 }
 
-const Card = ({ children, variant }: CardProps): JSX.Element => (
-  <section className={classnames(styles.card, styles[variant])}>
+const Card = ({ children, className, variant }: CardProps): JSX.Element => (
+  <section className={classnames(styles.card, styles[variant], className)}>
     {children}
   </section>
 );

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Text } from 'preact-i18n';
 
-import { repository, author } from 'package.json';
+import pkg from 'package.json';
 import Container from 'components/Container';
 import SocialList from 'components/Footer/Social';
 
@@ -12,6 +12,7 @@ const CURRENT = new Date().getFullYear();
 const URL = process.env.URL || 'http://localhost:3000';
 
 const Footer = (): JSX.Element => {
+  const { repository, author } = pkg;
   return (
     <footer className={styles.footer}>
       <Container>
@@ -23,7 +24,7 @@ const Footer = (): JSX.Element => {
         <p>
           <Text id="site.description" />{' '}
           <a href={repository} rel="noindex,nofollow">
-            <Text id="site.visitRepository" />
+            <Text id="site.visitRepository" /> &rarr;
           </a>
         </p>
       </Container>

@@ -12,6 +12,10 @@
     "link": "Besuche {{username}}'s {{provider}}-Profil"
   },
   "stations": {
+    "config": {
+      "inside": "Sensor ist innen platziert.",
+      "outside": "Sensor ist außen platziert."
+    },
     "createdAt": "{{createdAt}} registriert.",
     "title": "Aktuelle Temperaturaufzeichnungen der Station \"{{stations}}\"."
   },

@@ -1,6 +1,38 @@
+.station {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: var(--space-m) 0;
+  margin: 0 auto;
+  max-width: var(--width-m);
+  background: transparent;
+  color: HSL(var(--color-main));
+}
+
 .heading {
-  display: block;
   font-size: var(--space-l);
   letter-spacing: var(--letter-spacing);
   text-transform: uppercase;
+  line-height: calc(var(--space-l) + 0.25em);
+}
+
+.createdAt {
+  display: block;
+}
+
+.metaContainer {
+  flex: 0 0 auto;
+  margin-left: var(--space-l);
+  color: HSL(var(--color-grey));
+}
+
+.metaContainer svg + svg {
+  margin-left: var(--space-m);
+}
+
+.metaContainer svg {
+  display: inline-block;
+  height: 1.5rem;
+  width: 1.5rem;
 }

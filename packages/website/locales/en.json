@@ -12,7 +12,11 @@
     "link": "Visit {{username}}'s {{provider}} profile"
   },
   "stations": {
-    "createdAt": "Registered {{createdAt}}.",
+    "config": {
+      "inside": "Sensor is placed inside.",
+      "outside": "Sensor is placed outside."
+    },
+    "createdAt": "registered {{createdAt}}.",
     "title": "Latest temperature records from station \"{{station}}\"."
   },
   "temperature": {

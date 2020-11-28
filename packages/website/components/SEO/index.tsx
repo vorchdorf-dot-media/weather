@@ -1,6 +1,6 @@
-import { version } from 'next/package.json';
+import nextPkg from 'next/package.json';
 
-import { author, description as pkgDescription } from 'package.json';
+import pkg from 'package.json';
 import socialData from 'data/social.json';
 
 export interface SEOProps {
@@ -16,6 +16,8 @@ const SEOBlock = ({
   name,
   path,
 }: SEOProps): JSX.Element => {
+  const { author, description: pkgDescription } = pkg;
+  const { version } = nextPkg;
   const fallback = `${process.env.URL || ''}/card-image.jpg`;
   const url = `${process.env.URL || ''}${path}`;
 
