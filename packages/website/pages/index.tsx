@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { translate, useText } from 'preact-i18n';
 
 const Index = ({ title }) => {
@@ -13,7 +13,7 @@ const Index = ({ title }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const translation = (await import(`locales/${locale}.json`)).default;
   return {
     props: {
