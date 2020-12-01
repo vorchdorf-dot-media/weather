@@ -20,7 +20,12 @@ const SocialLink = ({
   });
   const p = provider.toLowerCase();
   return (
-    <a title={title} href={profile} rel="noindex,nofollow" target="_blank">
+    <a
+      title={title}
+      href={profile}
+      rel="noindex,nofollow,noreferrer,noopener"
+      target="_blank"
+    >
       {createElement(
         dynamic(
           () => import(`assets/icons/${p === 'website' ? 'user' : p}.svg`)

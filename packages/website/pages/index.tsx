@@ -1,12 +1,25 @@
-import { useText } from 'preact-i18n';
+import { GetStaticProps } from 'next';
+import { translate, useText } from 'preact-i18n';
 
-const Index = () => {
-  const { title } = useText('index.title');
+const Index = ({ title }) => {
+  const { headline } = useText({
+    headline: 'index.headline',
+  });
   return (
     <>
       <h1>{title}</h1>
+      <span>{headline}</span>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const translation = (await import(`locales/${locale}.json`)).default;
+  return {
+    props: {
+      title: translate('index.title', '', translation),
+    },
+  };
 };
 
 export default Index;

@@ -30,7 +30,11 @@ const Footer = (): JSX.Element => {
       </Container>
       <SocialList />
       <span>
-        <a href={author.url} rel="index,follow" target="_blank">
+        <a
+          href={author.url}
+          rel="index,follow,noreferrer,noopener"
+          target="_blank"
+        >
           {author.name}
         </a>{' '}
         &copy; {CREATED}

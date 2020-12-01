@@ -1,11 +1,11 @@
 {
   "index": {
-    "headline": "",
-    "title": "Hello, world"
+    "headline": "This page is currently under construction.",
+    "title": "Current weather records"
   },
   "loading": "Loading...",
   "site": {
-    "description": "This website shows collected data from independent, Arduino-compatible temperature-measuring stations. Its contents are 100% Open Source.",
+    "description": "This website shows collected data from independent, Arduino-compatible temperature-measuring stations. It consists of 100% Open Source and voluntary work.",
     "visitRepository": "To the source code repository"
   },
   "social": {
@@ -17,7 +17,7 @@
       "outside": "Sensor is placed outside."
     },
     "createdAt": "registered {{createdAt}}.",
-    "title": "Latest temperature records from station \"{{station}}\"."
+    "title": "Temperature records of \"{{station}}\""
   },
   "temperature": {
     "config": {

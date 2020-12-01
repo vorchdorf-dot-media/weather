@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "This website shows recorded data from various Arduino-powered weather logging stations.",
   "repository": "https://github.com/vorchdorf-dot-media/weather",
+  "homepage": "https://wetter.vorchdorf.media",
   "author": {
     "name": "Sascha Zarhuber",
     "email": "sascha.zarhuber@gmail.com",

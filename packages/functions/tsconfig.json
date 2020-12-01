@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "declaration": true,
     "declarationDir": "dist",
-    "module": "ES6",
+    "module": "CommonJS",
     "outDir": "dist",
     "rootDir": "./",
     "skipLibCheck": true,

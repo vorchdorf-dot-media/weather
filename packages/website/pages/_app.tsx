@@ -3,6 +3,7 @@ import { IntlProvider } from 'preact-i18n';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
+import pkg from 'package.json';
 import Footer from 'components/Footer';
 import SEOBlock from 'components/SEO';
 
@@ -10,6 +11,7 @@ import 'assets/styles/global.css';
 import 'assets/styles/_app.css';
 
 const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
+  const { homepage } = pkg;
   const { asPath, locale } = router;
   const [definition, setDefinition] = useState({});
   const locales = new Set();
@@ -26,7 +28,9 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
   return (
     <IntlProvider definition={definition}>
       <Head>
-        <title>{pageProps.title}</title>
+        <title>
+          {pageProps.title} | {homepage}
+        </title>
         <SEOBlock path={asPath} name={pageProps.title} />
       </Head>
       <main>
