@@ -21,12 +21,14 @@
     "@types/mongoose": "^5.7.36",
     "apollo-server-testing": "^2.19.0",
     "babel-loader": "^8.1.0",
+    "bufferutil": "^4.0.2",
     "dayjs": "^1.9.4",
     "dotenv-webpack": "^4.0.0",
     "encoding": "^0.1.13",
     "eslint-webpack-plugin": "^2.2.1",
     "globby": "^11.0.1",
-    "mongodb-client-encryption": "^1.1.0"
+    "mongodb-client-encryption": "^1.1.0",
+    "utf-8-validate": "^5.0.3"
   },
   "dependencies": {
     "apollo-datasource": "^0.7.2",

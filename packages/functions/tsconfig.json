@@ -4,9 +4,10 @@
     "baseUrl": "./",
     "declaration": true,
     "declarationDir": "dist",
-    "module": "CommonJS",
+    "module": "ES6",
     "outDir": "dist",
     "rootDir": "./",
+    "skipLibCheck": true,
     "target": "ES2017"
   },
   "include": ["**/*.ts"],

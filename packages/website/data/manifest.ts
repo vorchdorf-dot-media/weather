@@ -1,4 +1,6 @@
-import { author, description, manifest, version } from 'package.json';
+import pkg from 'package.json';
+
+const { author, description, manifest, version } = pkg;
 
 export default {
   $schema: 'http://json.schemastore.org/web-manifest',
