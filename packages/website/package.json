@@ -18,7 +18,6 @@
     "dev": "next",
     "build:build": "ANALYZE=true next build",
     "build:netlify": "next-on-netlify",
-    "build:push": "mv -v out_publish ../../ && mv -v out_functions ../../",
     "build": "run-s build:*",
     "test": "eslint . --ext .ts,.tsx,.js"
   },

@@ -13,7 +13,7 @@ let connection: Connection;
 
 export const config: Config = {
   context: async ({ headers }: IncomingMessage) => {
-    connection = (await connect()).connection;
+    connection = await connect().then(({ connection }) => connection);
     return {
       connection,
       headers,
