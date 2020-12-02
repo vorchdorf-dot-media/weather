@@ -28,7 +28,7 @@ export const config: Config = {
     {
       requestDidStart() {
         return {
-          willSendResponse: async () => connection && connection.close(true),
+          willSendResponse: async () => connection && connection.close(),
         };
       },
     },
