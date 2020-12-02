@@ -1,6 +1,7 @@
 import nextPkg from 'next/package.json';
 
 import pkg from 'package.json';
+import manifest from 'data/manifest';
 import socialData from 'data/social.json';
 
 export interface SEOProps {
@@ -29,6 +30,7 @@ const SEOBlock = ({
       <meta name="author" content={author.name} />
       <meta name="generator" content={`Next ${version}`} />
       <meta name="description" content={description || pkgDescription} />
+      <meta name="theme-color" content={manifest.theme_color} />
       {process.env.CONTEXT !== 'production' && (
         <meta name="robots" content="noindex,nofollow" />
       )}

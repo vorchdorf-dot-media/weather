@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const { nanoid } = require('nanoid/async');
 const withBundleAnalyzer = require('@next/bundle-analyzer');
 const withPlugins = require('next-compose-plugins');
 const withPreact = require('next-plugin-preact');
@@ -16,6 +17,8 @@ module.exports = withPlugins(
     withPWA,
   ],
   {
+    generateBuildId: async () =>
+      process.env.BUILD_ID ? JSON.stringify(process.env.BUILD_ID) : nanoid(),
     i18n: {
       defaultLocale: 'en',
       locales,
@@ -38,9 +41,10 @@ module.exports = withPlugins(
           use: ['@svgr/webpack'],
         }
       );
-      config.plugins.push(
-        new webpack.EnvironmentPlugin(Object.keys(process.env))
-      );
+      process.env.BUILD_ID &&
+        config.plugins.push(
+          new webpack.EnvironmentPlugin(Object.keys(process.env))
+        );
       return config;
     },
   }

@@ -12,7 +12,7 @@ import connect from '../db';
 let connection: Connection;
 
 export const config: Config = {
-  context: async ({ headers }: IncomingMessage) => {
+  context: async ({ req: { headers } }: { req: IncomingMessage }) => {
     connection = await connect().then(({ connection }) => connection);
     return {
       connection,
