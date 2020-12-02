@@ -39,13 +39,7 @@ module.exports = withPlugins(
         }
       );
       config.plugins.push(
-        new webpack.EnvironmentPlugin([
-          'ADMIN_USER',
-          'ADMIN_PASSWORD',
-          'MONGO_URL',
-          'MONGO_USER',
-          'MONGO_PASSWORD',
-        ])
+        new webpack.EnvironmentPlugin(Object.keys(process.env))
       );
       return config;
     },
