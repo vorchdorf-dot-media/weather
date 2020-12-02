@@ -33,7 +33,6 @@ abstract class MongooseDataSource<
   }
 
   protected async find(filter: RandomObject): Promise<Document[]> {
-    await this.connection();
     return this.model
       .find(filter)
       .sort({ createdAt: 'desc' })
@@ -43,7 +42,7 @@ abstract class MongooseDataSource<
   protected async findOne(filter: RandomObject): Promise<Document> {
     const { id, ...other } = filter;
     const sanitized = Object.assign({}, other, id && { _id: id });
-    await this.connection();
+
     return this.model
       .findOne(sanitized)
       .then(this.populateModel.bind(this)) as Promise<Document>;
@@ -54,14 +53,12 @@ abstract class MongooseDataSource<
   }
 
   protected async create(props: TProps): Promise<Document> {
-    await this.connection();
     return this.model
       .create(props)
       .then(this.populateModel.bind(this)) as Promise<Document>;
   }
 
   protected async delete(id: string): Promise<Document> {
-    await this.connection();
     return this.model
       .findByIdAndDelete(id)
       .then(this.populateModel.bind(this)) as Promise<Document>;
@@ -69,7 +66,7 @@ abstract class MongooseDataSource<
 
   protected async update(props: RandomObject): Promise<Document> {
     const { id, createdAt, updatedAt, __v, ...other } = props;
-    await this.connection();
+
     return this.model
       .findByIdAndUpdate(
         id,

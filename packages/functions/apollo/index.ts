@@ -1,4 +1,5 @@
 import { IncomingMessage } from 'http';
+import type { Connection } from 'mongoose';
 import { ApolloServer, Config } from 'apollo-server-micro';
 import { DataSources } from 'apollo-server-core/src/graphqlOptions';
 
@@ -8,9 +9,11 @@ import typeDefs from './types';
 import { RandomObject } from '../utils/definitions';
 import connect from '../db';
 
+let connection: Connection;
+
 export const config: Config = {
   context: async ({ headers }: IncomingMessage) => {
-    const { connection } = await connect();
+    connection = (await connect()).connection;
     return {
       connection,
       headers,
@@ -21,6 +24,15 @@ export const config: Config = {
     stations: new StationDataSource(),
   }),
   playground: process.env.CONTEXT !== 'production',
+  plugins: [
+    {
+      requestDidStart() {
+        return {
+          willSendResponse: async () => connection && connection.close(true),
+        };
+      },
+    },
+  ],
   resolvers,
   typeDefs,
 };

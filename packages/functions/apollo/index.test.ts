@@ -37,6 +37,7 @@ describe('Apollo GraphQL Server', () => {
     let errors: unknown;
 
     beforeAll(async () => {
+      await connect();
       client = createTestServer({
         context: {
           headers: {
@@ -204,7 +205,8 @@ describe('Apollo GraphQL Server', () => {
   describe('with unauthenticated user', () => {
     let client: ApolloServerTestClient;
 
-    beforeAll(() => {
+    beforeAll(async () => {
+      await connect();
       client = createTestServer({
         context: {
           headers: {},

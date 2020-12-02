@@ -10,7 +10,6 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
   }
 
   async getLatest(station: string): Promise<EntrySchema> {
-    await this.connection();
     try {
       const [entry] = (await this.model
         .find({ station })
@@ -34,7 +33,6 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
     from: string,
     to: string | number = Date.now()
   ): Promise<EntrySchema[]> {
-    await this.connection();
     try {
       const results = (await this.model
         .find({

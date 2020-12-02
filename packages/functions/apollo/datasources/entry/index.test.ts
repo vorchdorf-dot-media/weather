@@ -1,3 +1,4 @@
+import connect from '../../../db';
 import { StationSchema } from '../../../db/schemata/station';
 import { EntryDataSource, StationDataSource } from '..';
 
@@ -22,6 +23,7 @@ describe('Entry DataSource', () => {
   };
 
   beforeAll(async () => {
+    await connect();
     entry = new EntryDataSource();
     station = new StationDataSource();
 

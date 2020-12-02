@@ -23,9 +23,7 @@ export const StationMutation = {
     if (s < AUTH_SCOPE.ADMIN) {
       throw new AuthenticationError('Insufficient user privileges.');
     }
-    const result = await stations.createOne(station);
-    await connection.close(true);
-    return result;
+    return stations.createOne(station);
   },
 };
 
@@ -38,9 +36,7 @@ export const StationQuery = {
       dataSources: { stations },
     }: { connection: Connection; dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema> {
-    const result = await stations.getOne({ id });
-    await connection.close(true);
-    return result;
+    return stations.getOne({ id });
   },
 
   async stations(
@@ -51,8 +47,6 @@ export const StationQuery = {
       dataSources: { stations },
     }: { connection: Connection; dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema[]> {
-    const result = await stations.getMany({});
-    await connection.close(true);
-    return result;
+    return stations.getMany({});
   },
 };

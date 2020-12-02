@@ -37,15 +37,13 @@ export const EntryMutation = {
     }
 
     const [temperature, temperature2] = args.temperature;
-    const result = await entries.createOne({
+    return entries.createOne({
       ...args,
       station,
       temperature,
       temperature2,
       timestamp: new Date(args.timestamp * 1000),
     });
-    await connection.close(true);
-    return result;
   },
 };
 
@@ -58,9 +56,7 @@ export const EntryQuery = {
       dataSources: { entries },
     }: { connection: Connection; dataSources: { entries: EntryDataSource } }
   ): Promise<EntrySchema> {
-    const result = await entries.getLatest(station);
-    await connection.close(true);
-    return result;
+    return entries.getLatest(station);
   },
 
   async entries(
@@ -71,8 +67,6 @@ export const EntryQuery = {
       dataSources: { entries },
     }: { connection: Connection; dataSources: { entries: EntryDataSource } }
   ): Promise<EntrySchema[]> {
-    const result = await entries.getEntries(station, from, to);
-    await connection.close(true);
-    return result;
+    return entries.getEntries(station, from, to);
   },
 };
