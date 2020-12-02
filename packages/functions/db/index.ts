@@ -16,6 +16,8 @@ const CONNECTION = isTest()
 
 const client = async (): Promise<typeof mongoose> =>
   connect(CONNECTION, {
+    bufferCommands: false,
+    bufferMaxEntries: 0,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

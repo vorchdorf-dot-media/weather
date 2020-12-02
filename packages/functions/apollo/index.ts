@@ -10,8 +10,9 @@ import connect from '../db';
 
 export const config: Config = {
   context: async ({ headers }: IncomingMessage) => {
-    await connect();
+    const { connection } = await connect();
     return {
+      connection,
       headers,
     };
   },
