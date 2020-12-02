@@ -25,7 +25,7 @@ module.exports = withPlugins(
       disable: process.env.NODE_ENV !== 'production',
     },
     target: 'serverless',
-    webpack: config => {
+    webpack: (config, { webpack }) => {
       config.module.rules.push(
         {
           test: /\.mjs$/,
@@ -37,6 +37,15 @@ module.exports = withPlugins(
           exclude: /node_modules/,
           use: ['@svgr/webpack'],
         }
+      );
+      config.plugins.push(
+        new webpack.EnvironmentPlugin([
+          'ADMIN_USER',
+          'ADMIN_PASSWORD',
+          'MONGO_URL',
+          'MONGO_USER',
+          'MONGO_PASSWORD',
+        ])
       );
       return config;
     },

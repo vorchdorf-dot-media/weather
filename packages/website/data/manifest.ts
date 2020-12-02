@@ -14,7 +14,7 @@ export default {
   scope: '/',
   default_locale: 'en',
   display: 'standalone',
-  homepage_url: process.env.URL,
+  homepage_url: process.env.DEPLOY_PRIME_URL,
   icons: [
     {
       src: '/icons/rounded-icon-192.png',

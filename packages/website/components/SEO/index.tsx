@@ -18,8 +18,8 @@ const SEOBlock = ({
 }: SEOProps): JSX.Element => {
   const { author, description: pkgDescription } = pkg;
   const { version } = nextPkg;
-  const fallback = `${process.env.URL || ''}/card-image.jpg`;
-  const url = `${process.env.URL || ''}${path}`;
+  const fallback = `${process.env.DEPLOY_PRIME_URL || ''}/card-image.jpg`;
+  const url = `${process.env.DEPLOY_PRIME_URL || ''}${path}`;
 
   const { username } =
     socialData.find(({ provider }) => provider === 'twitter') || {};
