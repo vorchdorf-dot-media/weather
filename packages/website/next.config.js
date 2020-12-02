@@ -17,8 +17,7 @@ module.exports = withPlugins(
     withPWA,
   ],
   {
-    generateBuildId: async () =>
-      process.env.BUILD_ID ? JSON.stringify(process.env.BUILD_ID) : nanoid(),
+    generateBuildId: async () => process.env.BUILD_ID || nanoid(),
     i18n: {
       defaultLocale: 'en',
       locales,
