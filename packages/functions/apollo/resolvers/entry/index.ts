@@ -1,4 +1,5 @@
 import { AuthenticationError } from 'apollo-server-micro';
+import type { Connection } from 'mongoose';
 
 import { EntrySchema } from '../../../db/schemata/entry';
 import { scope, validateHash } from '../../../utils/authorization';
@@ -14,9 +15,14 @@ export const EntryMutation = {
     _parent: unknown,
     args: EntryInput,
     {
+      connection,
       dataSources: { entries },
       headers: { authorization },
-    }: { dataSources: { entries: EntryDataSource }; headers: StringObject }
+    }: {
+      connection: Connection;
+      dataSources: { entries: EntryDataSource };
+      headers: StringObject;
+    }
   ): Promise<EntrySchema> {
     const s = await scope(authorization);
     if (s !== AUTH_SCOPE.STATION) {
@@ -31,13 +37,15 @@ export const EntryMutation = {
     }
 
     const [temperature, temperature2] = args.temperature;
-    return entries.createOne({
+    const result = await entries.createOne({
       ...args,
       station,
       temperature,
       temperature2,
       timestamp: new Date(args.timestamp * 1000),
     });
+    await connection.close(true);
+    return result;
   },
 };
 
@@ -45,16 +53,26 @@ export const EntryQuery = {
   async entry(
     _parent: unknown,
     { station }: { station: string },
-    { dataSources: { entries } }: { dataSources: { entries: EntryDataSource } }
+    {
+      connection,
+      dataSources: { entries },
+    }: { connection: Connection; dataSources: { entries: EntryDataSource } }
   ): Promise<EntrySchema> {
-    return entries.getLatest(station);
+    const result = await entries.getLatest(station);
+    await connection.close(true);
+    return result;
   },
 
   async entries(
     _parent: unknown,
     { station, from, to }: { station: string; from: string; to?: string },
-    { dataSources: { entries } }: { dataSources: { entries: EntryDataSource } }
+    {
+      connection,
+      dataSources: { entries },
+    }: { connection: Connection; dataSources: { entries: EntryDataSource } }
   ): Promise<EntrySchema[]> {
-    return entries.getEntries(station, from, to);
+    const result = await entries.getEntries(station, from, to);
+    await connection.close(true);
+    return result;
   },
 };

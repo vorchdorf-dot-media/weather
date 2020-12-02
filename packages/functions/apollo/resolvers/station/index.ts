@@ -10,16 +10,22 @@ export const StationMutation = {
     _parent: unknown,
     { station }: { station: StationSchema },
     {
+      connection,
       dataSources: { stations },
       headers: { authorization },
-    }: { dataSources: { stations: StationDataSource }; headers: StringObject }
+    }: {
+      connection: Connection;
+      dataSources: { stations: StationDataSource };
+      headers: StringObject;
+    }
   ): Promise<StationSchema> {
     const s = await scope(authorization);
     if (s < AUTH_SCOPE.ADMIN) {
       throw new AuthenticationError('Insufficient user privileges.');
     }
-
-    return stations.createOne(station);
+    const result = await stations.createOne(station);
+    await connection.close(true);
+    return result;
   },
 };
 
@@ -28,10 +34,13 @@ export const StationQuery = {
     _parent: unknown,
     { id }: { id: string },
     {
+      connection,
       dataSources: { stations },
-    }: { dataSources: { stations: StationDataSource } }
+    }: { connection: Connection; dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema> {
-    return stations.getOne({ id });
+    const result = await stations.getOne({ id });
+    await connection.close(true);
+    return result;
   },
 
   async stations(
@@ -42,9 +51,8 @@ export const StationQuery = {
       dataSources: { stations },
     }: { connection: Connection; dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema[]> {
-    return stations.getMany({}).then(async results => {
-      await connection.close(true);
-      return results;
-    });
+    const result = await stations.getMany({});
+    await connection.close(true);
+    return result;
   },
 };
