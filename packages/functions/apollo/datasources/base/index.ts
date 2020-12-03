@@ -136,10 +136,7 @@ abstract class MongooseDataSource<
           })}`
         );
       }
-      console.log('Creating entry with data:');
-      console.log(other);
       const result = await this.create(other as TProps);
-      console.log('Create succeeded!');
       return result.toJSON();
     } catch (e) {
       console.error(e);

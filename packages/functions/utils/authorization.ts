@@ -23,10 +23,10 @@ export const validateHash = (
 
   const str = [
     station,
-    temperature > -274.0 && temperature,
-    temperature2 > -274.0 && temperature2,
-    humidity > -1.0 && humidity,
-    feels > -274.0 && feels,
+    temperature > -274.0 && Number(temperature).toFixed(2),
+    temperature2 > -274.0 && Number(temperature2).toFixed(2),
+    humidity > -1.0 && Number(humidity).toFixed(2),
+    feels > -274.0 && Number(feels).toFixed(2),
     timestamp,
   ]
     .filter(v => !!v)

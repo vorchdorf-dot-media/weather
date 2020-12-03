@@ -22,13 +22,13 @@ describe('utils/authorization', () => {
   });
 
   it('validates entry hash', () => {
-    const user = 'PJPWQSfT';
+    const user = 'd2Hr633Y';
     const payload: EntryInput = {
-      hash: 'b64ad2c3921da922acdb54e13fb59e8cbd2fb48d',
-      timestamp: 1604250300,
-      temperature: [22.4, 22.51],
-      humidity: 60.0,
-      feels: 22.71,
+      hash: '65c7d057d5825ca278af70624f1f2c0b4270a1c6',
+      timestamp: 1607006701,
+      temperature: [19.13, 19.2],
+      humidity: 48.0,
+      feels: 18.43,
     };
     const authorizationHeader = `Basic ${Buffer.from(
       `${user}:${payload.hash}`

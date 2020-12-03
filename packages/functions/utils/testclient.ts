@@ -15,14 +15,21 @@ export const generateHash = ({
   timestamp,
 }: {
   station: string;
-  temperature: number[];
-  humidity?: number;
-  feels?: number;
-  timestamp: number;
+  temperature: string[];
+  humidity?: string;
+  feels?: string;
+  timestamp: string;
 }): string => {
   const hash = createHash('sha1');
   hash.update(
-    [station, temperature, temperature2, humidity, feels, timestamp]
+    [
+      station,
+      Number(temperature).toFixed(2),
+      Number(temperature2).toFixed(2),
+      Number(humidity).toFixed(2),
+      Number(feels).toFixed(2),
+      timestamp,
+    ]
       .filter(v => !!v)
       .join('')
   );
