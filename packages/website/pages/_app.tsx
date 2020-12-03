@@ -1,3 +1,4 @@
+import { Provider } from '@urql/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { IntlProvider } from 'preact-i18n';
 import { AppProps } from 'next/app';
@@ -6,6 +7,7 @@ import Head from 'next/head';
 import pkg from 'package.json';
 import Footer from 'components/Footer';
 import SEOBlock from 'components/SEO';
+import client from 'utils/graphql';
 
 import 'assets/styles/global.css';
 import 'assets/styles/_app.css';
@@ -41,7 +43,9 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
         )}
       </Head>
       <main>
-        <Component {...pageProps} />
+        <Provider value={client}>
+          <Component {...pageProps} />
+        </Provider>
       </main>
       <Footer />
     </IntlProvider>

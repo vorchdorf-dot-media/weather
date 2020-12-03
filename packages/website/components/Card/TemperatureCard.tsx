@@ -53,6 +53,8 @@ const TemperatureCard = ({
     options: Intl.NumberFormatOptions = {}
   ): string =>
     new Intl.NumberFormat(locale, {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
       ...options,
     }).format(number);
 
@@ -100,7 +102,10 @@ const TemperatureCard = ({
           <div className={styles.container}>
             <small className={styles.label}>{humidityI18n}:</small>
             <span className={styles.data}>
-              {formatNumber(humidity)}
+              {formatNumber(humidity, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              })}
               <sup>%</sup>
             </span>
           </div>
