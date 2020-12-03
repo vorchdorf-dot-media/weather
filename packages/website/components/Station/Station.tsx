@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import useLocale from 'utils/hooks/useLocale';
 
-import styles from 'components/Card/StationCard.module.css';
+import styles from 'components/Station/Station.module.css';
 
 const StationCard = ({
   station,

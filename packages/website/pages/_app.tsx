@@ -11,7 +11,9 @@ import 'assets/styles/global.css';
 import 'assets/styles/_app.css';
 
 const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
-  const { homepage } = pkg;
+  const {
+    manifest: { short_name },
+  } = pkg;
   const { asPath, locale } = router;
   const [definition, setDefinition] = useState({});
   const locales = new Set();
@@ -29,9 +31,14 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
     <IntlProvider definition={definition}>
       <Head>
         <title>
-          {pageProps.title} | {homepage}
+          {pageProps.title ? `${pageProps.title} |` : ''}
+          {short_name}
         </title>
-        <SEOBlock path={asPath} name={pageProps.title} />
+        {!pageProps.statusCode ? (
+          <SEOBlock path={asPath} name={pageProps.title} />
+        ) : (
+          <meta name="robots" content="noindex,nofollow" />
+        )}
       </Head>
       <main>
         <Component {...pageProps} />

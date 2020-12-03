@@ -1,4 +1,10 @@
 {
+  "error": {
+    "notFound": "The requested resource could not be found.",
+    "notFoundID": "Resource with ID: {{id}} could not be found.",
+    "showStack": "Show detailed information",
+    "title": "Error"
+  },
   "index": {
     "headline": "This page is currently under construction.",
     "title": "Current weather records"

@@ -35,7 +35,6 @@ const SEOBlock = ({
         <meta name="robots" content="noindex,nofollow" />
       )}
 
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       <link rel="manifest" href="/api/manifest.json" />
       <link rel="icon" type="image/png" href="/favicon.png" />
       <link

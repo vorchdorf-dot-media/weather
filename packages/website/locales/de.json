@@ -1,4 +1,10 @@
 {
+  "error": {
+    "notFound": "Die gesuchte Ressource konnte nicht gefunden werden.",
+    "notFoundID": "Die Ressource mit ID: {{id}} konnte nicht gefunden werden.",
+    "showStack": "Detaillierte Informationen anzeigen",
+    "title": "Fehler"
+  },
   "index": {
     "headline": "Die Seite befindet sich momentan noch im Aufbau.",
     "title": "Aktuelle Wetteraufzeichnungen"

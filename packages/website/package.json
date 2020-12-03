@@ -11,7 +11,7 @@
   },
   "manifest": {
     "name": "Arduino Temperature Logging Service",
-    "short_name": "Temperature"
+    "short_name": "Temperature Logger"
   },
   "license": "MIT",
   "scripts": {

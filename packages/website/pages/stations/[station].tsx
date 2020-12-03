@@ -3,12 +3,15 @@ import { GetServerSideProps } from 'next';
 import { translate } from 'preact-i18n';
 
 import TemperatureCard from 'components/Card/TemperatureCard';
-import StationCard from 'components/Card/StationCard';
+import StationCard from 'components/Station/Station';
+import ErrorPage from 'pages/_error';
 import client from 'utils/graphql';
 import { GET_LATEST_ENTRY } from 'utils/queries';
 
-const Station = ({ entry }): JSX.Element => {
-  return (
+const Station = ({ entry, stack, statusCode, title }): JSX.Element => {
+  return statusCode ? (
+    <ErrorPage statusCode={statusCode} title={title} stack={stack} />
+  ) : (
     <Provider value={client}>
       <StationCard station={entry?.station} aria-level={1} />
       <TemperatureCard link={false} variant="primary" entry={entry} />
@@ -20,8 +23,8 @@ export const getServerSideProps: GetServerSideProps = async ({
   params: { station },
   locale,
 }) => {
+  const dictionary = (await import(`locales/${locale}.json`)).default;
   try {
-    const dictionary = (await import(`locales/${locale}.json`)).default;
     const { data, error } = await client
       .query(GET_LATEST_ENTRY, { station })
       .toPromise();
@@ -38,7 +41,11 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   } catch (e) {
     return {
-      notFound: true,
+      props: {
+        stack: e.message,
+        statusCode: 404,
+        title: translate('error.notFoundID', '', dictionary, { id: station }),
+      },
     };
   }
 };
