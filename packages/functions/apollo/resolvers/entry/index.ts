@@ -24,19 +24,24 @@ export const EntryMutation = {
       headers: StringObject;
     }
   ): Promise<EntrySchema> {
+    console.log('CreateEntry mutation called.');
     const s = await scope(authorization);
     if (s !== AUTH_SCOPE.STATION) {
       throw new AuthenticationError(
         'Only registered stations are allowed to create entries.'
       );
     }
+    console.log('Scope check succeeded!');
 
     const station = validateHash(authorization, args);
     if (!station) {
       throw new Error('Failed to validate hash!');
     }
+    console.log('Validate hash succeeded!');
 
     const [temperature, temperature2] = args.temperature;
+    console.log('Create entry with data:');
+    console.log(temperature, temperature2);
     return entries.createOne({
       ...args,
       station,
