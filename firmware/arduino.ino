@@ -229,7 +229,7 @@ void request(WeatherData *weather)
   }
 
   // Client is connected to API_HOST, now form GraphQL Mutation
-  String body = "{\"query\": \"mutation createEntry { createEntry(hash: \"" + weather->hash + "\", timestamp: " + weather->timestamp + ", temperature: [" + weather->temperature + ", " + weather->temperature2 + "], humidity: " + weather->humidity + ", feels: " + weather->feels + ") { id } }\"}";
+  String body = "{\"query\":\"mutation createEntry { createEntry(hash: \\\"" + weather->hash + "\\\", timestamp: " + weather->timestamp + ", temperature: [" + weather->temperature + ", " + weather->temperature2 + "], humidity: " + weather->humidity + ", feels: " + weather->feels + ") { id } }\",\"variables\":{}}";
   unsigned int len = body.length();
 
   // Form Basic authentication string
