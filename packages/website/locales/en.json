@@ -23,6 +23,10 @@
       "outside": "Sensor is placed outside."
     },
     "createdAt": "registered {{createdAt}}.",
+    "search": {
+      "label": "Search for station",
+      "submit": "Search"
+    },
     "title": "Temperature records of \"{{station}}\""
   },
   "temperature": {

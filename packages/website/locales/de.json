@@ -23,6 +23,10 @@
       "outside": "Sensor ist außen platziert."
     },
     "createdAt": "{{createdAt}} registriert.",
+    "search": {
+      "label": "Station suchen",
+      "submit": "Suchen"
+    },
     "title": "Temperaturaufzeichnungen von \"{{stations}}\""
   },
   "temperature": {

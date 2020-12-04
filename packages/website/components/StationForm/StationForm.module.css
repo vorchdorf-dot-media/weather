@@ -1,0 +1,28 @@
+.form {
+  position: relative;
+  border-radius: 4px;
+  border: 1px solid HSL(var(--color-grey), 0.333);
+  margin: var(--space-m) 0;
+  padding: var(--space-m);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.container label {
+  position: absolute;
+  display: block;
+  padding: 0 var(--space-s);
+  top: -1em;
+  left: var(--space-s);
+  background-color: HSL(var(--color-bg));
+}
+
+.container button {
+  flex: 1 0 auto;
+  padding: var(--space-s);
+  margin: 0;
+  margin-left: var(--space-s);
+}

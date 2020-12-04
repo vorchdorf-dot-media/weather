@@ -156,11 +156,26 @@ code {
   border-radius: 2px;
 }
 
-svg {
-  min-width: 1em;
-  min-height: 1em;
-  max-height: 100%;
-  max-width: 100%;
+label {
+  color: HSL(var(--color-grey));
+}
+
+input {
+  transition: border-color 200ms ease-in;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  border-bottom-color: HSL(var(--color-primary-offset));
+  padding: calc(var(--space-s) * 0.5) var(--space-s);
+  min-height: var(--size-touch);
+  width: 100%;
+  background-color: HSL(var(--color-grey), 0.125);
+  color: HSL(var(--color-main));
+  font-size: 1em;
+}
+
+input:focus {
+  outline: none;
+  border-color: HSL(var(--color-primary));
 }
 
 button {
@@ -183,8 +198,27 @@ button:focus,
 button:hover {
   border-color: HSL(var(--color-bg));
   background-color: HSL(var(--color-main));
-  color: inherit;
+  color: HSL(var(--color-bg));
   outline: none;
+}
+
+svg {
+  min-width: 1em;
+  min-height: 1em;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+figure {
+  margin: var(--space-m);
+}
+
+figcaption {
+  display: block;
+  margin-top: var(--space-s);
+  color: HSL(var(--color-grey));
+  text-align: center;
+  font-style: italic;
 }
 
 @media (min-width: 400px) {
