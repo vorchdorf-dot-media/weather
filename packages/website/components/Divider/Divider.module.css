@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin: var(--space-xl) 0;
+  color: HSL(var(--color-grey));
+}
+
+.container hr {
+  border: none;
+  flex: 0 1 auto;
+  background-color: HSL(var(--color-grey), 0.125);
+  height: 2px;
+  width: 100%;
+}
+
+.container span {
+  display: block;
+  flex: 1 0 auto;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing);
+  margin: 0 var(--space-l);
+}
