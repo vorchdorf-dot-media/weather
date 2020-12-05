@@ -51,6 +51,7 @@ station {
 export const GET_ENTRIES = `
 query entries($station: ID!, $from: String!, $to: String) {
   entries(station: $station, from: $from, to: $to) {
+    hash
     timestamp
     temperature
     temperature2
