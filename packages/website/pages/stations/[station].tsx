@@ -12,14 +12,14 @@ import { GET_LATEST_ENTRY } from 'utils/queries';
 
 const Station = ({ entry, stack, station, statusCode, title }): JSX.Element => {
   if (statusCode) {
-    return <ErrorPage statusCode={statusCode} title={title} stack={stack} />;
+    return <ErrorPage title={title} stack={stack} />;
   }
-  const [result, reExecuteQuery] = useQuery({
+  const [result, reexecuteQuery] = useQuery({
     query: GET_LATEST_ENTRY,
     variables: { station },
   });
 
-  const refresh = () => reExecuteQuery({ requestPolicy: 'network-only' });
+  const refresh = () => reexecuteQuery({ requestPolicy: 'network-only' });
 
   useEffect(() => {
     typeof window !== 'undefined' && window.addEventListener('focus', refresh);
@@ -48,6 +48,7 @@ const Station = ({ entry, stack, station, statusCode, title }): JSX.Element => {
       />
       <TemperatureCard
         link={false}
+        loading={result?.fetching}
         variant="primary"
         entry={result?.data?.entry || entry}
       />

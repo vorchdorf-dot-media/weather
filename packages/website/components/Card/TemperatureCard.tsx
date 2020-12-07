@@ -1,7 +1,10 @@
 import classnames from 'classnames';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useText, Text } from 'preact-i18n';
+import type { EntrySchema } from 'functions/dist/db/schemata/entry';
+import type { StationSchema } from 'functions/dist/db/schemata/station';
 
 import AlertIcon from 'assets/icons/alert.svg';
 import ArrowUpRightIcon from 'assets/icons/arrow-up-right.svg';
@@ -11,8 +14,19 @@ import useLocale from 'utils/hooks/useLocale';
 
 import styles from 'components/Card/TemperatureCard.module.scss';
 
+export interface EntryProps extends EntrySchema {
+  station: StationSchema;
+}
+export interface TemperatureCardProps {
+  entry: EntryProps;
+  link?: boolean;
+  loading?: boolean;
+  variant: 'grey' | 'primary' | 'secondary';
+}
+
 const TemperatureCard = ({
   link,
+  loading,
   variant,
   entry: {
     timestamp,
@@ -29,7 +43,7 @@ const TemperatureCard = ({
       },
     },
   },
-}): JSX.Element => {
+}: TemperatureCardProps): JSX.Element => {
   const { locale } = useRouter();
   const dayjs = useLocale(locale);
   const {
@@ -37,6 +51,9 @@ const TemperatureCard = ({
     humidityI18n,
     lastUpdated,
     latestEntry,
+    loadingLabel,
+    temp,
+    temp2,
     tempConfig,
     temp2Config,
   } = useText({
@@ -44,6 +61,9 @@ const TemperatureCard = ({
     humidityI18n: 'temperature.humidity',
     lastUpdated: 'temperature.lastUpdated',
     latestEntry: <Text id="temperature.latestEntry" fields={{ name }} />,
+    loading: 'loading',
+    temp: 'temperature.temperature',
+    temp2: 'temperature.temperature2',
     tempConfig: `temperature.config.${temperatureConfig}`,
     temp2Config: `temperature.config.${temperature2Config}`,
   });
@@ -58,10 +78,12 @@ const TemperatureCard = ({
       ...options,
     }).format(number);
 
+  const ActivityIcon = dynamic(() => import('assets/icons/activity.svg'));
+
   return (
     <Card variant={variant}>
       {name && (
-        <div className={classnames(styles.container, styles.header)}>
+        <article className={classnames(styles.container, styles.header)}>
           <span role="heading" aria-level={2} aria-label={latestEntry}>
             <strong>{name}</strong>
           </span>
@@ -72,35 +94,43 @@ const TemperatureCard = ({
               </a>
             </Link>
           )}
-        </div>
+        </article>
       )}
       {temperature && (
-        <div className={styles.container}>
-          <small className={styles.label}>{tempConfig}:</small>
+        <article className={styles.container}>
+          <small role="heading" aria-level={3} className={styles.label}>
+            {temp} ({tempConfig}):
+          </small>
           <span className={styles.data}>
             {formatNumber(temperature)}
             <sup>°C</sup>
           </span>
-        </div>
+        </article>
       )}
       {temperature2 && (
         <>
-          <div className={styles.container}>
-            <small className={styles.label}>{temp2Config}:</small>
+          <article className={styles.container}>
+            <small role="heading" aria-level={3} className={styles.label}>
+              {temp2} ({temp2Config}):
+            </small>
             <span className={styles.data}>
               {formatNumber(temperature2)}
               <sup>°C</sup>
             </span>
-          </div>
-          <div className={styles.container}>
-            <small className={styles.label}>{feelsI18n}:</small>
+          </article>
+          <article className={styles.container}>
+            <small role="heading" aria-level={3} className={styles.label}>
+              {feelsI18n}:
+            </small>
             <span className={styles.data}>
               {formatNumber(feels)}
               <sup>°C</sup>
             </span>
-          </div>
-          <div className={styles.container}>
-            <small className={styles.label}>{humidityI18n}:</small>
+          </article>
+          <article className={styles.container}>
+            <small role="heading" aria-level={3} className={styles.label}>
+              {humidityI18n}:
+            </small>
             <span className={styles.data}>
               {formatNumber(humidity, {
                 minimumFractionDigits: 0,
@@ -108,14 +138,21 @@ const TemperatureCard = ({
               })}
               <sup>%</sup>
             </span>
-          </div>
+          </article>
         </>
       )}
       {timestamp && (
-        <small className={classnames(styles.container, styles.footer)}>
-          {lastUpdated}: {dayjs(timestamp).fromNow()}
-          {new Date(timestamp).valueOf() < Date.now() - DAY && <AlertIcon />}
-        </small>
+        <div className={classnames(styles.container, styles.footer)}>
+          <small>
+            {lastUpdated}: {dayjs(timestamp).fromNow()}
+            {new Date(timestamp).valueOf() < Date.now() - DAY && <AlertIcon />}
+          </small>
+        </div>
+      )}
+      {loading && (
+        <div className={styles.svgContainer}>
+          <ActivityIcon aria-label={loadingLabel} />
+        </div>
       )}
     </Card>
   );

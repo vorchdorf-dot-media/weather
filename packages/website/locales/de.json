@@ -1,13 +1,22 @@
 {
   "error": {
+    "backToHome": "Zurück zur Startseite",
+    "headline": "Oh oh, da ist etwas schief gelaufen...",
     "notFound": "Die gesuchte Ressource konnte nicht gefunden werden.",
     "notFoundID": "Die Ressource mit ID: {{id}} konnte nicht gefunden werden.",
+    "or": "oder",
+    "searchOrBack": "Station suchen oder zurück zur Startseite",
     "showStack": "Detaillierte Informationen anzeigen",
+    "subtitle": "Das tut uns sehr leid! Wir haben einige Informationen gesammelt und können Ihnen nun folgende Optionen anbieten:",
     "title": "Fehler"
   },
   "index": {
+    "graphic": {
+      "caption": "Grafische Darstellung einer Arduino-kompatiblen Basisplatine"
+    },
     "headline": "Die Seite befindet sich momentan noch im Aufbau.",
-    "title": "Aktuelle Wetteraufzeichnungen"
+    "statistics": "Statistiken",
+    "title": "Aktuelle Temperaturaufzeichnungen"
   },
   "loading": "Lädt...",
   "site": {
@@ -25,15 +34,18 @@
     "createdAt": "{{createdAt}} registriert.",
     "search": {
       "label": "Station suchen",
+      "placeholder": "Stationsnamen eintippen...",
       "submit": "Suchen"
     },
     "title": "Temperaturaufzeichnungen von \"{{stations}}\""
   },
   "temperature": {
     "config": {
-      "IN": "Innen",
-      "OUT": "Außen"
+      "IN": "innen",
+      "OUT": "außen"
     },
+    "temperature": "Sensor 1",
+    "temperature2": "Sensor 2",
     "feels": "Gefühlt",
     "humidity": "Luftfeuchtigkeit",
     "lastUpdated": "Zuletzt aktualisiert",

@@ -42,9 +42,7 @@ const LoadingCard = ({
           <rect fill="url(#grad-2)"></rect>
         </svg>
         <span role="heading" aria-level={2} className={styles.heading}>
-          <div className={styles.svgContainer} aria-hidden>
-            <ActivityIcon />
-          </div>
+          <ActivityIcon className={styles.svgContainer} aria-hidden />
           {loading}
         </span>
       </div>

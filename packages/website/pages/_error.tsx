@@ -7,24 +7,38 @@ import StationForm from 'components/StationForm';
 
 import styles from 'assets/styles/_error.module.css';
 
-const ErrorPage = ({ stack, statusCode, title }): JSX.Element => {
-  const { notFound } = useText('error.notFound');
+const ErrorPage = ({ stack, title }): JSX.Element => {
+  const {
+    backToHome,
+    headline,
+    notFound,
+    or,
+    searchOrBack,
+    subtitle,
+  } = useText({
+    backToHome: 'error.backToHome',
+    headline: 'error.headline',
+    notFound: 'error.notFound',
+    or: 'error.or',
+    searchOrBack: 'error.searchOrBack',
+    subtitle: 'error.subtitle',
+  });
   return (
     <>
-      <h1 className={styles.heading}>{statusCode}</h1>
-      <ErrorCard message={title || notFound} stack={stack} />
-      <section className={styles.container}>
-        <StationForm />
-        <Divider
-          level={2}
-          aria-label="Station suchen oder zurück zur Startseite"
-        >
-          oder
-        </Divider>
-        <Link href="/">
-          <a>&larr; Zurück zur Startseite</a>
-        </Link>
-      </section>
+      <h1 className={styles.heading}>{headline}</h1>
+      <p>{subtitle}</p>
+      <div className={styles.container}>
+        <section className={styles.actions}>
+          <StationForm />
+          <Divider level={2} aria-label={searchOrBack}>
+            {or}
+          </Divider>
+          <Link href="/">
+            <a>&larr; {backToHome}</a>
+          </Link>
+        </section>
+        <ErrorCard message={title || notFound} stack={stack} />
+      </div>
     </>
   );
 };

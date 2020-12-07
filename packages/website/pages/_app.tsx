@@ -33,11 +33,15 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
     <IntlProvider definition={definition}>
       <Head>
         <title>
-          {pageProps.title ? `${pageProps.title} |` : ''}
+          {pageProps.title ? `${pageProps.title} | ` : ''}
           {short_name}
         </title>
         {!pageProps.statusCode ? (
-          <SEOBlock path={asPath} name={pageProps.title} />
+          <SEOBlock
+            path={asPath}
+            description={pageProps.description}
+            name={pageProps.title}
+          />
         ) : (
           <meta name="robots" content="noindex,nofollow" />
         )}

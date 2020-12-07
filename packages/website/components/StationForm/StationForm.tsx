@@ -8,8 +8,9 @@ import styles from 'components/StationForm/StationForm.module.css';
 
 const StationForm = (): JSX.Element => {
   const [id] = useState(nanoid);
-  const { searchFor, searchSubmit } = useText({
-    searchFor: 'stations.search.label',
+  const { label, placeholder, searchSubmit } = useText({
+    label: 'stations.search.label',
+    placeholder: 'stations.search.placeholder',
     searchSubmit: 'stations.search.submit',
   });
 
@@ -25,8 +26,8 @@ const StationForm = (): JSX.Element => {
       onSubmit={handleSubmit}
     >
       <div className={styles.container}>
-        <label htmlFor={id}>{searchFor}</label>
-        <input autoFocus id={id} type="text" />
+        <label htmlFor={id}>{label}</label>
+        <input autoFocus id={id} type="text" placeholder={placeholder} />
         <button title={searchSubmit}>
           <SearchIcon role="img" aria-hidden="true" />
         </button>

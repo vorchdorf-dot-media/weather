@@ -2,8 +2,11 @@
   position: relative;
   border-radius: 8px;
   border: 1px solid HSL(var(--color-grey), 0.25);
+  box-shadow: 0 5px 10px -2px HSL(var(--color-grey), 0.125);
   margin: var(--space-m) 0;
   padding: var(--space-m);
+  background-color: HSL(var(--color-bg));
+  z-index: 10;
 }
 
 .container {
@@ -22,6 +25,7 @@
 .container label {
   position: absolute;
   display: block;
+  border-radius: 8px;
   padding: 0 var(--space-s);
   top: -1em;
   left: var(--space-s);

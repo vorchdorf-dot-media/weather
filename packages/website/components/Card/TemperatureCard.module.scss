@@ -1,3 +1,9 @@
+@keyframes dash {
+  to {
+    stroke-dashoffset: 92;
+  }
+}
+
 .link {
   transition: opacity 200ms ease-in;
   flex: 0 0 auto;
@@ -73,14 +79,32 @@
 }
 
 .footer {
-  display: inline-flex;
-  align-self: end;
+  display: flex;
   align-items: center;
+  align-self: end;
   justify-content: flex-end;
 
-  svg {
-    display: inline-block;
-    margin-left: var(--space-m);
-    height: var(--space-l);
+  small {
+    display: inline-flex;
+    align-self: end;
+    align-items: inherit;
+    justify-content: flex-end;
+
+    svg {
+      display: inline-block;
+      margin-left: var(--space-m);
+      height: var(--space-l);
+    }
   }
+}
+
+.svgContainer {
+  position: absolute;
+  bottom: var(--space-m);
+  left: var(--space-m);
+}
+
+.svgContainer path {
+  animation: dash 1s linear infinite;
+  stroke-dasharray: 46;
 }

@@ -3,7 +3,6 @@
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: nowrap;
-  padding: var(--space-m) 0;
   margin: 0 auto;
   max-width: var(--width-m);
   background: transparent;

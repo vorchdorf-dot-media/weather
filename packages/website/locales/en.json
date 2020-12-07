@@ -1,13 +1,22 @@
 {
   "error": {
+    "backToHome": "Go back to the home page",
+    "headline": "Uh oh, something went wrong here...",
     "notFound": "The requested resource could not be found.",
     "notFoundID": "Resource with ID: {{id}} could not be found.",
+    "or": "or",
+    "searchOrBack": "Search for station or go back to the home page",
     "showStack": "Show detailed information",
+    "subtitle": "We're very sorry for that! We have gathered some information and may offer you the following possibilities:",
     "title": "Error"
   },
   "index": {
+    "graphic": {
+      "caption": "Graphical schematic of an Arduino-compatible base module"
+    },
     "headline": "This page is currently under construction.",
-    "title": "Current weather records"
+    "statistics": "Statistics",
+    "title": "Collecting current temperature data"
   },
   "loading": "Loading...",
   "site": {
@@ -25,15 +34,18 @@
     "createdAt": "registered {{createdAt}}.",
     "search": {
       "label": "Search for station",
+      "placeholder": "Type in station name...",
       "submit": "Search"
     },
     "title": "Temperature records of \"{{station}}\""
   },
   "temperature": {
     "config": {
-      "IN": "Inside",
-      "OUT": "Outside"
+      "IN": "inside",
+      "OUT": "outside"
     },
+    "temperature": "Sensor 1",
+    "temperature2": "Sensor 2",
     "feels": "Feels like",
     "humidity": "Humidity",
     "lastUpdated": "Last updated",

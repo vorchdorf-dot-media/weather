@@ -11,3 +11,9 @@ main {
   padding: var(--space-m);
   margin: 0 auto;
 }
+
+@media screen and (min-width: 768px) {
+  main {
+    padding-top: var(--space-xl);
+  }
+}

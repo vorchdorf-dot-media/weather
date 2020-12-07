@@ -1,10 +1,16 @@
 import styles from 'components/Divider/Divider.module.css';
 
+export interface DividerProps {
+  ['aria-label']?: string;
+  children: string;
+  level: number;
+}
+
 const Divider = ({
   ['aria-label']: ariaLabel,
   children,
   level,
-}): JSX.Element => {
+}: DividerProps): JSX.Element => {
   return (
     <div className={styles.container}>
       <hr />

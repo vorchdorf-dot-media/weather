@@ -9,6 +9,15 @@
     "email": "sascha.zarhuber@gmail.com",
     "url": "https://sascha.work"
   },
+  "keywords": [
+    "arduino",
+    "temperature",
+    "humidity",
+    "open source",
+    "weather",
+    "vorchdorf",
+    "media"
+  ],
   "manifest": {
     "name": "Arduino Temperature Logging Service",
     "short_name": "Temperature Logger"
