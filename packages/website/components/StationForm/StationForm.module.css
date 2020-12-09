@@ -1,0 +1,56 @@
+.form {
+  position: relative;
+  border-radius: 8px;
+  border: 1px solid HSL(var(--color-grey), 0.25);
+  box-shadow: 0 5px 10px -2px HSL(var(--color-grey), 0.125);
+  margin: var(--space-m) 0;
+  padding: var(--space-m);
+  background-color: HSL(var(--color-bg));
+  z-index: 10;
+}
+
+.container {
+  transition: border-color 200ms ease-in;
+  display: flex;
+  align-items: stretch;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-color: HSL(var(--color-grey), 0.125);
+}
+
+.container:focus-within {
+  border-color: HSL(var(--color-primary-offset));
+}
+
+.container label {
+  position: absolute;
+  display: block;
+  border-radius: 8px;
+  padding: 0 var(--space-s);
+  top: -1em;
+  left: var(--space-s);
+  background-color: HSL(var(--color-bg));
+}
+
+.container input {
+  border-width: 0;
+  background-color: transparent;
+}
+
+.container button {
+  flex: 1 0 auto;
+  border-radius: 6px;
+  border: none;
+  padding: var(--space-s);
+  margin: 0;
+  margin-left: var(--space-s);
+  background-color: transparent;
+  color: HSL(var(--color-grey));
+}
+
+.container button:active,
+.container button:focus,
+.container button:hover {
+  background-color: HSL(var(--color-grey));
+  color: HSL(var(--color-bg));
+}

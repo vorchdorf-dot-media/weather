@@ -1,5 +1,6 @@
 # Custom entries
-functions/*
+out_functions
+out_publish
 globalConfig.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/vscode,node,c++,react
@@ -172,3 +173,6 @@ sketch
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,node,c++,react
+
+# Local Netlify folder
+.netlify

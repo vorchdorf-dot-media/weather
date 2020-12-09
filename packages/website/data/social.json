@@ -1,0 +1,27 @@
+[
+  {
+    "provider": "Website",
+    "username": "Sascha Zarhuber",
+    "profile": "https://sascha.work"
+  },
+  {
+    "provider": "Twitter",
+    "username": "@saschazar",
+    "profile": "https://twitter.com/saschazar"
+  },
+  {
+    "provider": "Github",
+    "username": "saschazar21",
+    "profile": "https://github.com/saschazar21"
+  },
+  {
+    "provider": "LinkedIn",
+    "username": "Sascha Zarhuber",
+    "profile": "https://linkedin.com/in/sascha-zarhuber"
+  },
+  {
+    "provider": "Xing",
+    "username": "Sascha Zarhuber",
+    "profile": "https://www.xing.com/profile/Sascha_Zarhuber"
+  }
+]

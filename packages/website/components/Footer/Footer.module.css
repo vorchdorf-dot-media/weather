@@ -1,0 +1,23 @@
+.footer {
+  border-top: 2px solid HSL(var(--color-primary-offset));
+  margin-top: var(--space-l);
+  padding: var(--space-m);
+  text-align: center;
+}
+
+.footer p {
+  color: HSL(var(--color-grey));
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-align: left;
+}
+
+.footer p a {
+  color: HSL(var(--color-main));
+}
+
+@media screen and (min-width: 768px) {
+  .footer {
+    padding: var(--space-l) var(--space-m);
+  }
+}

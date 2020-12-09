@@ -1,0 +1,36 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin-top: var(--space-l);
+}
+
+.list li {
+  list-style: none;
+  margin: var(--space-s);
+}
+
+.list a {
+  transition: background-color 200ms ease-out;
+  display: block;
+  border-radius: 50%;
+  padding: calc(var(--space-s) * 1.25);
+  color: HSL(var(--color-bg));
+  height: 3rem;
+  width: 3rem;
+  line-height: 1rem;
+  background-color: HSL(var(--color-grey), 0.5);
+}
+
+.list a:hover,
+.list a:focus {
+  background-color: HSL(var(--color-grey));
+  outline: none;
+}
+
+@media (hover: none) {
+  .list a {
+    background-color: HSL(var(--color-grey));
+  }
+}

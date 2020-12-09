@@ -1,0 +1,54 @@
+{
+  "error": {
+    "backToHome": "Go back to the home page",
+    "headline": "Uh oh, something went wrong here...",
+    "notFound": "The requested resource could not be found.",
+    "notFoundID": "Resource with ID: {{id}} could not be found.",
+    "or": "or",
+    "searchOrBack": "Search for station or go back to the home page",
+    "showStack": "Show detailed information",
+    "subtitle": "We're very sorry for that! We have gathered some information and may offer you the following possibilities:",
+    "title": "Error"
+  },
+  "index": {
+    "graphic": {
+      "caption": "Graphical schematic of an Arduino-compatible base module"
+    },
+    "headline": "This page is currently under construction.",
+    "statistics": "Statistics",
+    "title": "Collecting current temperature data"
+  },
+  "loading": "Loading...",
+  "site": {
+    "description": "This website shows collected data from independent, Arduino-compatible temperature-measuring stations. It consists of 100% Open Source and voluntary work.",
+    "visitRepository": "To the source code repository"
+  },
+  "social": {
+    "link": "Visit {{username}}'s {{provider}} profile"
+  },
+  "stations": {
+    "config": {
+      "inside": "Sensor is placed inside.",
+      "outside": "Sensor is placed outside."
+    },
+    "createdAt": "registered {{createdAt}}.",
+    "search": {
+      "label": "Search for station",
+      "placeholder": "Type in station name...",
+      "submit": "Search"
+    },
+    "title": "Temperature records of \"{{station}}\""
+  },
+  "temperature": {
+    "config": {
+      "IN": "inside",
+      "OUT": "outside"
+    },
+    "temperature": "Sensor 1",
+    "temperature2": "Sensor 2",
+    "feels": "Feels like",
+    "humidity": "Humidity",
+    "lastUpdated": "Last updated",
+    "latestEntry": "Latest entry for \"{{name}}\""
+  }
+}

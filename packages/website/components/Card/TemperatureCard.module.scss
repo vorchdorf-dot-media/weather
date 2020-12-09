@@ -1,0 +1,110 @@
+@keyframes dash {
+  to {
+    stroke-dashoffset: 92;
+  }
+}
+
+.link {
+  transition: opacity 200ms ease-in;
+  flex: 0 0 auto;
+  display: block;
+  border-radius: 9999px;
+  padding: var(--space-s);
+  color: HSL(var(--bg));
+  background-color: HSL(var(--fg));
+  height: var(--size-touch);
+  width: var(--size-touch);
+  opacity: 0.667;
+
+  @media (hover: none) {
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus,
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.container {
+  flex: 1;
+  padding: var(--space-m);
+}
+
+.header,
+.footer {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  align-self: start;
+  justify-content: space-between;
+  border-bottom: 1px solid HSL(var(--color-main), 0.25);
+  margin-bottom: var(--space-m);
+  text-transform: uppercase;
+}
+
+.header,
+.footer,
+.label {
+  letter-spacing: var(--letter-spacing);
+}
+
+.footer,
+.data,
+.label {
+  text-align: right;
+}
+
+.data,
+.label {
+  display: block;
+  width: 100%;
+}
+
+.data {
+  font-size: 2.5rem;
+}
+
+.footer,
+.label {
+  opacity: 0.875;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  justify-content: flex-end;
+
+  small {
+    display: inline-flex;
+    align-self: end;
+    align-items: inherit;
+    justify-content: flex-end;
+
+    svg {
+      display: inline-block;
+      margin-left: var(--space-m);
+      height: var(--space-l);
+    }
+  }
+}
+
+.svgContainer {
+  position: absolute;
+  bottom: var(--space-m);
+  left: var(--space-m);
+}
+
+.svgContainer path {
+  animation: dash 1s linear infinite;
+  stroke-dasharray: 46;
+}

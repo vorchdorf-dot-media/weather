@@ -6,44 +6,40 @@
   "repository": "https://github.com/vorchdorf-dot-media/weather",
   "author": "Sascha Zarhuber <saschazar21@yahoo.de>",
   "license": "MIT",
-  "private": false,
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "start:functions": "NODE_ENV=development netlify-lambda serve --config ./webpack.functions.js src/functions",
-    "build:functions": "netlify-lambda build src/functions",
-    "build": "run-p build:**",
-    "test:lint": "eslint . --ext .ts",
+    "prestart": "netlify build --context branch-deploy --debug",
+    "start": "netlify dev",
+    "dev": "lerna run dev --parallel",
+    "prebuild": "rm -rf out_publish && rm -rf out_functions",
+    "build": "lerna run build",
+    "test:packages": "lerna run test --parallel",
     "test:jest": "jest --coverage --maxWorkers 4",
-    "test": "npm run test:lint && npm run test:jest"
+    "test": "run-s test:**"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@shelf/jest-mongodb": "^1.2.3",
-    "@types/aws-lambda": "^8.10.64",
-    "@types/basic-auth": "^1.1.3",
     "@types/jest": "^26.0.15",
-    "@types/mongoose": "^5.7.36",
     "@types/node": "^14.14.2",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
-    "apollo-server-testing": "^2.19.0",
-    "dayjs": "^1.9.4",
-    "dotenv-webpack": "^4.0.0",
-    "encoding": "^0.1.13",
     "eslint": "^7.11.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-webpack-plugin": "^2.2.0",
     "jest": "^26.6.1",
-    "netlify-lambda": "^2.0.1",
+    "lerna": "^3.22.1",
+    "netlify-cli": "^2.69.0",
     "npm-run-all": "^4.1.5",
     "ts-jest": "^26.4.3",
     "typescript": "^4.0.3"
   },
-  "dependencies": {
-    "apollo-datasource": "^0.7.2",
-    "apollo-server-lambda": "^2.18.2",
-    "basic-auth": "^2.0.1",
-    "graphql": "^15.4.0",
-    "mongoose": "^5.10.10",
-    "nanoid": "^3.1.15"
+  "resolutions": {
+    "next-on-netlify": "github:netlify/next-on-netlify#ll/i18n"
   }
 }

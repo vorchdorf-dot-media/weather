@@ -1,0 +1,54 @@
+{
+  "error": {
+    "backToHome": "Zurück zur Startseite",
+    "headline": "Oh oh, da ist etwas schief gelaufen...",
+    "notFound": "Die gesuchte Ressource konnte nicht gefunden werden.",
+    "notFoundID": "Die Ressource mit ID: {{id}} konnte nicht gefunden werden.",
+    "or": "oder",
+    "searchOrBack": "Station suchen oder zurück zur Startseite",
+    "showStack": "Detaillierte Informationen anzeigen",
+    "subtitle": "Das tut uns sehr leid! Wir haben einige Informationen gesammelt und können Ihnen nun folgende Optionen anbieten:",
+    "title": "Fehler"
+  },
+  "index": {
+    "graphic": {
+      "caption": "Grafische Darstellung einer Arduino-kompatiblen Basisplatine"
+    },
+    "headline": "Die Seite befindet sich momentan noch im Aufbau.",
+    "statistics": "Statistiken",
+    "title": "Aktuelle Temperaturaufzeichnungen"
+  },
+  "loading": "Lädt...",
+  "site": {
+    "description": "Diese Website zeigt gesammelte Daten von unabhängigen, Arduino-kompatiblen Temperatur-Messstationen. Sie besteht zu 100% aus Open Source und Freiwilligenarbeit.",
+    "visitRepository": "Zum Source Code"
+  },
+  "social": {
+    "link": "Besuche {{username}}'s {{provider}}-Profil"
+  },
+  "stations": {
+    "config": {
+      "inside": "Sensor ist innen platziert.",
+      "outside": "Sensor ist außen platziert."
+    },
+    "createdAt": "{{createdAt}} registriert.",
+    "search": {
+      "label": "Station suchen",
+      "placeholder": "Stationsnamen eintippen...",
+      "submit": "Suchen"
+    },
+    "title": "Temperaturaufzeichnungen von \"{{stations}}\""
+  },
+  "temperature": {
+    "config": {
+      "IN": "innen",
+      "OUT": "außen"
+    },
+    "temperature": "Sensor 1",
+    "temperature2": "Sensor 2",
+    "feels": "Gefühlt",
+    "humidity": "Luftfeuchtigkeit",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "latestEntry": "Aktuellster Eintrag für \"{{name}}\""
+  }
+}
