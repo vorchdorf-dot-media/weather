@@ -45,6 +45,16 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
         ) : (
           <meta name="robots" content="noindex,nofollow" />
         )}
+        <link
+          rel="preconnect"
+          crossOrigin="true"
+          href="https://fonts.gstatic.com"
+        />
+        <link
+          rel="preconnect"
+          crossOrigin="true"
+          href="https://fonts.googleapis.com"
+        />
       </Head>
       <main>
         <Provider value={client}>

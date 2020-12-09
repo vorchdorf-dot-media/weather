@@ -30,18 +30,6 @@ const Station = ({ entry, stack, station, statusCode, title }): JSX.Element => {
 
   return (
     <>
-      <Head>
-        <link
-          rel="preconnect"
-          crossOrigin="true"
-          href="https://fonts.gstatic.com"
-        />
-        <link
-          rel="preconnect"
-          crossOrigin="true"
-          href="https://fonts.googleapis.com"
-        />
-      </Head>
       <StationCard
         station={result?.data?.entry?.station || entry?.station}
         aria-level={1}

@@ -9,7 +9,7 @@ import styles from 'components/Footer/Footer.module.css';
 
 const CREATED = 2020;
 const CURRENT = new Date().getFullYear();
-const URL = process.env.DEPLOY_PRIME_URL || 'http://localhost:3000';
+const URL = process.env.URL || 'http://localhost:3000';
 
 const Footer = (): JSX.Element => {
   const { repository, author } = pkg;
