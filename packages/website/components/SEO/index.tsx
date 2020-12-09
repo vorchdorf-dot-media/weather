@@ -31,9 +31,9 @@ const SEOBlock = ({
       <meta name="generator" content={`Next ${version}`} />
       <meta name="description" content={description || pkgDescription} />
       <meta name="theme-color" content={manifest.theme_color} />
-      {process.env.CONTEXT !== 'production' && (
-        <meta name="robots" content="noindex,nofollow" />
-      )}
+      {/* {process.env.CONTEXT !== 'production' && ( */}
+      <meta name="robots" content="noindex,nofollow" />
+      {/* )} */}
 
       <link rel="manifest" href="/api/manifest.json" />
       <link rel="icon" type="image/png" href="/favicon.png" />
