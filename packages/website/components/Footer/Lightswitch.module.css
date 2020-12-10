@@ -1,0 +1,5 @@
+.lightbulb {
+  fill: currentColor;
+  height: var(--space-xl);
+  width: var(--space-xl);
+}

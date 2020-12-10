@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.container + .container {
+  margin-top: var(--space-xl);
+}
+
 .footer p {
   color: HSL(var(--color-grey));
   font-size: 1rem;

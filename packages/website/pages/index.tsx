@@ -27,9 +27,9 @@ const Index = ({ title }) => {
           <figcaption>{graphic}</figcaption>
         </figure>
       </article>
-      {/* <section>
+      <section>
         <Divider level={2}>{statistics}</Divider>
-      </section> */}
+      </section>
     </>
   );
 };

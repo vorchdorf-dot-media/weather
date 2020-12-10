@@ -10,6 +10,11 @@
     "subtitle": "Das tut uns sehr leid! Wir haben einige Informationen gesammelt und können Ihnen nun folgende Optionen anbieten:",
     "title": "Fehler"
   },
+  "footer": {
+    "lightswitch": {
+      "label": "Lichtschalter"
+    }
+  },
   "index": {
     "graphic": {
       "caption": "Grafische Darstellung einer Arduino-kompatiblen Basisplatine"
