@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import Link from 'next/link';
 import { Text } from 'preact-i18n';
 
@@ -17,7 +18,7 @@ const Footer = (): JSX.Element => {
   const { repository, author } = pkg;
   return (
     <footer className={styles.footer}>
-      <Container className={styles.container}>
+      <Container className={classnames(styles.container, styles.navigation)}>
         <Breadcrumbs />
         <Lightswitch />
       </Container>

@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'preact/hooks';
 import { useText } from 'preact-i18n';
@@ -48,11 +49,15 @@ const Lightswitch = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <label htmlFor={id}>{lightswitch}</label>
-      <input type="radio" id={id} checked={light} onClick={toggle} />
+      <input type="checkbox" id={id} checked={light} onClick={toggle} />
       <svg
-        className={styles.lightbulb}
+        role="img"
+        aria-hidden="true"
+        className={classnames(styles.lightbulb, {
+          [styles.off]: !light,
+        })}
         width="512"
         height="512"
         viewBox="0 0 512 512"

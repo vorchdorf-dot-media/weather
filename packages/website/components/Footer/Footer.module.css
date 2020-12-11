@@ -9,6 +9,13 @@
   margin-top: var(--space-xl);
 }
 
+.navigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(auto, 1fr));
+  column-gap: var(--space-l);
+  align-content: center;
+}
+
 .footer p {
   color: HSL(var(--color-grey));
   font-size: 1rem;

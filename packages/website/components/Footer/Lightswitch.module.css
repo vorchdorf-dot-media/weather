@@ -1,5 +1,90 @@
+@keyframes jitter {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  7% {
+    transform: rotate(15deg);
+  }
+
+  20% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(7deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.container {
+  transition: border-color 200ms ease-in;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: flex-end;
+  grid-column-end: -1;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px -1px HSL(var(--color-secondary)),
+    inset 0 0 4px HSL(var(--color-grey), 0.125);
+  padding: var(--space-s);
+  height: var(--size-touch);
+  width: var(--size-touch);
+  background-color: HSL(var(--color-secondary-offset));
+}
+
+.container:focus-within {
+  border-color: HSL(var(--color-secondary));
+}
+
+.container label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.container input {
+  position: absolute;
+  border: none;
+  margin: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 9999;
+}
+
+.container input:hover {
+  cursor: pointer;
+}
+
+.container input:focus + .lightbulb,
+.container input:hover + .lightbulb {
+  animation: jitter 500ms ease-in;
+}
+
 .lightbulb {
   fill: currentColor;
-  height: var(--space-xl);
-  width: var(--space-xl);
+  filter: drop-shadow(0 -3px 8px HSL(var(--color-secondary)));
+}
+
+.lightbulb g {
+  transition: opacity 200ms ease-in;
+  opacity: 1;
+}
+
+.off g {
+  opacity: 0;
 }
