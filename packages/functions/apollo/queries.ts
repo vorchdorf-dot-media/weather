@@ -105,8 +105,8 @@ export const GET_STATION = gql`
 `;
 
 export const GET_STATIONS = gql`
-  query stations {
-    stations {
+  query stations($name: String) {
+    stations(name: $name) {
       ${station}
     }
   }

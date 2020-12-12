@@ -78,7 +78,7 @@ const types = gql`
     entry(station: ID!): Entry
     entries(station: ID!, from: String!, to: String): [Entry]
     station(id: ID!): Station
-    stations: [Station]
+    stations(name: String): [Station]
   }
 
   type Mutation {

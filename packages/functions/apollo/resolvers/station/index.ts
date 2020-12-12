@@ -41,12 +41,14 @@ export const StationQuery = {
 
   async stations(
     _parent: unknown,
-    _args: unknown,
+    { name }: { name?: string },
     {
       connection,
       dataSources: { stations },
     }: { connection: Connection; dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema[]> {
-    return stations.getMany({});
+    return stations.getMany(
+      Object.assign({}, name ? { name: new RegExp(name, 'i') } : null)
+    );
   },
 };
