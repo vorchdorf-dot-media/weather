@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useState } from 'preact/hooks';
 import { useText, Text } from 'preact-i18n';
 import { useQuery } from '@urql/preact';
@@ -10,7 +11,6 @@ import useDebounce from 'utils/hooks/useDebounce';
 import { GET_STATIONS } from 'utils/queries';
 
 import styles from 'components/StationForm/StationForm.module.css';
-import Link from 'next/link';
 
 const StationForm = (): JSX.Element => {
   const [term, setTerm] = useState(null);
