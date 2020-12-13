@@ -40,6 +40,7 @@
     "search": {
       "label": "Search for station",
       "placeholder": "Type in station name...",
+      "results": "{{amount}} stations found using search term: \"{{term}}\"",
       "submit": "Search"
     },
     "title": "Temperature records of \"{{station}}\""

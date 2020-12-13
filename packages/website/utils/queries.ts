@@ -70,8 +70,8 @@ query entry($station: ID!) {
 `;
 
 export const GET_STATIONS = `
-query stations {
-  stations {
+query stations($name: String) {
+  stations(name: $name) {
     ${station}
   }
 }
