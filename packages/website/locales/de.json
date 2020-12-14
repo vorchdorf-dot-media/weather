@@ -38,10 +38,12 @@
     },
     "createdAt": "{{createdAt}} registriert.",
     "search": {
+      "description": "Registrierte Temperaturstationen ganz einfach nach Namen suchen und sofort die aktuellsten Temperatureinträge anzeigen lassen.",
       "label": "Station suchen",
       "placeholder": "Stationsnamen eintippen...",
       "results": "{{amount}} Stationen bei der Suche nach \"{{term}}\" gefunden",
-      "submit": "Suchen"
+      "submit": "Suchen",
+      "title": "Temperaturstationen suchen"
     },
     "title": "Temperaturaufzeichnungen von \"{{stations}}\""
   },

@@ -38,10 +38,12 @@
     },
     "createdAt": "registered {{createdAt}}.",
     "search": {
+      "description": "Simply search registered temperature stations by name and look up their latest temperature data.",
       "label": "Search for station",
       "placeholder": "Type in station name...",
       "results": "{{amount}} stations found using search term: \"{{term}}\"",
-      "submit": "Search"
+      "submit": "Search",
+      "title": "Search for temperature stations"
     },
     "title": "Temperature records of \"{{station}}\""
   },

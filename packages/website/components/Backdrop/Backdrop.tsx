@@ -8,16 +8,20 @@ const Backdrop = ({ onClose }: { onClose: () => void }): JSX.Element => {
   useEffect(() => {
     document.body.style.position = 'fixed';
     document.body.style.top = `-${window.scrollY}px`;
-    document.body.style['padding-right'] = '15px';
-    document.body.style['margin-right'] = '-15px';
+    if (document.body.scrollHeight > window.innerHeight) {
+      document.body.style['padding-right'] = '15px';
+      document.body.style['margin-right'] = '-15px';
+    }
 
     window.addEventListener('keyup', handleClose.bind(this));
 
     return () => {
       document.body.style.position = '';
       document.body.style.top = '';
-      document.body.style['padding-right'] = '';
-      document.body.style['margin-right'] = '';
+      if (document.body.scrollHeight > window.innerHeight) {
+        document.body.style['padding-right'] = '';
+        document.body.style['margin-right'] = '';
+      }
 
       window.removeEventListener('keyup', handleClose.bind(this));
     };

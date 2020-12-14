@@ -7,11 +7,14 @@ import { translate } from 'preact-i18n';
 
 import StationForm from 'components/StationForm';
 
-const Stations = ({ title }): JSX.Element => {
+import styles from 'assets/styles/stations.module.css';
+
+const Stations = ({ description, title }): JSX.Element => {
   return (
     <>
-      <h1>{title}</h1>
+      <h1 className={styles.headline}>{title}</h1>
       <StationForm autoFocus />
+      <p className={styles.description}>{description}</p>
     </>
   );
 };
@@ -21,9 +24,11 @@ export const getStaticProps: GetStaticProps = async ({
 }: GetStaticPropsContext): Promise<
   GetStaticPropsResult<{ [key: string]: string }>
 > => {
+  const dictionary = (await import(`locales/${locale}.json`)).default;
   return {
     props: {
-      title: 'Heyo',
+      description: translate('stations.search.description', '', dictionary),
+      title: translate('stations.search.title', '', dictionary),
     },
     revalidate: 5,
   };
