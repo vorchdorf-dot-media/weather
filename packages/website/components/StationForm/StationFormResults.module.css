@@ -1,0 +1,86 @@
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.container {
+  animation: appear 500ms ease-in;
+  position: absolute;
+  border-radius: inherit;
+  border: 1px solid HSL(var(--color-grey), 0.333);
+  box-shadow: 0 5px 15px 2px HSL(var(--color-grey), 0.125);
+  width: calc(100% + 4px);
+  top: calc(100% + var(--space-m));
+  left: -2px;
+  background-color: HSL(var(--color-bg));
+  overflow: hidden;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  max-height: 50vh;
+  color: HSL(var(--color-main), 0.667);
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  letter-spacing: var(--letter-spacing);
+  opacity: 1;
+}
+
+.results [role='heading'] {
+  display: block;
+  border-bottom: 2px solid HSL(var(--color-grey), 0.333);
+  box-shadow: 0 5px 10px -2px HSL(var(--color-grey), 0.125);
+  padding: var(--space-m);
+}
+
+.results ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.results li {
+  margin: 0 var(--space-m);
+}
+
+.results li + li {
+  border-top: 1px solid HSL(var(--color-grey), 0.125);
+}
+
+.results a {
+  transition: background-color 200ms ease-in;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-m);
+  margin: 0 calc(var(--space-m) * -1);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing);
+  font-size: 1.25rem;
+}
+
+.results svg {
+  transition: opacity 200ms ease-in;
+  opacity: 0;
+}
+
+.results a:focus svg,
+.results a:hover svg {
+  opacity: 1;
+}
+
+.results a:focus,
+.results a:hover {
+  background-color: HSL(var(--color-grey), 0.125);
+}
