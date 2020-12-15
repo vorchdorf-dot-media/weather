@@ -33,7 +33,8 @@ const StationFormResults = ({ term }: { term: string }): JSX.Element => {
         <span role="heading" aria-level={2}>
           <Text
             id="stations.search.results"
-            fields={{ amount: data?.stations?.length, term }}
+            plural={data?.stations?.length}
+            fields={{ count: data?.stations?.length, term }}
           />
         </span>
         {data?.stations?.length > 0 && (

@@ -1,7 +1,4 @@
-.headline {
-  margin-bottom: var(--space-l);
-}
-
+.headline,
 .description {
-  margin-bottom: var(--space-xl);
+  margin-top: var(--space-l);
 }

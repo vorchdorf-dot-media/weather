@@ -12,9 +12,9 @@ import styles from 'assets/styles/stations.module.css';
 const Stations = ({ description, title }): JSX.Element => {
   return (
     <>
+      <StationForm autoFocus />
       <h1 className={styles.headline}>{title}</h1>
       <p className={styles.description}>{description}</p>
-      <StationForm autoFocus />
     </>
   );
 };

@@ -41,9 +41,13 @@
       "description": "Registrierte Temperaturstationen ganz einfach nach Namen suchen und sofort die aktuellsten Temperatureinträge anzeigen lassen.",
       "label": "Station suchen",
       "placeholder": "Stationsnamen eintippen...",
-      "results": "{{amount}} Stationen bei der Suche nach \"{{term}}\" gefunden",
+      "results": {
+        "none": "Keine Stationen bei der Suche nach \"{{term}}\" gefunden",
+        "one": "{{count}} Station bei der Suche nach \"{{term}}\" gefunden",
+        "many": "{{count}} Stationen bei der Suche nach \"{{term}}\" gefunden"
+      },
       "submit": "Suchen",
-      "title": "Temperaturstationen suchen"
+      "title": "Temperaturstationen"
     },
     "title": "Temperaturaufzeichnungen von \"{{stations}}\""
   },

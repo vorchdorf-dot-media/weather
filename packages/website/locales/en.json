@@ -41,9 +41,13 @@
       "description": "Simply search registered temperature stations by name and look up their latest temperature data.",
       "label": "Search for station",
       "placeholder": "Type in station name...",
-      "results": "{{amount}} stations found using search term: \"{{term}}\"",
+      "results": {
+        "none": "No stations found using search term: \"{{term}}\"",
+        "one": "{{count}} station found using search term: \"{{term}}\"",
+        "many": "{{count}} stations found using search term: \"{{term}}\""
+      },
       "submit": "Search",
-      "title": "Search for temperature stations"
+      "title": "Temperature stations"
     },
     "title": "Temperature records of \"{{station}}\""
   },
