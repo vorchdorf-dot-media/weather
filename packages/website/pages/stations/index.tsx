@@ -13,8 +13,8 @@ const Stations = ({ description, title }): JSX.Element => {
   return (
     <>
       <h1 className={styles.headline}>{title}</h1>
-      <StationForm autoFocus />
       <p className={styles.description}>{description}</p>
+      <StationForm autoFocus />
     </>
   );
 };
