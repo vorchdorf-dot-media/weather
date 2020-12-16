@@ -76,6 +76,30 @@ abstract class MongooseDataSource<
       .then(this.populateModel.bind(this)) as Promise<Document>;
   }
 
+  async count(filter: RandomObject): Promise<number> {
+    try {
+      const result = await this.model.countDocuments(filter);
+      return result;
+    } catch (e) {
+      console.error(e);
+      throw new Error(
+        `Failed to count ${this.name} entries using filter: ${JSON.stringify(
+          filter
+        )}.`
+      );
+    }
+  }
+
+  async countAll(): Promise<number> {
+    try {
+      const result = await this.model.estimatedDocumentCount();
+      return result;
+    } catch (e) {
+      console.error(e);
+      throw new Error(`Failed to count total number of ${this.name} entries.`);
+    }
+  }
+
   async getById(id: string): Promise<TProps> {
     try {
       const result = await this.findById(id);

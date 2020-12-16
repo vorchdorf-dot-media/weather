@@ -48,6 +48,12 @@ station {
 }
 `;
 
+export const COUNT_ENTRIES = `
+query entriesCount($station: ID, $from: String, $to: String) {
+  entriesCount(station: $station, from: $from, to: $to)
+}
+`;
+
 export const GET_ENTRIES = `
 query entries($station: ID!, $from: String!, $to: String) {
   entries(station: $station, from: $from, to: $to) {
@@ -66,6 +72,12 @@ query entry($station: ID!) {
   entry(station: $station) {
     ${entry}
   }
+}
+`;
+
+export const COUNT_STATIONS = `
+query stationsCount {
+  stationsCount
 }
 `;
 

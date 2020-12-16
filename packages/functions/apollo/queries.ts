@@ -72,6 +72,12 @@ export const CREATE_ENTRY = gql`
   }
 `;
 
+export const COUNT_ENTRIES = gql`
+  query entriesCount($station: ID, $from: String, $to: String) {
+    entriesCount(station: $station, from: $from, to: $to)
+  }
+`;
+
 export const GET_ENTRY = gql`
   query entry($station: ID!) {
     entry(station: $station) {
@@ -85,6 +91,12 @@ export const GET_ENTRIES = gql`
     entries(station: $station, from: $from, to: $to) {
       ${entry}
     }
+  }
+`;
+
+export const COUNT_STATIONS = gql`
+  query stationsCount {
+    stationsCount
   }
 `;
 

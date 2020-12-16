@@ -9,6 +9,36 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
     super('Entry', Entry, [{ path: 'station' }]);
   }
 
+  async count({
+    station,
+    from,
+    to,
+  }: {
+    station?: string;
+    from?: string;
+    to?: string;
+  }): Promise<number> {
+    const filter = []
+      .concat(
+        station ? [{ station }] : null,
+        from ? [{ timestamp: { $gt: new Date(from) } }] : null,
+        to ? [{ timestamp: { $lte: new Date(to) } }] : null
+      )
+      .filter(f => !!f);
+
+    try {
+      const result = await this.model.countDocuments({ $and: filter });
+      return result;
+    } catch (e) {
+      console.error(e);
+      throw new Error(
+        `Failed to count ${this.name} entries using filter: ${JSON.stringify(
+          filter
+        )}`
+      );
+    }
+  }
+
   async getLatest(station: string): Promise<EntrySchema> {
     try {
       const [entry] = (await this.model

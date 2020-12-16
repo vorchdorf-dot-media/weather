@@ -51,4 +51,14 @@ export const StationQuery = {
       Object.assign({}, name ? { name: new RegExp(name, 'i') } : null)
     );
   },
+
+  async stationsCount(
+    _parent: unknown,
+    _variables: unknown,
+    {
+      dataSources: { stations },
+    }: { dataSources: { stations: StationDataSource } }
+  ): Promise<number> {
+    return stations.countAll();
+  },
 };
