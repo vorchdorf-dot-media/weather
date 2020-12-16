@@ -17,6 +17,32 @@
   filter: drop-shadow(0 5px 10px HSL(var(--color-grey), 0.333));
 }
 
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: var(--space-m);
+  row-gap: var(--space-m);
+  text-align: center;
+}
+
+.divider {
+  grid-column: 1/-1;
+}
+
+.card {
+  margin-top: 0;
+}
+
+.card span,
+.card strong {
+  display: block;
+  width: 100%;
+}
+
+.card strong {
+  font-size: var(--space-l);
+}
+
 @media screen and (min-width: 768px) {
   .container {
     grid-template-columns: 2fr 1fr;
@@ -24,5 +50,9 @@
 
   .container figure {
     max-width: unset;
+  }
+
+  .statistics {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

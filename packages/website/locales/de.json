@@ -49,12 +49,22 @@
       "submit": "Suchen",
       "title": "Temperaturstationen"
     },
+    "stations": {
+      "none": "Stationen",
+      "one": "Station",
+      "many": "Stationen"
+    },
     "title": "Temperaturaufzeichnungen von \"{{stations}}\""
   },
   "temperature": {
     "config": {
       "IN": "innen",
       "OUT": "außen"
+    },
+    "entries": {
+      "none": "Temperatureinträge",
+      "one": "Temperatureintrag",
+      "many": "Temperatureinträge"
     },
     "temperature": "Sensor 1",
     "temperature2": "Sensor 2",

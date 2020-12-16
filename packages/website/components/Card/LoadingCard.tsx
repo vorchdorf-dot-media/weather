@@ -6,16 +6,18 @@ import styles from 'components/Card/LoadingCard.module.css';
 import ActivityIcon from 'assets/icons/activity.svg';
 
 const LoadingCard = ({
+  className,
   height = 150,
   variant,
 }: {
+  className?: string;
   height?: number;
   variant: 'grey' | 'primary' | 'secondary';
 }): JSX.Element => {
   const { loading } = useText('loading');
 
   return (
-    <Card variant={variant}>
+    <Card className={className} variant={variant}>
       <div style={{ minHeight: height }}>
         <svg width="100%" height="100%" className={styles.loading}>
           <defs>

@@ -1,13 +1,18 @@
 import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
-import { translate, useText } from 'preact-i18n';
+import { translate, useText, Text } from 'preact-i18n';
+import { useQuery } from '@urql/preact';
 
+import { Card, LoadingCard } from 'components/Card';
+import Divider from 'components/Divider';
 import StationForm from 'components/StationForm/StationForm';
 
 import styles from 'assets/styles/index.module.css';
-import Divider from 'components/Divider';
 
 const Index = ({ title }) => {
+  const [{ data, fetching, error }] = useQuery({
+    query: `{ entriesCount stationsCount }`,
+  });
   const { graphic, headline, statistics } = useText({
     graphic: 'index.graphic.caption',
     headline: 'index.headline',
@@ -27,8 +32,34 @@ const Index = ({ title }) => {
           <figcaption>{graphic}</figcaption>
         </figure>
       </article>
-      <section>
-        <Divider level={2}>{statistics}</Divider>
+      <section className={styles.statistics}>
+        <Divider className={styles.divider} level={2}>
+          {statistics}
+        </Divider>
+        {fetching ? (
+          <LoadingCard className={styles.card} height={120} variant="grey" />
+        ) : (
+          <Card className={styles.card} variant="grey">
+            <span role="heading" aria-level={3}>
+              <strong>{data?.stationsCount}</strong>
+              <span>
+                <Text id="stations.stations" plural={data?.stationsCount} />
+              </span>
+            </span>
+          </Card>
+        )}
+        {fetching ? (
+          <LoadingCard className={styles.card} height={120} variant="grey" />
+        ) : (
+          <Card className={styles.card} variant="grey">
+            <span role="heading" aria-level={3}>
+              <strong>{data?.entriesCount}</strong>
+              <span>
+                <Text id="temperature.entries" plural={data?.entriesCount} />
+              </span>
+            </span>
+          </Card>
+        )}
       </section>
     </>
   );

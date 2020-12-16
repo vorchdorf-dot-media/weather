@@ -1,18 +1,22 @@
+import classnames from 'classnames';
+
 import styles from 'components/Divider/Divider.module.css';
 
 export interface DividerProps {
   ['aria-label']?: string;
   children: string;
+  className?: string;
   level: number;
 }
 
 const Divider = ({
   ['aria-label']: ariaLabel,
   children,
+  className,
   level,
 }: DividerProps): JSX.Element => {
   return (
-    <div className={styles.container}>
+    <div className={classnames(styles.container, className)}>
       <hr />
       <span role="heading" aria-level={level} aria-label={ariaLabel}>
         {children}
