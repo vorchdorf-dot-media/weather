@@ -81,6 +81,67 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
       throw new Error(`Failed to fetch data from ${this.name} entries.`);
     }
   }
+
+  async getTemperatureExtreme({
+    station,
+    from,
+    to,
+    low,
+  }: {
+    station?: string;
+    from?: string;
+    to?: string;
+    low?: boolean;
+  }): Promise<EntrySchema> {
+    const filter = []
+      .concat(
+        station && { station },
+        from && { timestamp: { $gt: new Date(from) } },
+        to && { timestamp: { $lte: new Date(to) } }
+      )
+      .filter(f => !!f);
+    try {
+      const results = (await this.model
+        .find(
+          Object.assign(
+            {},
+            filter.length > 0
+              ? {
+                  $and: filter,
+                }
+              : null,
+            {
+              $or: [
+                { temperature: { $ne: null } },
+                { temperature2: { $ne: null } },
+              ],
+            }
+          )
+        )
+        .sort({ temperature: low ? 1 : -1, temperature2: low ? 1 : -1 })
+        .limit(10)
+        .then(this.populateModel.bind(this))) as Document[];
+
+      return results
+        .sort((a: Document, b: Document): number => {
+          const aTemp = low
+            ? Math.min(a.get('temperature'), a.get('temperature2'))
+            : Math.max(a.get('temperature'), a.get('temperature2'));
+          const bTemp = low
+            ? Math.min(b.get('temperature'), b.get('temperature2'))
+            : Math.max(b.get('temperature'), b.get('temperature2'));
+          if (aTemp < bTemp) {
+            return low ? -1 : 1;
+          }
+          return low ? 1 : -1;
+        })
+        .shift()
+        .toJSON();
+    } catch (e) {
+      console.error(e);
+      throw new Error(`Failed to fetch extreme ${this.name} entry.`);
+    }
+  }
 }
 
 export default EntryDataSource;

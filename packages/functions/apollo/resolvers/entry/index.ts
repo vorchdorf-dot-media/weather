@@ -60,6 +60,14 @@ export const EntryQuery = {
     return entries.getLatest(station);
   },
 
+  async entryExtreme(
+    _parent: unknown,
+    filter: { low?: boolean; station?: string; from?: string; to?: string },
+    { dataSources: { entries } }: { dataSources: { entries: EntryDataSource } }
+  ): Promise<EntrySchema> {
+    return entries.getTemperatureExtreme(filter);
+  },
+
   async entries(
     _parent: unknown,
     { station, from, to }: { station: string; from: string; to?: string },

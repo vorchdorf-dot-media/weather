@@ -94,6 +94,14 @@ export const GET_ENTRIES = gql`
   }
 `;
 
+export const GET_EXTREME_ENTRY = gql`
+  query entryExtreme($low: Boolean, $station: ID, $from: String, $to: String) {
+    entryExtreme(low: $low, station: $station, from: $from, to: $to) {
+      ${entry}
+    }
+  }
+`;
+
 export const COUNT_STATIONS = gql`
   query stationsCount {
     stationsCount

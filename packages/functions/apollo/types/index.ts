@@ -76,6 +76,7 @@ const types = gql`
 
   type Query {
     entry(station: ID!): Entry
+    entryExtreme(low: Boolean, station: ID, from: String, to: String): Entry
     entries(station: ID!, from: String!, to: String): [Entry]
     entriesCount(station: ID, from: String, to: String): Int
     station(id: ID!): Station
