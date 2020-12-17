@@ -21,8 +21,27 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: var(--space-m);
-  row-gap: var(--space-m);
+  row-gap: var(--space-l);
   text-align: center;
+}
+
+.temperatureStatistics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column: 1 / -1;
+  column-gap: var(--space-m);
+  border-radius: 8px;
+  border: 1px dashed HSL(var(--color-grey), 0.333);
+  margin: calc(var(--space-s) * -1);
+  padding: var(--space-s);
+  background-color: transparent;
+}
+
+.temperatureStatistics > span {
+  display: block;
+  grid-column: 1 / -1;
+  margin-bottom: var(--space-m);
+  color: HSL(var(--color-grey));
 }
 
 .divider {
@@ -53,6 +72,11 @@
   }
 
   .statistics {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    align-items: flex-end;
+  }
+
+  .temperatureStatistics {
+    grid-column: 3 / -1;
   }
 }

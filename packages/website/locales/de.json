@@ -66,6 +66,9 @@
       "one": "Temperatureintrag",
       "many": "Temperatureinträge"
     },
+    "extremes": "Höchst- & Niedrigstwerte der letzten {{amount}} Stunden",
+    "max": "Höchstwert",
+    "min": "Niedrigstwert",
     "temperature": "Sensor 1",
     "temperature2": "Sensor 2",
     "feels": "Gefühlt",

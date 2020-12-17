@@ -88,3 +88,16 @@ query stations($name: String) {
   }
 }
 `;
+
+export const GET_INDEX_PAGE_QUERY = `
+query indexPage($from: String) {
+  entries: entriesCount
+  stations: stationsCount
+  highest: entryExtreme(from: $from) {
+    ${entry}
+  }
+  lowest: entryExtreme(low: true, from: $from) {
+    ${entry}
+  }
+}
+`;
