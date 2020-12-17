@@ -1,8 +1,10 @@
 import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useState } from 'preact/hooks';
 import { translate, useText, Text } from 'preact-i18n';
 import { useQuery } from '@urql/preact';
+import classnames from 'classnames';
 
 import { Card, LoadingCard } from 'components/Card';
 import Divider from 'components/Divider';
@@ -19,12 +21,27 @@ const Index = ({ locale, title }) => {
     query: GET_INDEX_PAGE_QUERY,
     variables: { from: new Date(time - DAY).toISOString() },
   });
-  const { graphic, headline, statistics } = useText({
+  const { graphic, headline, statistics, visitHighest, visitLowest } = useText({
     graphic: 'index.graphic.caption',
     headline: 'index.headline',
     statistics: 'index.statistics',
+    visitHighest: (
+      <Text
+        id="stations.visit"
+        fields={{ name: data?.highest?.station?.name }}
+      />
+    ),
+    visitLowest: (
+      <Text
+        id="stations.visit"
+        fields={{ name: data?.lowest?.station?.name }}
+      />
+    ),
   });
   const ArduinoGraphic = dynamic(() => import('assets/graphics/arduino.svg'));
+  const ArrowUpRightIcon = dynamic(
+    () => import('assets/icons/arrow-up-right.svg')
+  );
   return (
     <>
       <StationForm />
@@ -80,23 +97,31 @@ const Index = ({ locale, title }) => {
               variant="secondary"
             />
           ) : (
-            <Card className={styles.card} variant="secondary">
-              <span role="heading" aria-level={4}>
-                <strong>
-                  {formatNumber(
-                    locale,
-                    Math.max(
-                      data?.highest?.temperature,
-                      data?.highest?.temperature2
-                    )
-                  )}
-                  <sup>°C</sup>
-                </strong>
-                <span>
-                  <Text id="temperature.max" />
-                </span>
-              </span>
-            </Card>
+            <Link href={'/stations/' + data?.highest?.station?.id}>
+              <a title={visitHighest}>
+                <Card
+                  className={classnames(styles.loaded, styles.card)}
+                  variant="secondary"
+                >
+                  <span role="heading" aria-level={4}>
+                    <strong>
+                      {formatNumber(
+                        locale,
+                        Math.max(
+                          data?.highest?.temperature,
+                          data?.highest?.temperature2
+                        )
+                      )}
+                      <sup>°C</sup>
+                    </strong>
+                    <span>
+                      <Text id="temperature.max" />
+                    </span>
+                  </span>
+                  <ArrowUpRightIcon aria-hidden="true" />
+                </Card>
+              </a>
+            </Link>
           )}
           {fetching ? (
             <LoadingCard
@@ -105,23 +130,31 @@ const Index = ({ locale, title }) => {
               variant="primary"
             />
           ) : (
-            <Card className={styles.card} variant="primary">
-              <span role="heading" aria-level={4}>
-                <strong>
-                  {formatNumber(
-                    locale,
-                    Math.min(
-                      data?.lowest?.temperature,
-                      data?.lowest?.temperature2
-                    )
-                  )}
-                  <sup>°C</sup>
-                </strong>
-                <span>
-                  <Text id="temperature.min" />
-                </span>
-              </span>
-            </Card>
+            <Link href={'/stations/' + data?.lowest?.station?.id}>
+              <a title={visitLowest}>
+                <Card
+                  className={classnames(styles.loaded, styles.card)}
+                  variant="primary"
+                >
+                  <span role="heading" aria-level={4}>
+                    <strong>
+                      {formatNumber(
+                        locale,
+                        Math.min(
+                          data?.lowest?.temperature,
+                          data?.lowest?.temperature2
+                        )
+                      )}
+                      <sup>°C</sup>
+                    </strong>
+                    <span>
+                      <Text id="temperature.min" />
+                    </span>
+                  </span>
+                  <ArrowUpRightIcon aria-hidden="true" />
+                </Card>
+              </a>
+            </Link>
           )}
         </section>
       </section>

@@ -44,6 +44,17 @@
   color: HSL(var(--color-grey));
 }
 
+.temperatureStatistics a {
+  transition: transform 200ms ease-in;
+  position: relative;
+  text-decoration: unset;
+}
+
+.temperatureStatistics a:focus,
+.temperatureStatistics a:hover {
+  transform: scale(1.05);
+}
+
 .divider {
   grid-column: 1/-1;
 }
@@ -60,6 +71,13 @@
 
 .card strong {
   font-size: var(--space-l);
+}
+
+.loaded svg {
+  position: absolute;
+  top: var(--space-s);
+  right: var(--space-s);
+  color: HSL(var(--color-main), 0.5);
 }
 
 @media screen and (min-width: 768px) {

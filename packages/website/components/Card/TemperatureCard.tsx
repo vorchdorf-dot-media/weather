@@ -57,6 +57,7 @@ const TemperatureCard = ({
     temp2,
     tempConfig,
     temp2Config,
+    visit,
   } = useText({
     feelsI18n: 'temperature.feels',
     humidityI18n: 'temperature.humidity',
@@ -67,6 +68,7 @@ const TemperatureCard = ({
     temp2: 'temperature.temperature2',
     tempConfig: `temperature.config.${temperatureConfig}`,
     temp2Config: `temperature.config.${temperature2Config}`,
+    visit: <Text id="stations.visit" fields={{ name }} />,
   });
 
   const ActivityIcon = dynamic(() => import('assets/icons/activity.svg'));
@@ -80,7 +82,7 @@ const TemperatureCard = ({
           </span>
           {link && (
             <Link href={'/stations/' + encodeURIComponent(id)}>
-              <a className={styles.link}>
+              <a className={styles.link} title={visit}>
                 <ArrowUpRightIcon />
               </a>
             </Link>

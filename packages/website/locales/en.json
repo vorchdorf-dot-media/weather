@@ -54,7 +54,8 @@
       "one": "station",
       "many": "stations"
     },
-    "title": "Temperature records of \"{{station}}\""
+    "title": "Temperature records of \"{{station}}\"",
+    "visit": "Go to station \"{{name}}\""
   },
   "temperature": {
     "config": {
