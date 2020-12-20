@@ -1,12 +1,11 @@
 import { createClient } from '@urql/preact';
 import fetch from 'isomorphic-unfetch';
 
+import { URL as serverURL } from 'utils/constants';
+
 const client = createClient({
   fetch,
-  url: new URL(
-    '/api/graphql',
-    process.env.URL || 'http://localhost:3000'
-  ).toString(),
+  url: new URL('/api/graphql', serverURL).toString(),
 });
 
 export default client;

@@ -1,5 +1,7 @@
 import pkg from 'package.json';
 
+import { URL } from 'utils/constants';
+
 const { author, description, manifest, version } = pkg;
 
 export default {
@@ -14,7 +16,7 @@ export default {
   scope: '/',
   default_locale: 'en',
   display: 'standalone',
-  homepage_url: process.env.URL,
+  homepage_url: URL,
   icons: [
     {
       src: '/icons/rounded-icon-192.png',

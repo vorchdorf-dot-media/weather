@@ -7,12 +7,12 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import Container from 'components/Container';
 import Lightswitch from 'components/Footer/Lightswitch';
 import SocialList from 'components/Footer/Social';
+import { URL } from 'utils/constants';
 
 import styles from 'components/Footer/Footer.module.css';
 
 const CREATED = 2020;
 const CURRENT = new Date().getFullYear();
-const URL = process.env.URL || 'http://localhost:3000';
 
 const Footer = (): JSX.Element => {
   const { repository, author } = pkg;
