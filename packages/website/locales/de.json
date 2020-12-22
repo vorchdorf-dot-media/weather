@@ -37,6 +37,7 @@
       "outside": "Sensor ist außen platziert."
     },
     "createdAt": "{{createdAt}} registriert.",
+    "description": "Diese Seite zeigt die aktuellsten Temperatur- & Luftfeuchtigkeitsdaten von {{station}} an.",
     "search": {
       "description": "Registrierte Temperaturstationen ganz einfach nach Namen suchen und sofort die aktuellsten Temperatureinträge anzeigen lassen.",
       "label": "Station suchen",
@@ -54,7 +55,7 @@
       "one": "Station",
       "many": "Stationen"
     },
-    "title": "Temperaturaufzeichnungen von \"{{stations}}\"",
+    "title": "Temperaturaufzeichnungen von \"{{station}}\"",
     "visit": "Zur Station \"{{name}}\" wechseln"
   },
   "temperature": {

@@ -57,6 +57,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     }
     return {
       props: {
+        description: translate('stations.description', '', dictionary, {
+          station: data?.entry?.station?.name,
+        }),
         entry: data?.entry,
         station,
         title: translate('stations.title', '', dictionary, {

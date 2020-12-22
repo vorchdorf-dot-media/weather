@@ -37,6 +37,7 @@
       "outside": "Sensor is placed outside."
     },
     "createdAt": "registered {{createdAt}}.",
+    "description": "View the latest transmitted data on temperature and humidity from {{station}}.",
     "search": {
       "description": "Simply search registered temperature stations by name and look up their latest temperature data.",
       "label": "Search for station",
