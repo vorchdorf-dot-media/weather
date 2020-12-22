@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from 'next';
+import type { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState } from 'preact/hooks';
@@ -162,7 +162,7 @@ const Index = ({ locale, title }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const translation = (await import(`locales/${locale}.json`)).default;
   return {
     props: {
