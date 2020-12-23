@@ -101,42 +101,50 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
       )
       .filter(f => !!f);
     try {
-      const results = (await this.model
-        .find(
-          Object.assign(
-            {},
-            filter.length > 0
-              ? {
-                  $and: filter,
-                }
-              : null,
-            {
-              $or: [
-                { temperature: { $ne: null } },
-                { temperature2: { $ne: null } },
-              ],
-            }
-          )
-        )
-        .sort({ temperature: low ? 1 : -1, temperature2: low ? 1 : -1 })
-        .limit(10)
-        .then(this.populateModel.bind(this))) as Document[];
+      const results: EntrySchema[] = await this.model.aggregate([
+        {
+          $match: filter.length ? { $and: filter } : {},
+        },
+        {
+          $lookup: {
+            from: 'stations',
+            localField: 'station',
+            foreignField: '_id',
+            as: 'station_data',
+          },
+        },
+        {
+          $sort: {
+            'station_data.config.temperature': -1,
+            'station_data.config.temperature2': -1,
+            temperature: low ? 1 : -1,
+            temperature2: low ? 1 : -1,
+          },
+        },
+        {
+          $limit: 10,
+        },
+      ]);
 
-      return results
-        .sort((a: Document, b: Document): number => {
+      const populated = (await (Entry.populate(
+        results,
+        this.populate
+      ) as unknown)) as EntrySchema[];
+
+      return populated
+        .sort((a: EntrySchema, b: EntrySchema): number => {
           const aTemp = low
-            ? Math.min(a.get('temperature'), a.get('temperature2'))
-            : Math.max(a.get('temperature'), a.get('temperature2'));
+            ? Math.min(a.temperature, a.temperature2)
+            : Math.max(a.temperature, a.temperature2);
           const bTemp = low
-            ? Math.min(b.get('temperature'), b.get('temperature2'))
-            : Math.max(b.get('temperature'), b.get('temperature2'));
+            ? Math.min(b.temperature, b.temperature2)
+            : Math.max(b.temperature, b.temperature2);
           if (aTemp < bTemp) {
             return low ? -1 : 1;
           }
           return low ? 1 : -1;
         })
-        .shift()
-        .toJSON();
+        .shift();
     } catch (e) {
       console.error(e);
       throw new Error(`Failed to fetch extreme ${this.name} entry.`);
