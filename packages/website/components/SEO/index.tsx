@@ -3,6 +3,7 @@ import nextPkg from 'next/package.json';
 import pkg from 'package.json';
 import manifest from 'data/manifest';
 import socialData from 'data/social.json';
+import { URL } from 'utils/constants';
 
 export interface SEOProps {
   description?: string;
@@ -19,8 +20,8 @@ const SEOBlock = ({
 }: SEOProps): JSX.Element => {
   const { author, description: pkgDescription } = pkg;
   const { version } = nextPkg;
-  const fallback = `${process.env.URL || ''}/card-image.jpg`;
-  const url = `${process.env.URL || ''}${path}`;
+  const fallback = `${URL}/card-image.jpg`;
+  const url = `${URL}${path}`;
 
   const { username } =
     socialData.find(({ provider }) => provider === 'twitter') || {};
@@ -31,9 +32,9 @@ const SEOBlock = ({
       <meta name="generator" content={`Next ${version}`} />
       <meta name="description" content={description || pkgDescription} />
       <meta name="theme-color" content={manifest.theme_color} />
-      {/* {process.env.CONTEXT !== 'production' && ( */}
-      <meta name="robots" content="noindex,nofollow" />
-      {/* )} */}
+      {process.env.CONTEXT !== 'production' && (
+        <meta name="robots" content="noindex,nofollow" />
+      )}
 
       <link rel="manifest" href="/api/manifest.json" />
       <link rel="icon" type="image/png" href="/favicon.png" />

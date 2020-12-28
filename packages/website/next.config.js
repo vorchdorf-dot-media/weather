@@ -20,7 +20,6 @@ module.exports = withPlugins(
     generateBuildId: async () => process.env.BUILD_ID || nanoid(),
     i18n: {
       defaultLocale: 'en',
-      localeDetection: false,
       locales,
     },
     pwa: {

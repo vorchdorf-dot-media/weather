@@ -10,6 +10,7 @@ import AlertIcon from 'assets/icons/alert.svg';
 import ArrowUpRightIcon from 'assets/icons/arrow-up-right.svg';
 import Card from 'components/Card/Card';
 import { DAY } from 'utils/constants';
+import { formatNumber } from 'utils/helpers';
 import useLocale from 'utils/hooks/useLocale';
 
 import styles from 'components/Card/TemperatureCard.module.scss';
@@ -56,6 +57,7 @@ const TemperatureCard = ({
     temp2,
     tempConfig,
     temp2Config,
+    visit,
   } = useText({
     feelsI18n: 'temperature.feels',
     humidityI18n: 'temperature.humidity',
@@ -66,17 +68,8 @@ const TemperatureCard = ({
     temp2: 'temperature.temperature2',
     tempConfig: `temperature.config.${temperatureConfig}`,
     temp2Config: `temperature.config.${temperature2Config}`,
+    visit: <Text id="stations.visit" fields={{ name }} />,
   });
-
-  const formatNumber = (
-    number: number,
-    options: Intl.NumberFormatOptions = {}
-  ): string =>
-    new Intl.NumberFormat(locale, {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-      ...options,
-    }).format(number);
 
   const ActivityIcon = dynamic(() => import('assets/icons/activity.svg'));
 
@@ -89,7 +82,7 @@ const TemperatureCard = ({
           </span>
           {link && (
             <Link href={'/stations/' + encodeURIComponent(id)}>
-              <a className={styles.link}>
+              <a className={styles.link} title={visit}>
                 <ArrowUpRightIcon />
               </a>
             </Link>
@@ -102,7 +95,7 @@ const TemperatureCard = ({
             {temp} ({tempConfig}):
           </small>
           <span className={styles.data}>
-            {formatNumber(temperature)}
+            {formatNumber(locale, temperature)}
             <sup>°C</sup>
           </span>
         </article>
@@ -114,7 +107,7 @@ const TemperatureCard = ({
               {temp2} ({temp2Config}):
             </small>
             <span className={styles.data}>
-              {formatNumber(temperature2)}
+              {formatNumber(locale, temperature2)}
               <sup>°C</sup>
             </span>
           </article>
@@ -123,7 +116,7 @@ const TemperatureCard = ({
               {feelsI18n}:
             </small>
             <span className={styles.data}>
-              {formatNumber(feels)}
+              {formatNumber(locale, feels)}
               <sup>°C</sup>
             </span>
           </article>
@@ -132,7 +125,7 @@ const TemperatureCard = ({
               {humidityI18n}:
             </small>
             <span className={styles.data}>
-              {formatNumber(humidity, {
+              {formatNumber(locale, humidity, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
               })}

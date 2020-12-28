@@ -10,11 +10,16 @@
     "subtitle": "We're very sorry for that! We have gathered some information and may offer you the following possibilities:",
     "title": "Error"
   },
+  "footer": {
+    "lightswitch": {
+      "label": "Lightswitch"
+    }
+  },
   "index": {
     "graphic": {
       "caption": "Graphical schematic of an Arduino-compatible base module"
     },
-    "headline": "This page is currently under construction.",
+    "headline": "Small Arduino-compatible & WiFi-enabled bots are constantly recording temperature- & humidity data. This is a project from hobbyists for hobbyists.",
     "statistics": "Statistics",
     "title": "Collecting current temperature data"
   },
@@ -32,18 +37,40 @@
       "outside": "Sensor is placed outside."
     },
     "createdAt": "registered {{createdAt}}.",
+    "description": "View the latest transmitted data on temperature and humidity from {{station}}.",
     "search": {
+      "description": "Simply search registered temperature stations by name and look up their latest temperature data.",
       "label": "Search for station",
       "placeholder": "Type in station name...",
-      "submit": "Search"
+      "results": {
+        "none": "No stations found using search term: \"{{term}}\"",
+        "one": "{{count}} station found using search term: \"{{term}}\"",
+        "many": "{{count}} stations found using search term: \"{{term}}\""
+      },
+      "submit": "Search",
+      "title": "Temperature stations"
     },
-    "title": "Temperature records of \"{{station}}\""
+    "stations": {
+      "none": "stations",
+      "one": "station",
+      "many": "stations"
+    },
+    "title": "Temperature records of \"{{station}}\"",
+    "visit": "Go to station \"{{name}}\""
   },
   "temperature": {
     "config": {
       "IN": "inside",
       "OUT": "outside"
     },
+    "entries": {
+      "none": "temperature entries",
+      "one": "temperature entry",
+      "many": "temperature entries"
+    },
+    "extremes": "Temperature extremes in last {{amount}} hours",
+    "max": "highest",
+    "min": "lowest",
     "temperature": "Sensor 1",
     "temperature2": "Sensor 2",
     "feels": "Feels like",

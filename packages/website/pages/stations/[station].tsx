@@ -1,6 +1,5 @@
 import { useQuery } from '@urql/preact';
 import { GetServerSideProps } from 'next';
-import Head from 'next/head';
 import { useEffect } from 'preact/hooks';
 import { translate } from 'preact-i18n';
 
@@ -58,6 +57,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     }
     return {
       props: {
+        description: translate('stations.description', '', dictionary, {
+          station: data?.entry?.station?.name,
+        }),
         entry: data?.entry,
         station,
         title: translate('stations.title', '', dictionary, {

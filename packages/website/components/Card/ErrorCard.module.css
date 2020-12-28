@@ -2,7 +2,7 @@
   --border: HSL(var(--color-secondary-offset));
 
   justify-content: flex-start;
-  background-color: transparent;
+  background-color: HSL(var(--color-main));
   border: 3px solid var(--border);
   color: HSL(var(--color-secondary));
 }
@@ -50,4 +50,14 @@
 
 .button svg {
   margin: 0;
+}
+
+:global(.theme-dark) .error {
+  background-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  :not(:global(.theme-light) .error) {
+    background-color: transparent;
+  }
 }

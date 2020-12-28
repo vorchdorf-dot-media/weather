@@ -72,6 +72,12 @@ export const CREATE_ENTRY = gql`
   }
 `;
 
+export const COUNT_ENTRIES = gql`
+  query entriesCount($station: ID, $from: String, $to: String) {
+    entriesCount(station: $station, from: $from, to: $to)
+  }
+`;
+
 export const GET_ENTRY = gql`
   query entry($station: ID!) {
     entry(station: $station) {
@@ -85,6 +91,20 @@ export const GET_ENTRIES = gql`
     entries(station: $station, from: $from, to: $to) {
       ${entry}
     }
+  }
+`;
+
+export const GET_EXTREME_ENTRY = gql`
+  query entryExtreme($low: Boolean, $station: ID, $from: String, $to: String) {
+    entryExtreme(low: $low, station: $station, from: $from, to: $to) {
+      ${entry}
+    }
+  }
+`;
+
+export const COUNT_STATIONS = gql`
+  query stationsCount {
+    stationsCount
   }
 `;
 
@@ -105,8 +125,8 @@ export const GET_STATION = gql`
 `;
 
 export const GET_STATIONS = gql`
-  query stations {
-    stations {
+  query stations($name: String) {
+    stations(name: $name) {
       ${station}
     }
   }

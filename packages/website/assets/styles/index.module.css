@@ -17,6 +17,69 @@
   filter: drop-shadow(0 5px 10px HSL(var(--color-grey), 0.333));
 }
 
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: var(--space-m);
+  row-gap: var(--space-l);
+  text-align: center;
+}
+
+.temperatureStatistics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column: 1 / -1;
+  column-gap: var(--space-m);
+  border-radius: 8px;
+  border: 1px dashed HSL(var(--color-grey), 0.333);
+  margin: calc(var(--space-s) * -1);
+  padding: var(--space-s);
+  background-color: transparent;
+}
+
+.temperatureStatistics > span {
+  display: block;
+  grid-column: 1 / -1;
+  margin-bottom: var(--space-m);
+  color: HSL(var(--color-grey));
+}
+
+.temperatureStatistics a {
+  transition: transform 200ms ease-in;
+  position: relative;
+  text-decoration: unset;
+}
+
+.temperatureStatistics a:focus,
+.temperatureStatistics a:hover {
+  transform: scale(1.05);
+}
+
+.divider {
+  grid-column: 1/-1;
+}
+
+.card {
+  margin-top: 0;
+}
+
+.card span,
+.card strong {
+  display: block;
+  width: 100%;
+}
+
+.card strong {
+  font-size: var(--space-l);
+}
+
+.loaded svg {
+  position: absolute;
+  top: var(--space-s);
+  right: var(--space-s);
+  color: HSL(var(--color-main), 0.5);
+}
+
 @media screen and (min-width: 768px) {
   .container {
     grid-template-columns: 2fr 1fr;
@@ -24,5 +87,14 @@
 
   .container figure {
     max-width: unset;
+  }
+
+  .statistics {
+    grid-template-columns: repeat(4, 1fr);
+    align-items: flex-end;
+  }
+
+  .temperatureStatistics {
+    grid-column: 3 / -1;
   }
 }

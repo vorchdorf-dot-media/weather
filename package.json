@@ -1,5 +1,5 @@
 {
-  "name": "weather.sascha.app",
+  "name": "wetter.vorchdorf.media",
   "version": "0.0.0",
   "description": "An Arduino-powered weather logging service",
   "main": "index.js",

@@ -1,0 +1,30 @@
+.list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.list li {
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: var(--letter-spacing);
+  line-height: 1em;
+}
+
+.list a {
+  padding: var(--space-s) 0;
+}
+
+.list svg {
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.separator.separator {
+  margin: 0 var(--space-s);
+  height: 0.5em;
+  width: 0.5em;
+  color: HSL(var(--color-main), 0.333);
+}

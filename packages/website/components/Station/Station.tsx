@@ -44,7 +44,7 @@ const StationCard = ({
         {station.name}
       </span>
       <div className={styles.metaContainer}>
-        {Object.keys(stationConfig).map(renderIcon)}
+        {Object.values(stationConfig).map(renderIcon)}
         <small className={styles.createdAt}>
           <Text
             id="stations.createdAt"

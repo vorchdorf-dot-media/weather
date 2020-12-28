@@ -1,0 +1,4 @@
+.headline,
+.description {
+  margin-top: var(--space-l);
+}

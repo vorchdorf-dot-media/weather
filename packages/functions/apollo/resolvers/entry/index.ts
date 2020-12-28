@@ -6,6 +6,7 @@ import { scope, validateHash } from '../../../utils/authorization';
 import {
   AUTH_SCOPE,
   EntryInput,
+  RandomObject,
   StringObject,
 } from '../../../utils/definitions';
 import { EntryDataSource } from '../../datasources';
@@ -59,6 +60,14 @@ export const EntryQuery = {
     return entries.getLatest(station);
   },
 
+  async entryExtreme(
+    _parent: unknown,
+    filter: { low?: boolean; station?: string; from?: string; to?: string },
+    { dataSources: { entries } }: { dataSources: { entries: EntryDataSource } }
+  ): Promise<EntrySchema> {
+    return entries.getTemperatureExtreme(filter);
+  },
+
   async entries(
     _parent: unknown,
     { station, from, to }: { station: string; from: string; to?: string },
@@ -68,5 +77,15 @@ export const EntryQuery = {
     }: { connection: Connection; dataSources: { entries: EntryDataSource } }
   ): Promise<EntrySchema[]> {
     return entries.getEntries(station, from, to);
+  },
+
+  async entriesCount(
+    _parent: unknown,
+    filter: { station?: string; from?: string; to?: string },
+    { dataSources: { entries } }: { dataSources: { entries: EntryDataSource } }
+  ): Promise<number> {
+    return !Object.keys(filter).length
+      ? entries.countAll()
+      : entries.count(filter);
   },
 };

@@ -10,11 +10,16 @@
     "subtitle": "Das tut uns sehr leid! Wir haben einige Informationen gesammelt und können Ihnen nun folgende Optionen anbieten:",
     "title": "Fehler"
   },
+  "footer": {
+    "lightswitch": {
+      "label": "Lichtschalter"
+    }
+  },
   "index": {
     "graphic": {
       "caption": "Grafische Darstellung einer Arduino-kompatiblen Basisplatine"
     },
-    "headline": "Die Seite befindet sich momentan noch im Aufbau.",
+    "headline": "Kleine Arduino-kompatible & WLAN-fähige Bots zeichnen kontinuierlich Temperatur- & Luftfeuchtigkeitsdaten auf. Dies ist ein Projekt von Hobbyisten für Hobbyisten.",
     "statistics": "Statistiken",
     "title": "Aktuelle Temperaturaufzeichnungen"
   },
@@ -32,18 +37,40 @@
       "outside": "Sensor ist außen platziert."
     },
     "createdAt": "{{createdAt}} registriert.",
+    "description": "Diese Seite zeigt die aktuellsten Temperatur- & Luftfeuchtigkeitsdaten von {{station}} an.",
     "search": {
+      "description": "Registrierte Temperaturstationen ganz einfach nach Namen suchen und sofort die aktuellsten Temperatureinträge anzeigen lassen.",
       "label": "Station suchen",
       "placeholder": "Stationsnamen eintippen...",
-      "submit": "Suchen"
+      "results": {
+        "none": "Keine Stationen bei der Suche nach \"{{term}}\" gefunden",
+        "one": "{{count}} Station bei der Suche nach \"{{term}}\" gefunden",
+        "many": "{{count}} Stationen bei der Suche nach \"{{term}}\" gefunden"
+      },
+      "submit": "Suchen",
+      "title": "Temperaturstationen"
     },
-    "title": "Temperaturaufzeichnungen von \"{{stations}}\""
+    "stations": {
+      "none": "Stationen",
+      "one": "Station",
+      "many": "Stationen"
+    },
+    "title": "Temperaturaufzeichnungen von \"{{station}}\"",
+    "visit": "Zur Station \"{{name}}\" wechseln"
   },
   "temperature": {
     "config": {
       "IN": "innen",
       "OUT": "außen"
     },
+    "entries": {
+      "none": "Temperatureinträge",
+      "one": "Temperatureintrag",
+      "many": "Temperatureinträge"
+    },
+    "extremes": "Höchst- & Niedrigstwerte der letzten {{amount}} Stunden",
+    "max": "Höchstwert",
+    "min": "Niedrigstwert",
     "temperature": "Sensor 1",
     "temperature2": "Sensor 2",
     "feels": "Gefühlt",

@@ -48,6 +48,12 @@ station {
 }
 `;
 
+export const COUNT_ENTRIES = `
+query entriesCount($station: ID, $from: String, $to: String) {
+  entriesCount(station: $station, from: $from, to: $to)
+}
+`;
+
 export const GET_ENTRIES = `
 query entries($station: ID!, $from: String!, $to: String) {
   entries(station: $station, from: $from, to: $to) {
@@ -69,10 +75,29 @@ query entry($station: ID!) {
 }
 `;
 
+export const COUNT_STATIONS = `
+query stationsCount {
+  stationsCount
+}
+`;
+
 export const GET_STATIONS = `
-query stations {
-  stations {
+query stations($name: String) {
+  stations(name: $name) {
     ${station}
+  }
+}
+`;
+
+export const GET_INDEX_PAGE_QUERY = `
+query indexPage($from: String) {
+  entries: entriesCount
+  stations: stationsCount
+  highest: entryExtreme(from: $from) {
+    ${entry}
+  }
+  lowest: entryExtreme(low: true, from: $from) {
+    ${entry}
   }
 }
 `;
