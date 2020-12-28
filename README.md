@@ -22,9 +22,12 @@ This repository contains the source code for [wetter.vorchdorf.media](https://we
   <img src="packages/website/public/screenshots/station-en.png" alt="A screenshot showing the english version of a station page" width="49%" />
 </div>
 
-### Arduino wiring sketch
+## Firmware
+
+For the firmware docs (or how to setup a weather logging service), head over to the [firmware folder](firmware).
 
 <div align="center">
+  <br />
   <img src="firmware/wiring_sketch.png" alt="A screenshot showing the german version of a station page" width="49%" />
 </div>
 
