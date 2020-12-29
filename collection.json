@@ -1,0 +1,275 @@
+{
+  "info": {
+    "_postman_id": "db178bda-4eae-4c85-a653-c865c50b09c0",
+    "name": "wetter.vorchdorf.media v1",
+    "description": "GraphQL API endpoints for wetter.vorchdorf.media",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Queries",
+      "item": [
+        {
+          "name": "entry",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query entry($station: ID!) {\n    entry(station: $station) {\n        id\n        hash\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            id\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
+                "variables": "{\n    \"station\": {{STATION_ID}}\n}"
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Returns latest entry of specified station"
+          },
+          "response": []
+        },
+        {
+          "name": "entryExtreme",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query entryExtreme($low: Boolean, $station: ID, $from: String, $to: String) {\n    entryExtreme(low: $low, station: $station, from: $from, to: $to) {\n        id\n        hash\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            id\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Returns the entry containing the most extreme temperature value (low: true for negative extreme)"
+          },
+          "response": []
+        },
+        {
+          "name": "entries",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query entries($station: ID!, $from: String!, $to: String) {\n    entries(station: $station, from: $from, to: $to) {\n        id\n        hash\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            id\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
+                "variables": "{\n    \"station\": {{STATION_ID}},\n    \"from\": \"2020-12-29\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Returns entries within a given timespan for a certain station"
+          },
+          "response": []
+        },
+        {
+          "name": "entriesCount",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query entriesCount($station: ID, $from: String, $to: String) {\n    entriesCount(station: $station, from: $from, to: $to)\n}",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Returns the number of recorded entries based on given variables"
+          },
+          "response": []
+        },
+        {
+          "name": "station",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query station($id: ID!) {\n    station(id: $id) {\n        id\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
+                "variables": "{\n    \"id\": {{STATION_ID}}\n}"
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Returns single station entry"
+          },
+          "response": []
+        },
+        {
+          "name": "stations",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query stations($name: String) {\n    stations(name: $name) {\n        id\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Retrieves currently registered stations"
+          },
+          "response": []
+        },
+        {
+          "name": "stationsCount",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query stationsCount {\n    stationsCount\n}",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Returns total number of registered stations"
+          },
+          "response": []
+        }
+      ],
+      "description": "Collection of queries for wetter.vorchdorf.media's GraphQL API",
+      "protocolProfileBehavior": {}
+    },
+    {
+      "name": "Mutations",
+      "item": [
+        {
+          "name": "createEntry",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{STATION_ID}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation createEntry($hash: String!, $timestamp: Int!, $temperature: [Float], $humidity: Float, $feels: Float) {\n    createEntry(hash: $hash, timestamp: $timestamp, temperature: $temperature, humidity: $humidity, feels: $feels) {\n        id\n        hash\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            id\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
+                "variables": "{\n    \"hash\": \"\",\n    \"timestamp\": 0,\n    \"temperature\": [],\n    \"humidity\": 0,\n    \"feels\": 0\n}"
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Creates a new temperature entry for the given station"
+          },
+          "response": []
+        },
+        {
+          "name": "createStation",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{ADMIN_PASSWORD}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{ADMIN_USER}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation createStation($station: StationInput!) {\n    createStation(station: $station) {\n        id\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
+                "variables": "{\n    \"station\": {\n        \"name\": \"\",\n        \"email\": \"\",\n        \"address\": {\n            \"city\": \"\",\n            \"country\": \"\",\n            \"street\": \"\",\n            \"zip\": \"\"\n        },\n        \"coordinates\": {\n            \"height\": 0,\n            \"latitude\": 0,\n            \"longitude\": 0\n        },\n        \"config\": {\n            \"temperature\": \"OUT\",\n            \"temperature2\": \"OUT\"\n        }\n    }\n}"
+              }
+            },
+            "url": {
+              "raw": "{{URL}}",
+              "host": ["{{URL}}"]
+            },
+            "description": "Creates a new station"
+          },
+          "response": []
+        }
+      ],
+      "description": "Collection of mutations for wetter.vorchdorf.media's GraphQL API",
+      "protocolProfileBehavior": {}
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "efc6bb1b-ff51-42b6-84e8-48bd4d0a4b12",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "fddca94f-694b-4cd0-854a-56d30cfb3688",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "24669cb0-84e9-41d0-af56-49d3e767fcb2",
+      "key": "URL",
+      "value": "https://wetter.vorchdorf.media/api/graphql"
+    },
+    {
+      "id": "c27f6e74-4fe7-4bfd-9341-098cdd577b01",
+      "key": "ADMIN_USER",
+      "value": ""
+    },
+    {
+      "id": "06acbad7-b0fa-4fb6-812c-453f3055c79a",
+      "key": "ADMIN_PASSWORD",
+      "value": ""
+    },
+    {
+      "id": "a24fd94e-b9d8-469f-84ea-47e91c4b27d9",
+      "key": "STATION_ID",
+      "value": ""
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
