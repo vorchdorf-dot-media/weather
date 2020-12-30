@@ -1,4 +1,16 @@
 language: node_js
 
-script:
-  - yarn test
+jobs:
+  include:
+    - stage: test
+      script: yarn test
+    - stage: release
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script: npx semantic-release
+
+stages:
+  - test
+  - name: release
+    if: branch = master
