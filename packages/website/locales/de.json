@@ -55,7 +55,7 @@
       "one": "Station",
       "many": "Stationen"
     },
-    "title": "Temperaturaufzeichnungen von \"{{station}}\"",
+    "title": "Aufzeichnungen von \"{{station}}\"",
     "visit": "Zur Station \"{{name}}\" wechseln"
   },
   "temperature": {
