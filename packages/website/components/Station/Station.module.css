@@ -14,6 +14,7 @@
   letter-spacing: var(--letter-spacing);
   text-transform: uppercase;
   line-height: calc(var(--space-l) + 0.25em);
+  word-break: break-all;
 }
 
 .createdAt {
