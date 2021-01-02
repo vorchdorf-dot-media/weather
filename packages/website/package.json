@@ -19,8 +19,8 @@
     "media"
   ],
   "manifest": {
-    "name": "Arduino Temperature Logging Service",
-    "short_name": "Temperature Logger"
+    "name": "wetter.vorchdorf.media Temperature",
+    "short_name": "Temperature"
   },
   "license": "MIT",
   "scripts": {
