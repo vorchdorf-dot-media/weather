@@ -57,7 +57,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :not(:global(.theme-light) .error) {
+  .error:not(:global(.theme-light) .error) {
     background-color: transparent;
   }
 }

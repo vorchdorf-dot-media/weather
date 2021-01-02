@@ -2,6 +2,7 @@ import { useText, Text } from 'preact-i18n';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
+import { StationSchema } from 'functions/dist/db/schemata/station';
 import useLocale from 'utils/hooks/useLocale';
 
 import styles from 'components/Station/Station.module.css';
@@ -9,6 +10,9 @@ import styles from 'components/Station/Station.module.css';
 const StationCard = ({
   station,
   ['aria-level']: ariaLevel = 2,
+}: {
+  station: StationSchema;
+  ['aria-level']?: number;
 }): JSX.Element => {
   const { locale } = useRouter();
   const dayjs = useLocale(locale);
@@ -16,7 +20,7 @@ const StationCard = ({
     inside: 'stations.config.inside',
     outside: 'stations.config.outside',
   });
-  const { __typename, ...stationConfig } = station?.config;
+  const stationConfig = station?.config;
 
   const renderIcon = (config: 'IN' | 'OUT', sensor): JSX.Element => {
     if (!config) {

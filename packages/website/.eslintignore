@@ -1,0 +1,6 @@
+.next
+node_modules
+out_functions
+out_publish
+public/sw.js
+public/workbox-*

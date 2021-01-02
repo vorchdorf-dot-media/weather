@@ -15,9 +15,15 @@ import { formatNumber } from 'utils/helpers';
 
 import styles from 'assets/styles/index.module.css';
 
-const Index = ({ locale, title }) => {
+const Index = ({
+  locale,
+  title,
+}: {
+  locale: string;
+  title: string;
+}): JSX.Element => {
   const [time] = useState(Date.now());
-  const [{ data, fetching, error }] = useQuery({
+  const [{ data, fetching }] = useQuery({
     query: GET_INDEX_PAGE_QUERY,
     variables: { from: new Date(time - DAY).toISOString() },
   });

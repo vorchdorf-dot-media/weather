@@ -1,0 +1,15 @@
+language: node_js
+
+jobs:
+  include:
+    - stage: test
+      script: yarn test
+    - stage: release
+      deploy:
+        provider: script
+        script: npx semantic-release
+
+stages:
+  - test
+  - name: release
+    if: branch = master

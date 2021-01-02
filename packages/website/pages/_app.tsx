@@ -14,7 +14,7 @@ import 'assets/styles/_app.css';
 
 const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
   const {
-    manifest: { short_name },
+    manifest: { name },
   } = pkg;
   const { asPath, locale } = router;
   const [definition, setDefinition] = useState({});
@@ -34,7 +34,7 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
       <Head>
         <title>
           {pageProps.title ? `${pageProps.title} | ` : ''}
-          {short_name}
+          {name}
         </title>
         {!pageProps.statusCode ? (
           <SEOBlock

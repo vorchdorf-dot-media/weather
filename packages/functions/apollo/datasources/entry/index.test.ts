@@ -42,6 +42,49 @@ describe('Entry DataSource', () => {
     await expect(entry.getById(demoEntry.id)).resolves.toEqual(demoEntry);
   });
 
+  it('counts Entries', async () => {
+    const count = await entry.count({ station: demoStation.id });
+
+    expect(count).toEqual(1);
+  });
+
+  it('gets Entries', async () => {
+    const entries = await entry.getEntries(
+      demoStation.id,
+      new Date(ENTRY_DATA.timestamp.valueOf() - 1000).toISOString()
+    );
+
+    expect(entries).toHaveLength(1);
+  });
+
+  it('gets extreme Entry', async () => {
+    const additionalEntry = await entry.createOne({
+      ...ENTRY_DATA,
+      hash: 'testhash2',
+      temperature: ENTRY_DATA.temperature - 2,
+      temperature2: ENTRY_DATA.temperature2 - 2,
+      station: demoStation.id,
+    });
+
+    const extreme = await entry.getTemperatureExtreme({
+      station: demoStation.id,
+    });
+
+    expect(extreme).toHaveProperty('temperature', ENTRY_DATA.temperature);
+
+    const extremeLow = await entry.getTemperatureExtreme({
+      station: demoStation.id,
+      low: true,
+    });
+
+    expect(extremeLow).toHaveProperty(
+      'temperature',
+      additionalEntry.temperature
+    );
+
+    await entry.deleteOne(additionalEntry.id);
+  });
+
   it('updates Entry', async () => {
     const temperature = 23.71;
     const demoEntry = await entry.getLatest(demoStation.id);

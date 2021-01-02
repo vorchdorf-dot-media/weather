@@ -34,7 +34,7 @@ The following sketches show a rough overview of how to wire the aforementioned m
 
 ## Source Code
 
-The source code is available in the [arduino.ino](arduino.ino) file.
+The source code is available in the [arduino.ino](arduino/arduino.ino) file.
 
 ### Required Arduino libraries
 
@@ -51,7 +51,7 @@ Depending on the desired features, the following external libraries are necessar
 
 ### Configuration
 
-The firmware may be configured by uncommenting and adapting the config section of the [arduino.ino](arduino.ino) source file.
+The firmware may be configured by uncommenting and adapting the config section of the [arduino.ino](arduino/arduino.ino) source file.
 
 A disabled feature may be enabled by removing the doubled forward slashes (`//`) at the start of the respective line. The following example shows, how to enable the **Temperature (DS18B20)** feature:
 
