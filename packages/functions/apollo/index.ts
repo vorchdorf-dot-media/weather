@@ -26,7 +26,7 @@ export const config: Config = {
   playground: process.env.CONTEXT !== 'production',
   plugins: [
     {
-      requestDidStart() {
+      requestDidStart(): { willSendResponse: () => Promise<void> } {
         return {
           willSendResponse: async () => connection && connection.close(),
         };

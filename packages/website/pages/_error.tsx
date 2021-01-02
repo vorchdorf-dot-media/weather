@@ -7,7 +7,13 @@ import StationForm from 'components/StationForm';
 
 import styles from 'assets/styles/_error.module.css';
 
-const ErrorPage = ({ stack, title }): JSX.Element => {
+const ErrorPage = ({
+  stack,
+  title,
+}: {
+  stack: string;
+  title: string;
+}): JSX.Element => {
   const {
     backToHome,
     headline,

@@ -9,7 +9,7 @@ import { GET_STATIONS } from 'utils/queries';
 import styles from 'components/StationForm/StationFormResults.module.css';
 
 const StationFormResults = ({ term }: { term: string }): JSX.Element => {
-  const [{ data, fetching, error }] = useQuery({
+  const [{ data, fetching }] = useQuery({
     query: GET_STATIONS,
     variables: { name: term },
     pause: !term,

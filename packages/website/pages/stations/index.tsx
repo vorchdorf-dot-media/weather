@@ -9,7 +9,13 @@ import StationForm from 'components/StationForm';
 
 import styles from 'assets/styles/stations.module.css';
 
-const Stations = ({ description, title }): JSX.Element => {
+const Stations = ({
+  description,
+  title,
+}: {
+  description: string;
+  title: string;
+}): JSX.Element => {
   return (
     <>
       <StationForm autoFocus />

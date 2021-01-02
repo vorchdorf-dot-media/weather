@@ -1,12 +1,10 @@
 import { AuthenticationError } from 'apollo-server-micro';
-import type { Connection } from 'mongoose';
 
 import { EntrySchema } from '../../../db/schemata/entry';
 import { scope, validateHash } from '../../../utils/authorization';
 import {
   AUTH_SCOPE,
   EntryInput,
-  RandomObject,
   StringObject,
 } from '../../../utils/definitions';
 import { EntryDataSource } from '../../datasources';
@@ -16,11 +14,9 @@ export const EntryMutation = {
     _parent: unknown,
     args: EntryInput,
     {
-      connection,
       dataSources: { entries },
       headers: { authorization },
     }: {
-      connection: Connection;
       dataSources: { entries: EntryDataSource };
       headers: StringObject;
     }
@@ -52,10 +48,7 @@ export const EntryQuery = {
   async entry(
     _parent: unknown,
     { station }: { station: string },
-    {
-      connection,
-      dataSources: { entries },
-    }: { connection: Connection; dataSources: { entries: EntryDataSource } }
+    { dataSources: { entries } }: { dataSources: { entries: EntryDataSource } }
   ): Promise<EntrySchema> {
     return entries.getLatest(station);
   },
@@ -71,10 +64,7 @@ export const EntryQuery = {
   async entries(
     _parent: unknown,
     { station, from, to }: { station: string; from: string; to?: string },
-    {
-      connection,
-      dataSources: { entries },
-    }: { connection: Connection; dataSources: { entries: EntryDataSource } }
+    { dataSources: { entries } }: { dataSources: { entries: EntryDataSource } }
   ): Promise<EntrySchema[]> {
     return entries.getEntries(station, from, to);
   },

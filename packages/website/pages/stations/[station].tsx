@@ -8,8 +8,22 @@ import StationCard from 'components/Station/Station';
 import ErrorPage from 'pages/_error';
 import client from 'utils/graphql';
 import { GET_LATEST_ENTRY } from 'utils/queries';
+import { EntrySchema } from 'functions/dist/db/schemata/entry';
+import { StationSchema } from 'functions/dist/db/schemata/station';
 
-const Station = ({ entry, stack, station, statusCode, title }): JSX.Element => {
+const Station = ({
+  entry,
+  stack,
+  station,
+  statusCode,
+  title,
+}: {
+  entry: EntrySchema;
+  stack: string;
+  station: StationSchema;
+  statusCode: number;
+  title: string;
+}): JSX.Element => {
   if (statusCode) {
     return <ErrorPage title={title} stack={stack} />;
   }

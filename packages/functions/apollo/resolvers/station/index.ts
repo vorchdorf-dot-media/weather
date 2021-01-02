@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server-micro';
-import type { Connection } from 'mongoose';
+
 import { StationSchema } from '../../../db/schemata/station';
 import { scope } from '../../../utils/authorization';
 import { AUTH_SCOPE, StringObject } from '../../../utils/definitions';
@@ -10,11 +10,9 @@ export const StationMutation = {
     _parent: unknown,
     { station }: { station: StationSchema },
     {
-      connection,
       dataSources: { stations },
       headers: { authorization },
     }: {
-      connection: Connection;
       dataSources: { stations: StationDataSource };
       headers: StringObject;
     }
@@ -32,9 +30,8 @@ export const StationQuery = {
     _parent: unknown,
     { id }: { id: string },
     {
-      connection,
       dataSources: { stations },
-    }: { connection: Connection; dataSources: { stations: StationDataSource } }
+    }: { dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema> {
     return stations.getOne({ id });
   },
@@ -43,9 +40,8 @@ export const StationQuery = {
     _parent: unknown,
     { name }: { name?: string },
     {
-      connection,
       dataSources: { stations },
-    }: { connection: Connection; dataSources: { stations: StationDataSource } }
+    }: { dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema[]> {
     return stations.getMany(
       Object.assign({}, name ? { name: new RegExp(name, 'i') } : null)
