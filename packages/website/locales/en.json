@@ -34,7 +34,8 @@
   "stations": {
     "config": {
       "inside": "Sensor is placed inside.",
-      "outside": "Sensor is placed outside."
+      "outside": "Sensor is placed outside.",
+      "x": "Sensor is unavailable."
     },
     "createdAt": "registered {{createdAt}}.",
     "description": "View the latest transmitted data on temperature and humidity from {{station}}.",

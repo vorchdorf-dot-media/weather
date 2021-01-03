@@ -16,25 +16,32 @@ const StationCard = ({
 }): JSX.Element => {
   const { locale } = useRouter();
   const dayjs = useLocale(locale);
-  const { inside, outside } = useText({
+  const { inside, outside, x } = useText({
     inside: 'stations.config.inside',
     outside: 'stations.config.outside',
+    x: 'stations.config.x',
   });
-  const stationConfig = station?.config;
+  const { temperature, temperature2 } = station?.config;
 
   const renderIcon = (config: 'IN' | 'OUT', sensor): JSX.Element => {
-    if (!config) {
-      return null;
+    let icon: string = null;
+    let msg: string = null;
+    switch (config) {
+      case 'IN':
+        icon = 'home';
+        msg = inside;
+        break;
+      case 'OUT':
+        icon = 'signal';
+        msg = outside;
+        break;
+      default:
+        icon = 'x';
+        msg = x;
     }
-    const isInside = config === 'IN';
-    const Icon = dynamic(
-      () => import(`assets/icons/${isInside ? 'home' : 'signal'}.svg`)
-    );
+    const Icon = dynamic(() => import(`assets/icons/${icon}.svg`));
     return (
-      <Icon
-        aria-label={`Sensor #${sensor + 1}: ${isInside ? inside : outside}`}
-        aria-hidden={null}
-      />
+      <Icon aria-label={`Sensor #${sensor + 1}: ${msg}`} aria-hidden={null} />
     );
   };
 
@@ -48,7 +55,7 @@ const StationCard = ({
         {station.name}
       </span>
       <div className={styles.metaContainer}>
-        {Object.values(stationConfig).map(renderIcon)}
+        {[temperature, temperature2].map(renderIcon)}
         <small className={styles.createdAt}>
           <Text
             id="stations.createdAt"

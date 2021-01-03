@@ -34,7 +34,8 @@
   "stations": {
     "config": {
       "inside": "Sensor ist innen platziert.",
-      "outside": "Sensor ist außen platziert."
+      "outside": "Sensor ist außen platziert.",
+      "x": "Sensor ist nicht verfügbar."
     },
     "createdAt": "{{createdAt}} registriert.",
     "description": "Diese Seite zeigt die aktuellsten Temperatur- & Luftfeuchtigkeitsdaten von {{station}} an.",
