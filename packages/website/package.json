@@ -53,8 +53,11 @@
   "dependencies": {
     "@prefresh/next": "^1.3.0",
     "@urql/preact": "^1.4.2",
-    "apollo-server-micro": "^2.19.0",
+    "@visx/curve": "^1.0.0",
+    "@visx/scale": "^1.3.0",
+    "@visx/shape": "^1.3.0",
     "classnames": "^2.2.6",
+    "d3-array": "^2.9.1",
     "dayjs": "^1.9.6",
     "functions": "file:../functions",
     "isomorphic-unfetch": "^3.1.0",

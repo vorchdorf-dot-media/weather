@@ -1,0 +1,6 @@
+.chart path {
+  fill: transparent;
+  stroke: HSL(var(--color-secondary));
+  stroke-width: 2px;
+  stroke-linecap: round;
+}
