@@ -56,11 +56,7 @@ const Station = ({
         variant="primary"
         entry={result?.data?.entry || entry}
       />
-      <LineChart
-        data={(mock.data.entries as unknown) as EntrySchema[]}
-        height={480}
-        width={640}
-      />
+      <LineChart data={(mock.data.entries as unknown) as EntrySchema[]} />
     </>
   );
 };

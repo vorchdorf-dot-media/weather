@@ -1,6 +1,16 @@
+.chart {
+  display: block;
+  width: 100%;
+}
+
 .chart path {
   fill: transparent;
-  stroke: HSL(var(--color-secondary));
+  stroke: HSL(var(--color-secondary-offset));
   stroke-width: 2px;
   stroke-linecap: round;
+}
+
+.feels.feels {
+  stroke: HSL(var(--color-primary-offset));
+  stroke-dasharray: 2, 4;
 }
