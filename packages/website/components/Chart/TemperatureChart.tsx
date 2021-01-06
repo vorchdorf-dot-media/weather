@@ -1,12 +1,15 @@
 import { useMemo, useRef } from 'preact/hooks';
 import { AxisBottom, AxisLeft } from '@visx/axis';
 import { curveNatural } from '@visx/curve';
+import { GridColumns, GridRows } from '@visx/grid';
 import { Group } from '@visx/group';
 import { scaleLinear, scaleTime } from '@visx/scale';
 import { LinePath } from '@visx/shape';
 import { Threshold } from '@visx/threshold';
 import type { EntrySchema } from 'functions/dist/db/schemata/entry';
 import type { StationSchema } from 'functions/dist/db/schemata/station';
+
+import { formatNumber } from 'utils/helpers';
 
 import styles from 'components/Chart/TemperatureChart.module.css';
 
@@ -20,7 +23,7 @@ const getTemperature2 = ({ temperature2 }: EntrySchema): number =>
 const LineChart = ({
   data,
   height: propHeight,
-  margin = 64,
+  margin = 48,
   width: propWidth,
 }: {
   data: EntrySchema[];
@@ -108,18 +111,46 @@ const LineChart = ({
   return (
     <svg className={styles.chart} ref={svgRef} width={width} height={height}>
       <Group left={margin} top={margin * -0.75}>
+        <GridColumns
+          scale={scaleDate}
+          width={width}
+          height={height}
+          stroke="currentColor"
+          strokeWidth={0.25}
+        />
+        <GridRows
+          scale={scaleTemperature}
+          width={width}
+          height={height}
+          stroke="currentColor"
+          strokeWidth={0.25}
+        />
         <AxisLeft
-          label="Temperature (°C)"
           numTicks={width <= 375 ? 8 : 16}
           scale={scaleTemperature}
           stroke="currentColor"
+          tickFormat={(v: number) =>
+            `${formatNumber('default', v, {
+              maximumFractionDigits: 1,
+              minimumFractionDigits: 1,
+            })}°C`
+          }
           tickStroke="currentColor"
         />
         <AxisBottom
-          label="Time"
           scale={scaleDate}
           top={height}
+          numTicks={width <= 375 ? 4 : 8}
           stroke="currentColor"
+          tickFormat={(d: Date) =>
+            new Intl.DateTimeFormat('default', {
+              day: '2-digit',
+              month: '2-digit',
+              year: width > 375 ? 'numeric' : undefined,
+              hour: '2-digit',
+              minute: '2-digit',
+            }).format(d)
+          }
           tickStroke="currentColor"
         />
         {width > 0 && temperature === 'OUT' && (
