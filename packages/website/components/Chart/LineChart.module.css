@@ -6,11 +6,22 @@
 .chart path {
   fill: transparent;
   stroke: HSL(var(--color-secondary-offset));
+  stroke-opacity: 0.5;
   stroke-width: 2px;
   stroke-linecap: round;
 }
 
-.feels.feels {
-  stroke: HSL(var(--color-primary-offset));
+.chart :global(.visx-area) {
+  fill: HSL(var(--color-secondary-offset));
+  fill-opacity: 0.25;
+}
+
+.intersect.intersect,
+.temperature.temperature {
+  stroke-opacity: unset;
+}
+
+.intersect.intersect {
+  stroke: HSL(var(--color-primary));
   stroke-dasharray: 2, 4;
 }

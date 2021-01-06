@@ -2,6 +2,7 @@ import { useMemo, useRef } from 'preact/hooks';
 import { curveNatural } from '@visx/curve';
 import { scaleLinear, scaleTime } from '@visx/scale';
 import { LinePath } from '@visx/shape';
+import { Threshold } from '@visx/threshold';
 import type { EntrySchema } from 'functions/dist/db/schemata/entry';
 import type { StationSchema } from 'functions/dist/db/schemata/station';
 
@@ -26,6 +27,25 @@ const LineChart = ({
 }): JSX.Element => {
   const [{ station }] = data;
   const { temperature, temperature2 } = (station as StationSchema)?.config;
+  const isTemperature = temperature === 'OUT';
+  const isTemperature2 = temperature2 === 'OUT';
+
+  const getTemperatureIntersect = ({
+    temperature,
+    temperature2,
+  }: EntrySchema) => {
+    return isTemperature && isTemperature2
+      ? (temperature + temperature2) * 0.5
+      : isTemperature
+      ? temperature
+      : temperature2;
+  };
+
+  const filter = (d: EntrySchema) =>
+    [].concat(
+      isTemperature ? [getTemperature(d)] : [],
+      isTemperature2 ? [getTemperature2(d), getFeels(d)] : []
+    ) as number[];
 
   const svgRef = useRef(null);
 
@@ -37,12 +57,7 @@ const LineChart = ({
   const height = useMemo(() => propHeight ?? width * 0.75, [propHeight, width]);
 
   const max = useMemo(
-    () =>
-      Math.max(
-        ...data.map((d: EntrySchema) =>
-          Math.max(getTemperature(d), getTemperature2(d), getFeels(d))
-        )
-      ),
+    () => Math.max(...data.map((d: EntrySchema) => Math.max(...filter(d)))),
     [data]
   );
 
@@ -56,12 +71,7 @@ const LineChart = ({
   );
 
   const min = useMemo(
-    () =>
-      Math.min(
-        ...data.map((d: EntrySchema) =>
-          Math.min(getTemperature(d), getTemperature2(d), getFeels(d))
-        )
-      ),
+    () => Math.min(...data.map((d: EntrySchema) => Math.min(...filter(d)))),
     [data]
   );
 
@@ -96,6 +106,7 @@ const LineChart = ({
     <svg className={styles.chart} ref={svgRef} width={width} height={height}>
       {width > 0 && temperature === 'OUT' && (
         <LinePath
+          className={!isTemperature2 && styles.temperature}
           curve={curveNatural}
           data={data}
           x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
@@ -105,17 +116,32 @@ const LineChart = ({
       {width > 0 && temperature2 === 'OUT' && (
         <>
           <LinePath
+            className={!isTemperature && styles.temperature}
             curve={curveNatural}
             data={data}
             x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
             y={(d: EntrySchema) => scaleTemperature(getTemperature2(d)) ?? 0}
           />
-          <LinePath
-            className={styles.feels}
+        </>
+      )}
+      {width > 0 && isTemperature && isTemperature2 && (
+        <>
+          <Threshold
+            id="threshold"
+            clipAboveTo={height}
+            clipBelowTo={0}
             curve={curveNatural}
             data={data}
             x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
-            y={(d: EntrySchema) => scaleTemperature(getFeels(d)) ?? 0}
+            y0={(d: EntrySchema) => scaleTemperature(getTemperature(d)) ?? 0}
+            y1={(d: EntrySchema) => scaleTemperature(getTemperature2(d)) ?? 0}
+          />
+          <LinePath
+            className={styles.intersect}
+            curve={curveNatural}
+            data={data}
+            x={(d: EntrySchema) => scaleDate(getDate(d))}
+            y={(d: EntrySchema) => scaleTemperature(getTemperatureIntersect(d))}
           />
         </>
       )}
