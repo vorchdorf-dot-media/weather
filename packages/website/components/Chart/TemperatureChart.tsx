@@ -1,16 +1,17 @@
 import { useMemo, useRef } from 'preact/hooks';
+import { AxisBottom, AxisLeft } from '@visx/axis';
 import { curveNatural } from '@visx/curve';
+import { Group } from '@visx/group';
 import { scaleLinear, scaleTime } from '@visx/scale';
 import { LinePath } from '@visx/shape';
 import { Threshold } from '@visx/threshold';
 import type { EntrySchema } from 'functions/dist/db/schemata/entry';
 import type { StationSchema } from 'functions/dist/db/schemata/station';
 
-import styles from 'components/Chart/LineChart.module.css';
+import styles from 'components/Chart/TemperatureChart.module.css';
 
 const getDate = ({ timestamp }: EntrySchema): number =>
   Date.parse((timestamp as unknown) as string);
-const getFeels = ({ feels }: EntrySchema): number => feels as number;
 const getTemperature = ({ temperature }: EntrySchema): number =>
   temperature as number;
 const getTemperature2 = ({ temperature2 }: EntrySchema): number =>
@@ -19,10 +20,12 @@ const getTemperature2 = ({ temperature2 }: EntrySchema): number =>
 const LineChart = ({
   data,
   height: propHeight,
+  margin = 64,
   width: propWidth,
 }: {
   data: EntrySchema[];
   height?: number;
+  margin?: number;
   width?: number;
 }): JSX.Element => {
   const [{ station }] = data;
@@ -44,7 +47,7 @@ const LineChart = ({
   const filter = (d: EntrySchema) =>
     [].concat(
       isTemperature ? [getTemperature(d)] : [],
-      isTemperature2 ? [getTemperature2(d), getFeels(d)] : []
+      isTemperature2 ? [getTemperature2(d)] : []
     ) as number[];
 
   const svgRef = useRef(null);
@@ -88,7 +91,7 @@ const LineChart = ({
     () =>
       scaleTime<number>({
         domain: [minDate, maxDate] as [number, number],
-        range: [0, width],
+        range: [0, width - margin],
       }),
     [data, width]
   );
@@ -97,54 +100,72 @@ const LineChart = ({
     () =>
       scaleLinear<number>({
         domain: [min, max] as [number, number],
-        range: [height - Math.abs(max), 100 + Math.abs(min)],
+        range: [height, margin],
       }),
     [min, max, height]
   );
 
   return (
     <svg className={styles.chart} ref={svgRef} width={width} height={height}>
-      {width > 0 && temperature === 'OUT' && (
-        <LinePath
-          className={!isTemperature2 && styles.temperature}
-          curve={curveNatural}
-          data={data}
-          x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
-          y={(d: EntrySchema) => scaleTemperature(getTemperature(d)) ?? 0}
+      <Group left={margin} top={margin * -0.75}>
+        <AxisLeft
+          label="Temperature (°C)"
+          numTicks={width <= 375 ? 8 : 16}
+          scale={scaleTemperature}
+          stroke="currentColor"
+          tickStroke="currentColor"
         />
-      )}
-      {width > 0 && temperature2 === 'OUT' && (
-        <>
+        <AxisBottom
+          label="Time"
+          scale={scaleDate}
+          top={height}
+          stroke="currentColor"
+          tickStroke="currentColor"
+        />
+        {width > 0 && temperature === 'OUT' && (
           <LinePath
-            className={!isTemperature && styles.temperature}
+            className={!isTemperature2 && styles.temperature}
             curve={curveNatural}
             data={data}
             x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
-            y={(d: EntrySchema) => scaleTemperature(getTemperature2(d)) ?? 0}
+            y={(d: EntrySchema) => scaleTemperature(getTemperature(d)) ?? 0}
           />
-        </>
-      )}
-      {width > 0 && isTemperature && isTemperature2 && (
-        <>
-          <Threshold
-            id="threshold"
-            clipAboveTo={height}
-            clipBelowTo={0}
-            curve={curveNatural}
-            data={data}
-            x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
-            y0={(d: EntrySchema) => scaleTemperature(getTemperature(d)) ?? 0}
-            y1={(d: EntrySchema) => scaleTemperature(getTemperature2(d)) ?? 0}
-          />
-          <LinePath
-            className={styles.intersect}
-            curve={curveNatural}
-            data={data}
-            x={(d: EntrySchema) => scaleDate(getDate(d))}
-            y={(d: EntrySchema) => scaleTemperature(getTemperatureIntersect(d))}
-          />
-        </>
-      )}
+        )}
+        {width > 0 && temperature2 === 'OUT' && (
+          <>
+            <LinePath
+              className={!isTemperature && styles.temperature}
+              curve={curveNatural}
+              data={data}
+              x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
+              y={(d: EntrySchema) => scaleTemperature(getTemperature2(d)) ?? 0}
+            />
+          </>
+        )}
+        {width > 0 && isTemperature && isTemperature2 && (
+          <>
+            <Threshold
+              id="threshold"
+              clipAboveTo={height}
+              clipBelowTo={0}
+              curve={curveNatural}
+              data={data}
+              x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
+              y0={(d: EntrySchema) => scaleTemperature(getTemperature(d)) ?? 0}
+              y1={(d: EntrySchema) => scaleTemperature(getTemperature2(d)) ?? 0}
+            />
+            <LinePath
+              className={styles.intersect}
+              curve={curveNatural}
+              data={data}
+              x={(d: EntrySchema) => scaleDate(getDate(d)) ?? 0}
+              y={(d: EntrySchema) =>
+                scaleTemperature(getTemperatureIntersect(d)) ?? 0
+              }
+            />
+          </>
+        )}
+      </Group>
     </svg>
   );
 };

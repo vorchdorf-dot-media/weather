@@ -10,7 +10,7 @@ import client from 'utils/graphql';
 import { GET_LATEST_ENTRY } from 'utils/queries';
 import { EntrySchema } from 'functions/dist/db/schemata/entry';
 import { StationSchema } from 'functions/dist/db/schemata/station';
-import LineChart from 'components/Chart/LineChart';
+import LineChart from 'components/Chart/TemperatureChart';
 
 import mock from 'utils/mocks/entries.mock';
 
