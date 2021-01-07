@@ -20,19 +20,20 @@ const getTemperature = ({ temperature }: EntrySchema): number =>
 const getTemperature2 = ({ temperature2 }: EntrySchema): number =>
   temperature2 as number;
 
-const LineChart = ({
+const TemperatureChart = ({
   data,
+  station,
   height: propHeight,
   margin = 48,
   width: propWidth,
 }: {
   data: EntrySchema[];
+  station: StationSchema;
   height?: number;
   margin?: number;
   width?: number;
 }): JSX.Element => {
-  const [{ station }] = data;
-  const { temperature, temperature2 } = (station as StationSchema)?.config;
+  const { temperature, temperature2 } = station?.config;
   const isTemperature = temperature === 'OUT';
   const isTemperature2 = temperature2 === 'OUT';
 
@@ -201,4 +202,4 @@ const LineChart = ({
   );
 };
 
-export default LineChart;
+export default TemperatureChart;

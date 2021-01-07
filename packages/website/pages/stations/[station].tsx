@@ -1,18 +1,20 @@
 import { useQuery } from '@urql/preact';
 import { GetServerSideProps } from 'next';
-import { useEffect } from 'preact/hooks';
-import { translate } from 'preact-i18n';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'preact/hooks';
+import { translate, useText } from 'preact-i18n';
 
 import TemperatureCard from 'components/Card/TemperatureCard';
 import StationCard from 'components/Station/Station';
 import ErrorPage from 'pages/_error';
 import client from 'utils/graphql';
-import { GET_LATEST_ENTRY } from 'utils/queries';
+import { GET_LATEST_ENTRY, GET_STATION_PAGE_QUERY } from 'utils/queries';
 import { EntrySchema } from 'functions/dist/db/schemata/entry';
-import { StationSchema } from 'functions/dist/db/schemata/station';
-import LineChart from 'components/Chart/TemperatureChart';
 
-import mock from 'utils/mocks/entries.mock';
+import Divider from 'components/Divider';
+import { DAY } from 'utils/constants';
+
+const setTimeframe = () => new Date(Date.now() - DAY * 7).toISOString();
 
 const Station = ({
   entry,
@@ -23,19 +25,28 @@ const Station = ({
 }: {
   entry: EntrySchema;
   stack: string;
-  station: StationSchema;
+  station: string;
   statusCode: number;
   title: string;
 }): JSX.Element => {
   if (statusCode) {
     return <ErrorPage title={title} stack={stack} />;
   }
-  const [result, reexecuteQuery] = useQuery({
-    query: GET_LATEST_ENTRY,
-    variables: { station },
+
+  const [from] = useState(setTimeframe);
+  const { statistics } = useText({
+    statistics: 'index.statistics',
   });
 
-  const refresh = () => reexecuteQuery({ requestPolicy: 'network-only' });
+  const [stationData, reexecuteQuery] = useQuery({
+    query: GET_STATION_PAGE_QUERY,
+    variables: { station, from },
+  });
+
+  const refresh = () => {
+    stationData.operation.variables.from = setTimeframe();
+    reexecuteQuery({ requestPolicy: 'network-only' });
+  };
 
   useEffect(() => {
     typeof window !== 'undefined' && window.addEventListener('focus', refresh);
@@ -44,19 +55,29 @@ const Station = ({
       window.removeEventListener('focus', refresh);
   }, []);
 
+  const TemperatureChart = dynamic(
+    () => import('components/Chart/TemperatureChart')
+  );
+
   return (
     <>
       <StationCard
-        station={result?.data?.entry?.station || entry?.station}
+        station={stationData?.data?.entry?.station || entry?.station}
         aria-level={1}
       />
       <TemperatureCard
         link={false}
-        loading={result?.fetching}
+        loading={stationData?.fetching}
         variant="primary"
-        entry={result?.data?.entry || entry}
+        entry={stationData?.data?.entry || entry}
       />
-      <LineChart data={(mock.data.entries as unknown) as EntrySchema[]} />
+      <Divider level={2}>{statistics}</Divider>
+      {stationData?.data?.entries?.length > 0 && (
+        <TemperatureChart
+          data={stationData?.data?.entries}
+          station={stationData?.data?.entry?.station}
+        />
+      )}
     </>
   );
 };

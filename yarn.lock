@@ -14013,7 +14013,7 @@ next-compose-plugins@^2.2.1:
   resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.1.tgz#020fc53f275a7e719d62521bef4300fbb6fde5ab"
   integrity sha512-OjJ+fV15FXO2uQXQagLD4C0abYErBjyjE0I0FHpOEIB8upw0hg1ldFP6cqHTJBH1cZqy96OeR3u1dJ+Ez2D4Bg==
 
-next-on-netlify@^2.6.3:
+next-on-netlify@^2.6.3, "next-on-netlify@github:netlify/next-on-netlify#ll/i18n":
   version "2.6.3"
   resolved "https://codeload.github.com/netlify/next-on-netlify/tar.gz/25ff5febfb17065cf91a2809aeed5b946013f62b"
   dependencies:
