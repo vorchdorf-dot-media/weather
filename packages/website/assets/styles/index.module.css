@@ -59,18 +59,8 @@
   grid-column: 1/-1;
 }
 
-.card {
+.loading {
   margin-top: 0;
-}
-
-.card span,
-.card strong {
-  display: block;
-  width: 100%;
-}
-
-.card strong {
-  font-size: var(--space-l);
 }
 
 .loaded svg {

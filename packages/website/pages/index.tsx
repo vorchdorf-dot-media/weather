@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { useState } from 'preact/hooks';
 import { translate, useText, Text } from 'preact-i18n';
 import { useQuery } from '@urql/preact';
-import classnames from 'classnames';
 
-import { Card, LoadingCard } from 'components/Card';
+import Card from 'components/Card/Card';
+import LoadingCard from 'components/Card/LoadingCard';
+import SingleCard from 'components/Card/SingleCard';
 import Divider from 'components/Divider';
 import StationForm from 'components/StationForm/StationForm';
 import { GET_INDEX_PAGE_QUERY } from 'utils/queries';
@@ -66,28 +67,28 @@ const Index = ({
           {statistics}
         </Divider>
         {fetching ? (
-          <LoadingCard className={styles.card} height={120} variant="grey" />
+          <LoadingCard className={styles.loading} height={120} variant="grey" />
         ) : (
-          <Card className={styles.card} variant="grey">
+          <SingleCard variant="grey">
             <span role="heading" aria-level={3}>
               <strong>{data?.stations}</strong>
               <span>
                 <Text id="stations.stations" plural={data?.stations} />
               </span>
             </span>
-          </Card>
+          </SingleCard>
         )}
         {fetching ? (
-          <LoadingCard className={styles.card} height={120} variant="grey" />
+          <LoadingCard className={styles.loading} height={120} variant="grey" />
         ) : (
-          <Card className={styles.card} variant="grey">
+          <SingleCard variant="grey">
             <span role="heading" aria-level={3}>
               <strong>{data?.entries}</strong>
               <span>
                 <Text id="temperature.entries" plural={data?.entries} />
               </span>
             </span>
-          </Card>
+          </SingleCard>
         )}
         <section className={styles.temperatureStatistics}>
           <span role="heading" aria-level={3}>
@@ -98,17 +99,14 @@ const Index = ({
           </span>
           {fetching ? (
             <LoadingCard
-              className={styles.card}
+              className={styles.loading}
               height={120}
               variant="secondary"
             />
           ) : (
             <Link href={'/stations/' + data?.highest?.station?.id}>
               <a title={visitHighest}>
-                <Card
-                  className={classnames(styles.loaded, styles.card)}
-                  variant="secondary"
-                >
+                <SingleCard className={styles.loaded} variant="secondary">
                   <span role="heading" aria-level={4}>
                     <strong>
                       {formatNumber(
@@ -125,23 +123,20 @@ const Index = ({
                     </span>
                   </span>
                   <ArrowUpRightIcon aria-hidden="true" />
-                </Card>
+                </SingleCard>
               </a>
             </Link>
           )}
           {fetching ? (
             <LoadingCard
-              className={styles.card}
+              className={styles.loading}
               height={120}
               variant="primary"
             />
           ) : (
             <Link href={'/stations/' + data?.lowest?.station?.id}>
               <a title={visitLowest}>
-                <Card
-                  className={classnames(styles.loaded, styles.card)}
-                  variant="primary"
-                >
+                <SingleCard className={styles.loaded} variant="primary">
                   <span role="heading" aria-level={4}>
                     <strong>
                       {formatNumber(
@@ -158,7 +153,7 @@ const Index = ({
                     </span>
                   </span>
                   <ArrowUpRightIcon aria-hidden="true" />
-                </Card>
+                </SingleCard>
               </a>
             </Link>
           )}

@@ -113,5 +113,13 @@ query stationPage($station: ID!, $from: String!) {
     humidity
     feels
   }
+  max: entryExtreme(low: false, station: $station, from: $from) {
+    temperature
+    temperature2
+  }
+  min: entryExtreme(low: true, station: $station, from: $from) {
+    temperature
+    temperature2
+  }
 }
 `;
