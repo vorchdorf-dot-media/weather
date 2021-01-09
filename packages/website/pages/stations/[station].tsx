@@ -18,6 +18,8 @@ import Divider from 'components/Divider';
 import { DAY } from 'utils/constants';
 import { formatNumber } from 'utils/helpers';
 
+import styles from 'assets/styles/station.module.css';
+
 const setTimeframe = () => new Date(Date.now() - DAY * 7).toISOString();
 
 const ExtremeCard = ({
@@ -31,7 +33,7 @@ const ExtremeCard = ({
 }): JSX.Element => {
   const variant = low ? 'primary' : 'secondary';
   return fetching ? (
-    <LoadingCard variant={variant} />
+    <LoadingCard className={styles.loading} variant={variant} height={120} />
   ) : (
     <SingleCard variant={variant}>
       <span role="heading" aria-level={4}>
@@ -133,7 +135,7 @@ const Station = ({
       {hasOutsideSensor && (
         <section>
           <Divider level={2}>{statistics}</Divider>
-          <article>
+          <article className={styles.extremes}>
             <ExtremeCard fetching={fetching} value={max()} />
             <ExtremeCard fetching={fetching} value={min()} low />
           </article>
