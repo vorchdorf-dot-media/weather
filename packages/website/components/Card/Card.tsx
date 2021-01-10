@@ -9,9 +9,9 @@ export interface CardProps {
 }
 
 const Card = ({ children, className, variant }: CardProps): JSX.Element => (
-  <section className={classnames(styles.card, styles[variant], className)}>
+  <article className={classnames(styles.card, styles[variant], className)}>
     {children}
-  </section>
+  </article>
 );
 
 export default Card;

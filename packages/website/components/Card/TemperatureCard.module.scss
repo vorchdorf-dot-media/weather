@@ -4,6 +4,10 @@
   }
 }
 
+.wrapper {
+  margin-top: var(--space-l);
+}
+
 .link {
   transition: opacity 200ms ease-in;
   flex: 0 0 auto;
@@ -33,6 +37,7 @@
 .container {
   flex: 1;
   padding: var(--space-m);
+  margin-top: unset;
 }
 
 .header,

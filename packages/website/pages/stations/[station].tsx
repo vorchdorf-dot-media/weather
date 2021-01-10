@@ -20,6 +20,8 @@ import { formatNumber } from 'utils/helpers';
 
 import styles from 'assets/styles/station.module.css';
 
+import mock from 'utils/mocks/stationPage.mock';
+
 const setTimeframe = () => new Date(Date.now() - DAY * 7).toISOString();
 
 const ExtremeCard = ({
@@ -33,7 +35,7 @@ const ExtremeCard = ({
 }): JSX.Element => {
   const variant = low ? 'primary' : 'secondary';
   return fetching ? (
-    <LoadingCard className={styles.loading} variant={variant} height={120} />
+    <LoadingCard className={styles.loading} variant={variant} height={116} />
   ) : (
     <SingleCard variant={variant}>
       <span role="heading" aria-level={4}>
@@ -78,7 +80,8 @@ const Station = ({
     query: GET_STATION_PAGE_QUERY,
     variables: { station: station.id, from },
   });
-  const { data, fetching } = stationData;
+  const { fetching } = stationData;
+  const data = mock.data;
   const { max: maxEntry, min: minEntry } = data || {};
 
   const max = () => {
@@ -133,19 +136,63 @@ const Station = ({
         entry={data?.entry || entry}
       />
       {hasOutsideSensor && (
-        <section>
+        <article>
           <Divider level={2}>{statistics}</Divider>
-          <article className={styles.extremes}>
+          <section className={styles.meta}>
+            {fetching ? (
+              <>
+                <LoadingCard
+                  className={styles.loading}
+                  variant="grey"
+                  height={116}
+                />
+                <LoadingCard
+                  className={styles.loading}
+                  variant="grey"
+                  height={116}
+                />
+              </>
+            ) : (
+              <>
+                <SingleCard variant="grey">
+                  <span role="heading" aria-level={3}>
+                    <strong>
+                      {new Intl.DateTimeFormat(locale, {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                      }).format(
+                        Date.parse((station?.createdAt as unknown) as string)
+                      )}
+                    </strong>
+                    <span>
+                      <Text id="stations.registered" />
+                    </span>
+                  </span>
+                </SingleCard>
+                <SingleCard variant="grey">
+                  <span role="heading" aria-level={3}>
+                    <strong>{data?.count ?? 0}</strong>
+                    <span>
+                      <Text
+                        id="temperature.entries"
+                        plural={data?.count ?? 0}
+                      />
+                    </span>
+                  </span>
+                </SingleCard>
+              </>
+            )}
             <ExtremeCard fetching={fetching} value={max()} />
             <ExtremeCard fetching={fetching} value={min()} low />
-          </article>
+          </section>
           {data?.entries?.length > 0 && (
             <TemperatureChart
               data={data?.entries}
               station={data?.entry?.station}
             />
           )}
-        </section>
+        </article>
       )}
     </>
   );

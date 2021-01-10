@@ -74,9 +74,9 @@ const TemperatureCard = ({
   const ActivityIcon = dynamic(() => import('assets/icons/activity.svg'));
 
   return (
-    <Card variant={variant}>
+    <Card className={styles.wrapper} variant={variant}>
       {name && (
-        <article className={classnames(styles.container, styles.header)}>
+        <section className={classnames(styles.container, styles.header)}>
           <span role="heading" aria-level={2} aria-label={latestEntry}>
             <strong>{name}</strong>
           </span>
@@ -87,10 +87,10 @@ const TemperatureCard = ({
               </a>
             </Link>
           )}
-        </article>
+        </section>
       )}
-      {temperature && (
-        <article className={styles.container}>
+      {!isNaN(temperature) && (
+        <section className={styles.container}>
           <small role="heading" aria-level={3} className={styles.label}>
             {temp} ({tempConfig}):
           </small>
@@ -98,11 +98,11 @@ const TemperatureCard = ({
             {formatNumber(locale, temperature)}
             <sup>°C</sup>
           </span>
-        </article>
+        </section>
       )}
-      {temperature2 && (
+      {!isNaN(temperature2) && (
         <>
-          <article className={styles.container}>
+          <section className={styles.container}>
             <small role="heading" aria-level={3} className={styles.label}>
               {temp2} ({temp2Config}):
             </small>
@@ -110,8 +110,8 @@ const TemperatureCard = ({
               {formatNumber(locale, temperature2)}
               <sup>°C</sup>
             </span>
-          </article>
-          <article className={styles.container}>
+          </section>
+          <section className={styles.container}>
             <small role="heading" aria-level={3} className={styles.label}>
               {feelsI18n}:
             </small>
@@ -119,8 +119,8 @@ const TemperatureCard = ({
               {formatNumber(locale, feels)}
               <sup>°C</sup>
             </span>
-          </article>
-          <article className={styles.container}>
+          </section>
+          <section className={styles.container}>
             <small role="heading" aria-level={3} className={styles.label}>
               {humidityI18n}:
             </small>
@@ -131,7 +131,7 @@ const TemperatureCard = ({
               })}
               <sup>%</sup>
             </span>
-          </article>
+          </section>
         </>
       )}
       {timestamp && (

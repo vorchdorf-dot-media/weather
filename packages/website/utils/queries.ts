@@ -103,6 +103,7 @@ query indexPage($from: String) {
 
 export const GET_STATION_PAGE_QUERY = `
 query stationPage($station: ID!, $from: String!) {
+  count: entriesCount(station: $station)
   entry(station: $station) {
     ${entry}
   }

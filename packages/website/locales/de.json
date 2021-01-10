@@ -39,6 +39,7 @@
     },
     "createdAt": "{{createdAt}} registriert.",
     "description": "Diese Seite zeigt die aktuellsten Temperatur- & Luftfeuchtigkeitsdaten von {{station}} an.",
+    "registered": "Registrierungsdatum",
     "search": {
       "description": "Registrierte Temperaturstationen ganz einfach nach Namen suchen und sofort die aktuellsten Temperatureinträge anzeigen lassen.",
       "label": "Station suchen",

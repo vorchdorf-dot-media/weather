@@ -1,9 +1,28 @@
-.extremes {
+.meta {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: var(--space-s);
+  row-gap: var(--space-m);
+  margin-bottom: var(--space-m);
+}
+
+.meta :nth-child(1),
+.meta :nth-child(2) {
+  grid-column: 1/-1;
 }
 
 .loading {
   margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .meta {
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: var(--space-l);
+  }
+
+  .meta :nth-child(1),
+  .meta :nth-child(2) {
+    grid-column: unset;
+  }
 }
