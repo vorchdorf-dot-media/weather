@@ -20,7 +20,9 @@ import { formatNumber } from 'utils/helpers';
 
 import styles from 'assets/styles/station.module.css';
 
-const setTimeframe = () => new Date(Date.now() - DAY * 7).toISOString();
+const DAYS = 7;
+
+const setTimeframe = () => new Date(Date.now() - DAY * DAYS).toISOString();
 
 const ExtremeCard = ({
   fetching,
@@ -180,8 +182,16 @@ const Station = ({
                 </SingleCard>
               </>
             )}
-            <ExtremeCard fetching={fetching} value={max()} />
-            <ExtremeCard fetching={fetching} value={min()} low />
+            <section className={styles.extremes}>
+              <span role="heading" aria-level={3}>
+                <Text
+                  id="temperature.extremes.days"
+                  fields={{ amount: DAYS }}
+                />
+              </span>
+              <ExtremeCard fetching={fetching} value={max()} />
+              <ExtremeCard fetching={fetching} value={min()} low />
+            </section>
           </section>
           {data?.entries?.length > 0 && (
             <TemperatureChart

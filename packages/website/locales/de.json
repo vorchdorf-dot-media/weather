@@ -70,7 +70,10 @@
       "one": "Temperatureintrag",
       "many": "Temperatureinträge"
     },
-    "extremes": "Höchst- & Niedrigstwerte der letzten {{amount}} Stunden",
+    "extremes": {
+      "days": "Höchst- & Niedrigstwerte der letzten {{amount}} Tage",
+      "hours": "Höchst- & Niedrigstwerte der letzten {{amount}} Stunden"
+    },
     "max": "Höchstwert",
     "min": "Niedrigstwert",
     "temperature": "Sensor 1",

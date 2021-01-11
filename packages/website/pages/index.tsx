@@ -93,7 +93,7 @@ const Index = ({
         <section className={styles.temperatureStatistics}>
           <span role="heading" aria-level={3}>
             <Text
-              id="temperature.extremes"
+              id="temperature.extremes.hours"
               fields={{ amount: Math.floor(DAY / 3600000) }}
             />
           </span>
