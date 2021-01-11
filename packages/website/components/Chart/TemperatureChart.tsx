@@ -13,6 +13,8 @@ import { formatNumber } from 'utils/helpers';
 
 import styles from 'components/Chart/TemperatureChart.module.css';
 
+const BREAKPOINT = 768;
+
 const getDate = ({ timestamp }: EntrySchema): number =>
   Date.parse((timestamp as unknown) as string);
 const getTemperature = ({ temperature }: EntrySchema): number =>
@@ -132,7 +134,7 @@ const TemperatureChart = ({
             strokeWidth={0.25}
           />
           <AxisLeft
-            numTicks={width <= 375 ? 8 : 16}
+            numTicks={width <= BREAKPOINT ? 8 : 16}
             scale={scaleTemperature}
             stroke="currentColor"
             tickFormat={(v: number) =>
@@ -146,15 +148,15 @@ const TemperatureChart = ({
           <AxisBottom
             scale={scaleDate}
             top={height}
-            numTicks={width <= 375 ? 4 : 8}
+            numTicks={width <= BREAKPOINT ? 4 : 8}
             stroke="currentColor"
             tickFormat={(d: Date) =>
               new Intl.DateTimeFormat('default', {
                 day: '2-digit',
                 month: '2-digit',
-                year: width > 375 ? 'numeric' : undefined,
-                hour: '2-digit',
-                minute: '2-digit',
+                year: width > BREAKPOINT ? 'numeric' : undefined,
+                hour: width > BREAKPOINT ? '2-digit' : undefined,
+                minute: width > BREAKPOINT ? '2-digit' : undefined,
               }).format(d)
             }
             tickStroke="currentColor"

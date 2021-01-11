@@ -6,6 +6,7 @@ jobs:
       script: yarn test
     - stage: release
       deploy:
+        edge: true
         provider: script
         script: npx semantic-release
 
