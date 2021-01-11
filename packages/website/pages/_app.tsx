@@ -45,6 +45,7 @@ const App = ({ Component, pageProps, router }: AppProps): JSX.Element => {
         ) : (
           <meta name="robots" content="noindex,nofollow" />
         )}
+        <link rel="preload" href="/Cabin.ttf" as="font" />
       </Head>
       <main>
         <Provider value={client}>
