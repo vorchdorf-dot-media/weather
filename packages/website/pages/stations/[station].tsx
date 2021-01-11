@@ -20,8 +20,6 @@ import { formatNumber } from 'utils/helpers';
 
 import styles from 'assets/styles/station.module.css';
 
-import mock from 'utils/mocks/stationPage.mock';
-
 const setTimeframe = () => new Date(Date.now() - DAY * 7).toISOString();
 
 const ExtremeCard = ({
@@ -80,8 +78,7 @@ const Station = ({
     query: GET_STATION_PAGE_QUERY,
     variables: { station: station.id, from },
   });
-  const { fetching } = stationData;
-  const data = mock.data;
+  const { data, fetching } = stationData;
   const { max: maxEntry, min: minEntry } = data || {};
 
   const max = () => {
@@ -139,7 +136,7 @@ const Station = ({
         <article>
           <Divider level={2}>{statistics}</Divider>
           <section className={styles.meta}>
-            {fetching ? (
+            {(!isNaN(data?.count) || !station?.createdAt) && fetching ? (
               <>
                 <LoadingCard
                   className={styles.loading}

@@ -24,7 +24,7 @@ const TemperatureChart = ({
   data,
   station,
   height: propHeight,
-  margin = 48,
+  margin = 42,
   width: propWidth,
 }: {
   data: EntrySchema[];

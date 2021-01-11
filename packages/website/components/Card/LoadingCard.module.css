@@ -37,6 +37,7 @@
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
 }
+
 .svgContainer {
   display: inline-block;
   margin-bottom: var(--space-m);

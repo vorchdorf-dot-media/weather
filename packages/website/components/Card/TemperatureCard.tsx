@@ -1,7 +1,9 @@
 import classnames from 'classnames';
+import { nanoid } from 'nanoid';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useMemo } from 'preact/hooks';
 import { useText, Text } from 'preact-i18n';
 import type { EntrySchema } from 'functions/dist/db/schemata/entry';
 import type { StationSchema } from 'functions/dist/db/schemata/station';
@@ -45,6 +47,7 @@ const TemperatureCard = ({
     },
   },
 }: TemperatureCardProps): JSX.Element => {
+  const temperatureId = useMemo(() => `temperature-${nanoid(3)}`, []);
   const { locale } = useRouter();
   const dayjs = useLocale(locale);
   const {
@@ -74,12 +77,21 @@ const TemperatureCard = ({
   const ActivityIcon = dynamic(() => import('assets/icons/activity.svg'));
 
   return (
-    <Card className={styles.wrapper} variant={variant}>
+    <Card
+      className={styles.wrapper}
+      variant={variant}
+      aria-labelledby={temperatureId}
+    >
       {name && (
         <section className={classnames(styles.container, styles.header)}>
-          <span role="heading" aria-level={2} aria-label={latestEntry}>
-            <strong>{name}</strong>
-          </span>
+          <strong
+            id={temperatureId}
+            role="heading"
+            aria-level={2}
+            aria-label={latestEntry}
+          >
+            {name}
+          </strong>
           {link && (
             <Link href={'/stations/' + encodeURIComponent(id)}>
               <a className={styles.link} title={visit}>
@@ -89,51 +101,53 @@ const TemperatureCard = ({
           )}
         </section>
       )}
-      {!isNaN(temperature) && (
-        <section className={styles.container}>
-          <small role="heading" aria-level={3} className={styles.label}>
-            {temp} ({tempConfig}):
-          </small>
-          <span className={styles.data}>
-            {formatNumber(locale, temperature)}
-            <sup>°C</sup>
-          </span>
-        </section>
-      )}
-      {!isNaN(temperature2) && (
-        <>
+      <div className={styles.values}>
+        {!isNaN(temperature) && (
           <section className={styles.container}>
             <small role="heading" aria-level={3} className={styles.label}>
-              {temp2} ({temp2Config}):
+              {temp} ({tempConfig}):
             </small>
             <span className={styles.data}>
-              {formatNumber(locale, temperature2)}
+              {formatNumber(locale, temperature)}
               <sup>°C</sup>
             </span>
           </section>
-          <section className={styles.container}>
-            <small role="heading" aria-level={3} className={styles.label}>
-              {feelsI18n}:
-            </small>
-            <span className={styles.data}>
-              {formatNumber(locale, feels)}
-              <sup>°C</sup>
-            </span>
-          </section>
-          <section className={styles.container}>
-            <small role="heading" aria-level={3} className={styles.label}>
-              {humidityI18n}:
-            </small>
-            <span className={styles.data}>
-              {formatNumber(locale, humidity, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-              })}
-              <sup>%</sup>
-            </span>
-          </section>
-        </>
-      )}
+        )}
+        {!isNaN(temperature2) && (
+          <>
+            <section className={styles.container}>
+              <small role="heading" aria-level={3} className={styles.label}>
+                {temp2} ({temp2Config}):
+              </small>
+              <span className={styles.data}>
+                {formatNumber(locale, temperature2)}
+                <sup>°C</sup>
+              </span>
+            </section>
+            <section className={styles.container}>
+              <small role="heading" aria-level={3} className={styles.label}>
+                {feelsI18n}:
+              </small>
+              <span className={styles.data}>
+                {formatNumber(locale, feels)}
+                <sup>°C</sup>
+              </span>
+            </section>
+            <section className={styles.container}>
+              <small role="heading" aria-level={3} className={styles.label}>
+                {humidityI18n}:
+              </small>
+              <span className={styles.data}>
+                {formatNumber(locale, humidity, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                })}
+                <sup>%</sup>
+              </span>
+            </section>
+          </>
+        )}
+      </div>
       {timestamp && (
         <div className={classnames(styles.container, styles.footer)}>
           <small>
