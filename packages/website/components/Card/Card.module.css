@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   align-items: stretch;
   justify-content: space-between;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   box-shadow: 0 5px 10px 0px HSL(var(--bg), 0.666);
   padding: var(--space-m);
   background-color: HSL(var(--bg, var(--color-primary-offset)));

@@ -39,6 +39,7 @@
     },
     "createdAt": "registered {{createdAt}}.",
     "description": "View the latest transmitted data on temperature and humidity from {{station}}.",
+    "registered": "register date",
     "search": {
       "description": "Simply search registered temperature stations by name and look up their latest temperature data.",
       "label": "Search for station",
@@ -60,6 +61,9 @@
     "visit": "Go to station \"{{name}}\""
   },
   "temperature": {
+    "chart": {
+      "days": "temperature records of the last {{amount}} days"
+    },
     "config": {
       "IN": "inside",
       "OUT": "outside"
@@ -69,7 +73,10 @@
       "one": "temperature entry",
       "many": "temperature entries"
     },
-    "extremes": "Temperature extremes in last {{amount}} hours",
+    "extremes": {
+      "days": "Temperature extremes in last {{amount}} days",
+      "hours": "Temperature extremes in last {{amount}} hours"
+    },
     "max": "highest",
     "min": "lowest",
     "temperature": "Sensor 1",

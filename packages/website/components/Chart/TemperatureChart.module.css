@@ -1,0 +1,42 @@
+.chart {
+  display: block;
+  width: 100%;
+  color: HSL(var(--color-grey), 0.333);
+}
+
+.chart path {
+  fill: transparent;
+  stroke: HSL(var(--color-secondary-offset));
+  stroke-opacity: 0.5;
+  stroke-width: 1px;
+  stroke-linecap: round;
+}
+
+.chart text {
+  fill: HSL(var(--color-grey));
+  font-family: inherit;
+}
+
+.chart :global(.visx-area) {
+  fill: HSL(var(--color-secondary-offset));
+  fill-opacity: 0.25;
+}
+
+.intersect.intersect,
+.temperature.temperature {
+  stroke-opacity: unset;
+}
+
+.intersect.intersect {
+  stroke: HSL(var(--color-primary));
+}
+
+@media (min-width: 375px) {
+  .chart path {
+    stroke-width: 2px;
+  }
+
+  .intersect.intersect {
+    stroke-dasharray: 2, 4;
+  }
+}

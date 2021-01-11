@@ -57,7 +57,6 @@ query entriesCount($station: ID, $from: String, $to: String) {
 export const GET_ENTRIES = `
 query entries($station: ID!, $from: String!, $to: String) {
   entries(station: $station, from: $from, to: $to) {
-    hash
     timestamp
     temperature
     temperature2
@@ -98,6 +97,30 @@ query indexPage($from: String) {
   }
   lowest: entryExtreme(low: true, from: $from) {
     ${entry}
+  }
+}
+`;
+
+export const GET_STATION_PAGE_QUERY = `
+query stationPage($station: ID!, $from: String!) {
+  count: entriesCount(station: $station)
+  entry(station: $station) {
+    ${entry}
+  }
+  entries(station: $station, from: $from) {
+    timestamp
+    temperature
+    temperature2
+    humidity
+    feels
+  }
+  max: entryExtreme(low: false, station: $station, from: $from) {
+    temperature
+    temperature2
+  }
+  min: entryExtreme(low: true, station: $station, from: $from) {
+    temperature
+    temperature2
   }
 }
 `;

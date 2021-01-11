@@ -16,11 +16,14 @@ const Divider = ({
   level,
 }: DividerProps): JSX.Element => {
   return (
-    <div className={classnames(styles.container, className)}>
+    <div
+      role="heading"
+      aria-level={level}
+      aria-label={ariaLabel}
+      className={classnames(styles.container, className)}
+    >
       <hr />
-      <span role="heading" aria-level={level} aria-label={ariaLabel}>
-        {children}
-      </span>
+      <span>{children}</span>
       <hr />
     </div>
   );

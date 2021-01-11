@@ -39,6 +39,7 @@
     },
     "createdAt": "{{createdAt}} registriert.",
     "description": "Diese Seite zeigt die aktuellsten Temperatur- & Luftfeuchtigkeitsdaten von {{station}} an.",
+    "registered": "Registrierungsdatum",
     "search": {
       "description": "Registrierte Temperaturstationen ganz einfach nach Namen suchen und sofort die aktuellsten Temperatureinträge anzeigen lassen.",
       "label": "Station suchen",
@@ -60,6 +61,9 @@
     "visit": "Zur Station \"{{name}}\" wechseln"
   },
   "temperature": {
+    "chart": {
+      "days": "Temperaturverlauf der letzten {{amount}} Tage"
+    },
     "config": {
       "IN": "innen",
       "OUT": "außen"
@@ -69,7 +73,10 @@
       "one": "Temperatureintrag",
       "many": "Temperatureinträge"
     },
-    "extremes": "Höchst- & Niedrigstwerte der letzten {{amount}} Stunden",
+    "extremes": {
+      "days": "Höchst- & Niedrigstwerte der letzten {{amount}} Tage",
+      "hours": "Höchst- & Niedrigstwerte der letzten {{amount}} Stunden"
+    },
     "max": "Höchstwert",
     "min": "Niedrigstwert",
     "temperature": "Sensor 1",

@@ -4,6 +4,10 @@
   }
 }
 
+.wrapper {
+  margin-top: var(--space-l);
+}
+
 .link {
   transition: opacity 200ms ease-in;
   flex: 0 0 auto;
@@ -33,6 +37,13 @@
 .container {
   flex: 1;
   padding: var(--space-m);
+  margin-top: unset;
+}
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
 }
 
 .header,
@@ -107,4 +118,10 @@
 .svgContainer path {
   animation: dash 1s linear infinite;
   stroke-dasharray: 46;
+}
+
+@media (min-width: 768px) {
+  .values {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

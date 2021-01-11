@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "prestart": "netlify build --context branch-deploy --debug",
-    "start": "netlify dev",
+    "start": "netlify dev -p 3000",
     "dev": "lerna run dev --parallel",
     "prebuild": "rm -rf out_publish && rm -rf out_functions",
     "build": "lerna run build",
@@ -40,8 +40,5 @@
     "semantic-release": "^17.3.1",
     "ts-jest": "^26.4.3",
     "typescript": "^4.0.3"
-  },
-  "resolutions": {
-    "next-on-netlify": "github:netlify/next-on-netlify#ll/i18n"
   }
 }

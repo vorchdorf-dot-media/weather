@@ -30,7 +30,7 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column: 1 / -1;
   column-gap: var(--space-m);
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   border: 1px dashed HSL(var(--color-grey), 0.333);
   margin: calc(var(--space-s) * -1);
   padding: var(--space-s);
@@ -59,18 +59,8 @@
   grid-column: 1/-1;
 }
 
-.card {
+.loading {
   margin-top: 0;
-}
-
-.card span,
-.card strong {
-  display: block;
-  width: 100%;
-}
-
-.card strong {
-  font-size: var(--space-l);
 }
 
 .loaded svg {
