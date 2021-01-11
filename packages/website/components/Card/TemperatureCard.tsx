@@ -152,7 +152,9 @@ const TemperatureCard = ({
         <div className={classnames(styles.container, styles.footer)}>
           <small>
             {lastUpdated}: {dayjs(timestamp).fromNow()}
-            {new Date(timestamp).valueOf() < Date.now() - DAY && <AlertIcon />}
+            {new Date(timestamp).valueOf() < Date.now() - DAY && (
+              <AlertIcon role="presentation" />
+            )}
           </small>
         </div>
       )}

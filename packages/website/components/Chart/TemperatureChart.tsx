@@ -25,10 +25,12 @@ const TemperatureChart = ({
   station,
   height: propHeight,
   margin = 42,
+  title,
   width: propWidth,
 }: {
   data: EntrySchema[];
   station: StationSchema;
+  title: string;
   height?: number;
   margin?: number;
   width?: number;
@@ -112,6 +114,7 @@ const TemperatureChart = ({
 
   return (
     <svg className={styles.chart} ref={svgRef} width={width} height={height}>
+      <title>{title}</title>
       {width > 0 && (
         <Group left={margin} top={margin * -0.75}>
           <GridColumns

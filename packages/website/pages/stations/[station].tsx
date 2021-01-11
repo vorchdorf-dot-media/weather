@@ -70,7 +70,8 @@ const Station = ({
     return <ErrorPage title={title} stack={stack} />;
   }
   const [from] = useState(setTimeframe);
-  const { statistics } = useText({
+  const { statistics, chartTitle } = useText({
+    chartTitle: <Text id="temperature.chart.days" fields={{ amount: DAYS }} />,
     statistics: 'index.statistics',
   });
   const { temperature, temperature2 } = station?.config;
@@ -197,6 +198,7 @@ const Station = ({
             <TemperatureChart
               data={data?.entries}
               station={data?.entry?.station}
+              title={chartTitle}
             />
           )}
         </article>

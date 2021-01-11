@@ -61,6 +61,9 @@
     "visit": "Zur Station \"{{name}}\" wechseln"
   },
   "temperature": {
+    "chart": {
+      "days": "Temperaturverlauf der letzten {{amount}} Tage"
+    },
     "config": {
       "IN": "innen",
       "OUT": "außen"

@@ -61,6 +61,9 @@
     "visit": "Go to station \"{{name}}\""
   },
   "temperature": {
+    "chart": {
+      "days": "temperature records of the last {{amount}} days"
+    },
     "config": {
       "IN": "inside",
       "OUT": "outside"
