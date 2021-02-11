@@ -31,7 +31,7 @@
   stroke: HSL(var(--color-primary));
 }
 
-@media (min-width: 375px) {
+@media (min-width: 768px) {
   .chart path {
     stroke-width: 2px;
   }
