@@ -17,6 +17,9 @@ module.exports = withPlugins(
     withPWA,
   ],
   {
+    future: {
+      webpack5: true,
+    },
     generateBuildId: async () => process.env.BUILD_ID || nanoid(),
     i18n: {
       defaultLocale: 'en',

@@ -14,7 +14,7 @@
     "prestart": "netlify build --context branch-deploy --debug",
     "start": "netlify dev -p 3000",
     "dev": "lerna run dev --parallel",
-    "prebuild": "rm -rf out_publish && rm -rf out_functions",
+    "prebuild": "rm -rf packages/website/out_publish && rm -rf packages/website/out_functions",
     "build": "lerna run build",
     "test:packages": "lerna run test --parallel",
     "test:jest": "jest --coverage --maxWorkers 4",
