@@ -1,10 +1,11 @@
 name: Deploy to Netlify
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-  push:
+  pull_request:
+    types: [opened, synchronize]
     branches:
       - main
 
