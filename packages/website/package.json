@@ -25,8 +25,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next",
-    "build:next": "ANALYZE=true next build",
-    "build": "netlify build",
+    "build": "ANALYZE=true next build",
     "test": "eslint . --ext .ts,.tsx,.js"
   },
   "browserslist": [
