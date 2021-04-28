@@ -36,3 +36,10 @@ jobs:
 
       - name: Build
         run: yarn build
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          retention-days: 5
+          name: analyze
+          path: packages/website/.next/analyze/**.html
