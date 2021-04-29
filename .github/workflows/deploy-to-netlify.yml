@@ -1,6 +1,10 @@
 name: Deploy to Netlify
 
-on: pull_request
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   deploy:
