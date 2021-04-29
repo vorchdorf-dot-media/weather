@@ -11,8 +11,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
 
-    # env:
-    #   PROD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    env:
+      PROD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
 
     steps:
       - name: Check out repository
@@ -34,9 +34,9 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      # - name: Deploy to Netlify
-      #   run: yarn workspace website netlify deploy --json --build --prod=$PROD --message="${{ github.event.head_commit.message }}" --dir=out_publish --functions=out_functions
+      - name: Deploy to Netlify
+        run: yarn workspace website netlify deploy --json --build --prod=$PROD --message="${{ github.event.head_commit.message }}" --dir=out_publish --functions=out_functions
 
-      # - name: Release on GitHub
-      #   if: ${{ env.PROD }}
-      #   run: npx semantic-release
+      - name: Release on GitHub
+        if: ${{ env.PROD }}
+        run: npx semantic-release
