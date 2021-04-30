@@ -35,7 +35,12 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Deploy to Netlify
-        run: yarn workspace website netlify deploy --json --build --dir=out_publish --functions=out_functions
+        run: |
+          if [[ $PROD == 'false' ]]; then
+            yarn workspace website netlify deploy --json --build
+          else
+            yarn workspace website netlify deploy --json --build --prod
+          fi
 
       - name: Release on GitHub
         if: ${{ env.PROD }}
