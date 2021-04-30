@@ -34,6 +34,9 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
+      - name: Build functions package
+        run: yarn workspace functions build
+
       - name: Deploy to Netlify
         env:
           BRANCH: ${{ github.head_ref }}
