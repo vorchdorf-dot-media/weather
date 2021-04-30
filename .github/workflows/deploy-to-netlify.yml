@@ -34,12 +34,18 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
+      - name: Build project
+        run: yarn build
+
       - name: Deploy to Netlify
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
           if [[ $PROD == 'false' ]]; then
-            yarn workspace website netlify deploy --json --build
+            yarn workspace website netlify deploy
           else
-            yarn workspace website netlify deploy --json --build --prod
+            yarn workspace website netlify deploy --prod
           fi
 
       - name: Release on GitHub
