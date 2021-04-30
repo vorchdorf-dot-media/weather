@@ -3,7 +3,7 @@ import nextPkg from 'next/package.json';
 import pkg from 'package.json';
 import manifest from 'data/manifest';
 import socialData from 'data/social.json';
-import { URL } from 'utils/constants';
+import { getUrl } from 'utils/constants';
 
 export interface SEOProps {
   description?: string;
@@ -20,8 +20,8 @@ const SEOBlock = ({
 }: SEOProps): JSX.Element => {
   const { author, description: pkgDescription } = pkg;
   const { version } = nextPkg;
-  const fallback = `${URL}/card-image.jpg`;
-  const url = `${URL}${path}`;
+  const fallback = `${getUrl()}/card-image.jpg`;
+  const url = `${getUrl()}${path}`;
 
   const { username } =
     socialData.find(({ provider }) => provider === 'twitter') || {};

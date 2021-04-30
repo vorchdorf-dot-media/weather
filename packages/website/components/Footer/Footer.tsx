@@ -1,3 +1,4 @@
+import { useMemo } from 'preact/hooks';
 import classnames from 'classnames';
 import Link from 'next/link';
 import { Text } from 'preact-i18n';
@@ -7,7 +8,7 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import Container from 'components/Container';
 import Lightswitch from 'components/Footer/Lightswitch';
 import SocialList from 'components/Footer/Social';
-import { URL } from 'utils/constants';
+import { getUrl } from 'utils/constants';
 
 import styles from 'components/Footer/Footer.module.css';
 
@@ -16,6 +17,7 @@ const CURRENT = new Date().getFullYear();
 
 const Footer = (): JSX.Element => {
   const { repository, author } = pkg;
+  const url = useMemo(() => getUrl(), []);
   return (
     <footer className={styles.footer}>
       <Container className={classnames(styles.container, styles.navigation)}>
@@ -25,7 +27,7 @@ const Footer = (): JSX.Element => {
       <Container className={styles.container}>
         <span role="heading" aria-level={2}>
           <Link href="/">
-            <a>{URL}</a>
+            <a>{url}</a>
           </Link>
         </span>
         <p>
