@@ -39,8 +39,8 @@ jobs:
 
       - name: Deploy to Netlify
         env:
-          ALIAS: ${{ github.sha }}
-          PREVIEW_URL: ${{ format('https://{0}--wetter-vorchdorf-media.netlify.app', github.sha) }}
+          ALIAS: ${GITHUB_SHA::8}
+          PREVIEW_URL: ${{ format('https://{0}--wetter-vorchdorf-media.netlify.app', env.ALIAS) }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
