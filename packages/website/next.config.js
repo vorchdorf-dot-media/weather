@@ -20,7 +20,7 @@ module.exports = withPlugins(
     future: {
       webpack5: true,
     },
-    generateBuildId: async () => process.env.BUILD_ID || nanoid(),
+    generateBuildId: async () => process.env.GITHUB_SHA || nanoid(),
     i18n: {
       defaultLocale: 'en',
       locales,
@@ -43,7 +43,7 @@ module.exports = withPlugins(
           use: ['@svgr/webpack'],
         }
       );
-      process.env.BUILD_ID &&
+      process.env.GITHUB_SHA &&
         config.plugins.push(
           new webpack.EnvironmentPlugin(Object.keys(process.env))
         );
