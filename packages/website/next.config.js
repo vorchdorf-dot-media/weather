@@ -18,7 +18,7 @@ module.exports = withPlugins(
   ],
   {
     future: {
-      webpack5: true,
+      webpack5: false,
     },
     generateBuildId: async () => process.env.GITHUB_SHA || nanoid(),
     i18n: {
