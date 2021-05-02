@@ -41,14 +41,15 @@ jobs:
         env:
           ALIAS: ${{ github.head_ref }}
           PREVIEW_URL: ${{ format('https://{0}--wetter-vorchdorf-media.netlify.app', github.head_ref) }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
           if [[ $PROD == 'false' ]]; then
             yarn workspace website netlify build --context=deploy_preview
-            yarn workspace website netlify deploy --alias=$ALIAS
+            yarn workspace website netlify deploy --alias=$ALIAS --message="$COMMIT_MESSAGE"
           else
-            yarn workspace website netlify deploy --build --prod
+            yarn workspace website netlify deploy --build --prod --message="$COMMIT_MESSAGE"
           fi
 
       - name: Release on GitHub
