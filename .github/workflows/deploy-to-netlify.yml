@@ -15,10 +15,11 @@ jobs:
       PROD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
 
     steps:
-      - run: echo "${{ toJSON(github.event) }}"
-
       - name: Check out repository
         uses: actions/checkout@v2
+
+      - name: Set COMMIT_MESSAGE env
+        run: echo "COMMIT_MESSAGE=`git log -1 --pretty=format:"%s"`" >> $GITHUB_ENV
 
       - name: Use Node.js 14.x
         uses: actions/setup-node@v2
@@ -41,9 +42,8 @@ jobs:
 
       - name: Deploy to Netlify
         env:
-          ALIAS: ${{ github.head_ref }}
-          PREVIEW_URL: ${{ format('https://{0}--wetter-vorchdorf-media.netlify.app', github.head_ref) }}
-          COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
+          ALIAS: ${{ format('pr-{0}', github.event.number) }}
+          PREVIEW_URL: ${{ format('https://{0}--wetter-vorchdorf-media.netlify.app', env.ALIAS) }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
