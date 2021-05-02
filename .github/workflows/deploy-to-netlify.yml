@@ -41,7 +41,7 @@ jobs:
         env:
           ALIAS: ${{ github.head_ref }}
           PREVIEW_URL: ${{ format('https://{0}--wetter-vorchdorf-media.netlify.app', github.head_ref) }}
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
