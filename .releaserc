@@ -9,11 +9,9 @@
       {
         "assets": []
       }
-    ],
-  ],
-  "release": {
-    "branches": [
-      "main"
     ]
-  }
+  ],
+  "branches": [
+    "main"
+  ]
 }
