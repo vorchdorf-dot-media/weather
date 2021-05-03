@@ -1,7 +1,0 @@
-[build]
-  command = "yarn build"
-  functions = "packages/website/out_functions"
-  publish = "packages/website/out_publish"
-
-[[plugins]]
-  package = 'netlify-plugin-contextual-env'

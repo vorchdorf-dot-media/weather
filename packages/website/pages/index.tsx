@@ -5,7 +5,6 @@ import { useState } from 'preact/hooks';
 import { translate, useText, Text } from 'preact-i18n';
 import { useQuery } from '@urql/preact';
 
-import Card from 'components/Card/Card';
 import LoadingCard from 'components/Card/LoadingCard';
 import SingleCard from 'components/Card/SingleCard';
 import Divider from 'components/Divider';

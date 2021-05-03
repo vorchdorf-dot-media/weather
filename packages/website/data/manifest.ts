@@ -1,6 +1,6 @@
 import pkg from 'package.json';
 
-import { URL } from 'utils/constants';
+import { getUrl } from 'utils/constants';
 
 const { author, description, manifest, version } = pkg;
 
@@ -16,7 +16,7 @@ export default {
   scope: '/',
   default_locale: 'en',
   display: 'standalone',
-  homepage_url: URL,
+  homepage_url: getUrl(),
   icons: [
     {
       src: '/icons/rounded-icon-192.png',
