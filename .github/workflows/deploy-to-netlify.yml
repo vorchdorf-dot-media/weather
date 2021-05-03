@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Set COMMIT_MESSAGE env
         run: echo "COMMIT_MESSAGE=$(git --no-pager log -1 --pretty=format:"%s" ${{ github.event.after }})" >> $GITHUB_ENV
