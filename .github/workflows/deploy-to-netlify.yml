@@ -21,7 +21,12 @@ jobs:
           fetch-depth: 2
 
       - name: Set COMMIT_MESSAGE env
-        run: echo "COMMIT_MESSAGE=$(git --no-pager log -1 --pretty=format:"%s" ${{ github.event.after }})" >> $GITHUB_ENV
+        run: |
+          if [[ $PROD == 'false' ]]; then
+            echo "COMMIT_MESSAGE=$(git --no-pager log -1 --pretty=format:"%s" ${{ github.event.after }})" >> $GITHUB_ENV
+          else
+            echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+          fi
 
       - name: Use Node.js 14.x
         uses: actions/setup-node@v2
