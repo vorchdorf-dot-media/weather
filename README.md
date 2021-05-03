@@ -5,7 +5,7 @@
   <strong>An Arduino-powered weather logging service. 🌡️🌤️</strong>
   <br />
   <br />
-  <a href="https://app.netlify.com/sites/wetter-vorchdorf-media/deploys"><img alt="Netlify Deployment Status" src="https://api.netlify.com/api/v1/badges/4d3def6c-c992-4f1c-8a91-5fac84cac030/deploy-status" /></a> <img alt="Build status on travis.com" src="https://img.shields.io/travis/com/vorchdorf-dot-media/weather"> <img alt="License" src="https://img.shields.io/github/license/vorchdorf-dot-media/weather"> 
+  <a href="https://app.netlify.com/sites/wetter-vorchdorf-media/deploys"><img alt="Netlify Deployment Status" src="https://api.netlify.com/api/v1/badges/4d3def6c-c992-4f1c-8a91-5fac84cac030/deploy-status" /></a> <a href="https://github.com/vorchdorf-dot-media/weather/actions/workflows/deploy-to-netlify.yml"><img alt="GitHub Actions: Deploy to Netlify workflow" src="https://github.com/vorchdorf-dot-media/weather/actions/workflows/deploy-to-netlify.yml/badge.svg" /></a> <a href="https://github.com/vorchdorf-dot-media/weather/actions/workflows/build-and-test.yml"><img alt="GitHub Actions: Test workflow" src="https://github.com/vorchdorf-dot-media/weather/actions/workflows/build-and-test.yml/badge.svg" /></a> <img alt="License" src="https://img.shields.io/github/license/vorchdorf-dot-media/weather"> 
   <br />
   <br />
   <br />

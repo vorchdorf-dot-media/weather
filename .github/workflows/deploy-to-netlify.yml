@@ -23,9 +23,11 @@ jobs:
       - name: Set COMMIT_MESSAGE env
         run: |
           if [[ $PROD == 'false' ]]; then
-            echo "COMMIT_MESSAGE=$(git --no-pager log -1 --pretty=format:"%s" ${{ github.event.after }})" >> $GITHUB_ENV
+            SHORT_SHA=$(git rev-parse --short ${{ github.event.after }})
+            echo "COMMIT_MESSAGE=($SHORT_SHA) $(git --no-pager log -1 --pretty=format:"%s" ${{ github.event.after }})" >> $GITHUB_ENV
           else
-            echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+            SHORT_SHA=$(git rev-parse --short $GITHUB_SHA)
+            echo "COMMIT_MESSAGE=($SHORT_SHA) ${{ github.event.head_commit.message }}" >> $GITHUB_ENV
           fi
 
       - name: Use Node.js 14.x
