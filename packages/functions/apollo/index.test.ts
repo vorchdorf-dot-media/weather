@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApolloServerTestClient } from 'apollo-server-testing';
 import * as day from 'dayjs';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 import {
   CREATE_ENTRY,
@@ -35,6 +35,10 @@ describe('Apollo GraphQL Server', () => {
     let client: ApolloServerTestClient;
     let createStation: StationSchema;
     let errors: unknown;
+
+    afterAll(async () => {
+      await mongoose.connection.close();
+    });
 
     beforeAll(async () => {
       await connect();
@@ -106,6 +110,10 @@ describe('Apollo GraphQL Server', () => {
     let ENTRY_HASH: string;
     let client: ApolloServerTestClient;
     let station: Document;
+
+    afterAll(async () => {
+      await mongoose.connection.close();
+    });
 
     beforeAll(async () => {
       await connect();
@@ -204,6 +212,10 @@ describe('Apollo GraphQL Server', () => {
 
   describe('with unauthenticated user', () => {
     let client: ApolloServerTestClient;
+
+    afterAll(async () => {
+      await mongoose.connection.close();
+    });
 
     beforeAll(async () => {
       await connect();

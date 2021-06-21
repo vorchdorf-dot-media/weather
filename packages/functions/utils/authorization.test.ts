@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 import connect from '../db';
 import { Station } from '../db/schemata';
@@ -15,6 +15,10 @@ describe('utils/authorization', () => {
     email: 'authorizationtest@mail.com',
     name: 'AuthorizationTest',
   };
+
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
 
   beforeAll(async () => {
     await connect();

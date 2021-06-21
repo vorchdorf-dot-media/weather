@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 import connect from '../';
 import Station, { StationSchema } from './station';
@@ -10,6 +10,10 @@ const STATION_DATA: StationSchema = {
 
 describe('Station', () => {
   let station: Document<StationSchema>;
+
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
 
   beforeAll(async () => {
     await connect();

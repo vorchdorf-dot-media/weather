@@ -79,7 +79,7 @@ const Station = ({
 
   const [stationData, reexecuteQuery] = useQuery({
     query: GET_STATION_PAGE_QUERY,
-    variables: { station: station.id, from },
+    variables: { station: station.name, from },
   });
   const { data, fetching } = stationData;
   const { max: maxEntry, min: minEntry } = data || {};

@@ -1,4 +1,4 @@
-import { Document, Model } from 'mongoose';
+import { Document } from 'mongoose';
 
 import { Entry } from '../../../db/schemata';
 import { EntrySchema } from '../../../db/schemata/entry';
