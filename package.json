@@ -19,7 +19,7 @@
     "prebuild": "rm -rf packages/website/out_publish && rm -rf packages/website/out_functions",
     "build": "lerna run build",
     "test:packages": "lerna run test --parallel",
-    "test:jest": "jest --coverage --runInBand",
+    "test:jest": "jest --coverage --runInBand --forceExit",
     "test": "run-s test:**"
   },
   "devDependencies": {
