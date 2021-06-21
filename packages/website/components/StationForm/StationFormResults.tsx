@@ -4,6 +4,7 @@ import { Text } from 'preact-i18n';
 import { useQuery } from '@urql/preact';
 import classnames from 'classnames';
 
+import { blankToUnderscore } from 'utils/helpers';
 import { GET_STATIONS } from 'utils/queries';
 
 import styles from 'components/StationForm/StationFormResults.module.css';
@@ -39,9 +40,9 @@ const StationFormResults = ({ term }: { term: string }): JSX.Element => {
         </span>
         {data?.stations?.length > 0 && (
           <ul>
-            {data.stations.map(({ id, name }) => (
+            {data.stations.map(({ name }) => (
               <li>
-                <Link href={'/stations/' + id}>
+                <Link href={'/stations/' + blankToUnderscore(name)}>
                   <a title={name}>
                     <span>{name}</span>
                     <ArrowUpRight aria-hidden="true" />

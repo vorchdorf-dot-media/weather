@@ -20,7 +20,6 @@ const station = `
 createdAt
 updatedAt
 email
-id
 name
 address {
   ${address}
