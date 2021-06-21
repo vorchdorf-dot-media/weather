@@ -33,10 +33,9 @@ const types = gql`
   }
 
   type Station {
-    id: ID!
+    name: ID!
     createdAt: String
     updatedAt: String
-    name: String
     email: String
     address: Address
     coordinates: Coordinates
@@ -79,7 +78,7 @@ const types = gql`
     entryExtreme(low: Boolean, station: ID, from: String, to: String): Entry
     entries(station: ID!, from: String!, to: String): [Entry]
     entriesCount(station: ID, from: String, to: String): Int
-    station(id: ID!): Station
+    station(name: ID!): Station
     stations(name: String): [Station]
     stationsCount: Int
   }

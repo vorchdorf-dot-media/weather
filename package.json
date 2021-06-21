@@ -17,7 +17,7 @@
     "prebuild": "rm -rf packages/website/out_publish && rm -rf packages/website/out_functions",
     "build": "lerna run build",
     "test:packages": "lerna run test --parallel",
-    "test:jest": "jest --coverage --maxWorkers 4",
+    "test:jest": "jest --coverage --runInBand",
     "test": "run-s test:**"
   },
   "devDependencies": {

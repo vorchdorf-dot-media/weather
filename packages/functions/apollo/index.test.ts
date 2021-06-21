@@ -58,7 +58,7 @@ describe('Apollo GraphQL Server', () => {
       createStation = station.data.createStation;
       errors = station.errors;
 
-      ENTRY_DATA.station = createStation.id;
+      ENTRY_DATA.station = createStation.name;
       ENTRY_HASH = generateHash({ ...(ENTRY_DATA as any) });
     });
 
@@ -74,7 +74,7 @@ describe('Apollo GraphQL Server', () => {
         errors,
       } = await client.query({
         query: GET_STATION,
-        variables: { id: createStation.id },
+        variables: { name: createStation.name },
       });
 
       expect(errors).not.toBeDefined();
@@ -144,7 +144,7 @@ describe('Apollo GraphQL Server', () => {
 
       expect(errors).not.toBeDefined();
       expect(createEntry.hash).toEqual(ENTRY_HASH);
-      expect(createEntry.station.id).toEqual(station._id);
+      expect(createEntry.station.name).toEqual(station.get('name'));
     });
 
     it('fetches latest Entry', async () => {
@@ -153,7 +153,7 @@ describe('Apollo GraphQL Server', () => {
         errors,
       } = await client.query({
         query: GET_ENTRY,
-        variables: { station: station._id },
+        variables: { station: station.get('name') },
       });
 
       expect(errors).not.toBeDefined();
@@ -168,7 +168,7 @@ describe('Apollo GraphQL Server', () => {
         errors,
       } = await client.query({
         query: GET_ENTRIES,
-        variables: { station: station.id, from },
+        variables: { station: station.get('name'), from },
       });
 
       expect(errors).not.toBeDefined();
@@ -184,7 +184,7 @@ describe('Apollo GraphQL Server', () => {
         errors,
       } = await client.query({
         query: GET_ENTRIES,
-        variables: { station: station.id, from, to },
+        variables: { station: station.get('name'), from, to },
       });
 
       expect(errors).not.toBeDefined();

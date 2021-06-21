@@ -24,7 +24,6 @@ const dates = `
 `;
 
 const station = `
-  id
   name
   email
   ${dates}
@@ -117,8 +116,8 @@ export const CREATE_STATION = gql`
 `;
 
 export const GET_STATION = gql`
-  query station($id: ID!) {
-    station(id: $id) {
+  query station($name: ID!) {
+    station(name: $name) {
       ${station}
     }
   }

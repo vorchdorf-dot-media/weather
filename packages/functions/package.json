@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "@types/basic-auth": "^1.1.3",
-    "@types/mongoose": "^5.7.36",
     "apollo-server-testing": "^2.19.0",
     "babel-loader": "^8.1.0",
     "bufferutil": "^4.0.3",
@@ -35,7 +34,7 @@
     "apollo-server-micro": "^2.19.0",
     "basic-auth": "^2.0.1",
     "graphql": "^15.3.0",
-    "mongoose": "~5.10.10",
+    "mongoose": "^5.12.14",
     "nanoid": "^3.1.15"
   }
 }

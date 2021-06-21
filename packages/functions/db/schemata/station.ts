@@ -1,29 +1,29 @@
-import { Schema, model } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 import { customAlphabet } from 'nanoid';
 
 import { BASE_58, ID_SHORT } from '../../utils/definitions';
 
 const nanoid = customAlphabet(BASE_58, ID_SHORT);
 
-export interface AddressSchema {
+export type AddressSchema = {
   city?: string;
   country?: string;
   street?: string;
   zip?: string;
-}
+};
 
-export interface ConfigSchema {
+export type ConfigSchema = {
   temperature?: 'IN' | 'OUT';
   temperature2?: 'IN' | 'OUT';
-}
+};
 
-export interface CoordinatesSchema {
+export type CoordinatesSchema = {
   height?: number;
   latitude: number;
   longitude: number;
-}
+};
 
-export interface StationSchema {
+export type StationSchema = {
   [key: string]: unknown;
   id?: string;
   createdAt?: Date;
@@ -33,9 +33,9 @@ export interface StationSchema {
   address?: AddressSchema;
   coordinates?: CoordinatesSchema;
   config?: ConfigSchema;
-}
+};
 
-const StationSchema: Schema<StationSchema> = new Schema(
+const StationSchema: Schema<Document<StationSchema>> = new Schema(
   {
     _id: {
       default: () => nanoid(),
@@ -88,4 +88,4 @@ StationSchema.path('updatedAt').get(
   (value: number) => value && new Date(value).toISOString()
 );
 
-export default model('Station', StationSchema);
+export default model<Document<StationSchema>>('Station', StationSchema);

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import connect from '../../../db';
 import { StationSchema } from '../../../db/schemata/station';
 import { EntryDataSource, StationDataSource } from '..';
@@ -22,7 +23,13 @@ describe('Entry DataSource', () => {
     name: 'entryDataSourceTest',
   };
 
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+
   beforeAll(async () => {
+    console.error = console.log;
+
     await connect();
     entry = new EntryDataSource();
     station = new StationDataSource();
@@ -43,14 +50,14 @@ describe('Entry DataSource', () => {
   });
 
   it('counts Entries', async () => {
-    const count = await entry.count({ station: demoStation.id });
+    const count = await entry.count({ station: demoStation.name });
 
     expect(count).toEqual(1);
   });
 
   it('gets Entries', async () => {
     const entries = await entry.getEntries(
-      demoStation.id,
+      demoStation.name,
       new Date(ENTRY_DATA.timestamp.valueOf() - 1000).toISOString()
     );
 
@@ -67,13 +74,13 @@ describe('Entry DataSource', () => {
     });
 
     const extreme = await entry.getTemperatureExtreme({
-      station: demoStation.id,
+      station: demoStation.name,
     });
 
     expect(extreme).toHaveProperty('temperature', ENTRY_DATA.temperature);
 
     const extremeLow = await entry.getTemperatureExtreme({
-      station: demoStation.id,
+      station: demoStation.name,
       low: true,
     });
 
@@ -87,7 +94,7 @@ describe('Entry DataSource', () => {
 
   it('updates Entry', async () => {
     const temperature = 23.71;
-    const demoEntry = await entry.getLatest(demoStation.id);
+    const demoEntry = await entry.getLatest(demoStation.name);
     const updated = await entry.updateOne({
       ...demoEntry,
       temperature,
@@ -98,12 +105,18 @@ describe('Entry DataSource', () => {
   });
 
   it('deletes Entry', async () => {
-    const demoEntry = await entry.getLatest(demoStation.id);
+    const demoEntry = await entry.getLatest(demoStation.name);
     const deleted = await entry.deleteOne(demoEntry.id);
 
     expect(deleted).toHaveProperty('id', demoEntry.id);
 
     await expect(entry.deleteOne(demoEntry.id)).rejects.toThrowError();
+  });
+
+  it('fails to count Entries from non-existing Station', async () => {
+    await expect(
+      entry.count({ station: 'I do not exist' })
+    ).rejects.toThrowError();
   });
 
   it('fails to fetch Entry from invalid Station', async () => {
@@ -117,7 +130,17 @@ describe('Entry DataSource', () => {
 
   it('fails to fetch Entries with invalid query', async () => {
     await expect(
-      entry.getMany({ $and: { id: demoStation.id } })
+      entry.getMany({ $and: { id: demoStation.name } })
+    ).rejects.toThrowError();
+  });
+
+  it('fails to fetch latest Entry from non-existing Station', async () => {
+    await expect(entry.getLatest('I do not exist')).rejects.toThrowError();
+  });
+
+  it('fails to fetch Entries from non-existing Station', async () => {
+    await expect(
+      entry.getEntries('I do not exist', '2021-06-21')
     ).rejects.toThrowError();
   });
 

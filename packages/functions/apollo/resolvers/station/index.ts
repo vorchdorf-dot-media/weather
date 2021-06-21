@@ -28,12 +28,12 @@ export const StationMutation = {
 export const StationQuery = {
   async station(
     _parent: unknown,
-    { id }: { id: string },
+    { name }: { name: string },
     {
       dataSources: { stations },
     }: { dataSources: { stations: StationDataSource } }
   ): Promise<StationSchema> {
-    return stations.getOne({ id });
+    return stations.getOne({ name });
   },
 
   async stations(

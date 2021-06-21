@@ -56,7 +56,7 @@ export const scope = async (
     if (!station) {
       throw new Error(`No station found with ID: ${name}`);
     }
-    return station._id === name
+    return station.get('id') === name
       ? AUTH_SCOPE.STATION
       : AUTH_SCOPE.UNAUTHENTICATED;
   } catch (e) {
