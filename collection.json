@@ -17,8 +17,8 @@
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "query entry($station: ID!) {\n    entry(station: $station) {\n        id\n        hash\n        timestamp\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            id\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
-                "variables": "{\n    \"station\": \"{{STATION_ID}}\"\n}"
+                "query": "query entry($station: ID!) {\n    entry(station: $station) {\n        id\n        hash\n        timestamp\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
+                "variables": "{\n    \"station\": \"{{STATION_NAME}}\"\n}"
               }
             },
             "url": {
@@ -37,7 +37,7 @@
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "query entryExtreme($low: Boolean, $station: ID, $from: String, $to: String) {\n    entryExtreme(low: $low, station: $station, from: $from, to: $to) {\n        id\n        hash\n        timestamp\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            id\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
+                "query": "query entryExtreme($low: Boolean, $station: ID, $from: String, $to: String) {\n    entryExtreme(low: $low, station: $station, from: $from, to: $to) {\n        id\n        hash\n        timestamp\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
                 "variables": ""
               }
             },
@@ -57,8 +57,8 @@
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "query entries($station: ID!, $from: String!, $to: String) {\n    entries(station: $station, from: $from, to: $to) {\n        id\n        hash\n        timestamp\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            id\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
-                "variables": "{\n    \"station\": \"{{STATION_ID}}\",\n    \"from\": \"2020-12-29\"\n}"
+                "query": "query entries($station: ID!, $from: String!, $to: String) {\n    entries(station: $station, from: $from, to: $to) {\n        id\n        hash\n        timestamp\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
+                "variables": "{\n    \"station\": \"{{STATION_NAME}}\",\n    \"from\": \"2020-12-29\"\n}"
               }
             },
             "url": {
@@ -97,8 +97,8 @@
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "query station($id: ID!) {\n    station(id: $id) {\n        id\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
-                "variables": "{\n    \"id\": \"{{STATION_ID}}\"\n}"
+                "query": "query station($name: ID!) {\n    station(name: $name) {\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
+                "variables": "{\n    \"name\": \"{{STATION_NAME}}\"\n}"
               }
             },
             "url": {
@@ -117,7 +117,7 @@
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "query stations($name: String) {\n    stations(name: $name) {\n        id\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
+                "query": "query stations($name: String) {\n    stations(name: $name) {\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
                 "variables": ""
               }
             },
@@ -150,8 +150,7 @@
           "response": []
         }
       ],
-      "description": "Collection of queries for wetter.vorchdorf.media's GraphQL API",
-      "protocolProfileBehavior": {}
+      "description": "Collection of queries for wetter.vorchdorf.media's GraphQL API"
     },
     {
       "name": "Mutations",
@@ -164,7 +163,7 @@
               "basic": [
                 {
                   "key": "password",
-                  "value": "",
+                  "value": "c8b34a2f7daf21d794560e4dce9ed5f82f5d3acc",
                   "type": "string"
                 },
                 {
@@ -179,8 +178,8 @@
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "mutation createEntry($hash: String!, $timestamp: Int!, $temperature: [Float], $humidity: Float, $feels: Float) {\n    createEntry(hash: $hash, timestamp: $timestamp, temperature: $temperature, humidity: $humidity, feels: $feels) {\n        id\n        hash\n        timestamp\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            id\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
-                "variables": "{\n    \"hash\": \"\",\n    \"timestamp\": 0,\n    \"temperature\": [],\n    \"humidity\": 0,\n    \"feels\": 0\n}"
+                "query": "mutation createEntry($hash: String!, $timestamp: Int!, $temperature: [Float], $humidity: Float, $feels: Float) {\n    createEntry(hash: $hash, timestamp: $timestamp, temperature: $temperature, humidity: $humidity, feels: $feels) {\n        id\n        hash\n        timestamp\n        temperature\n        temperature2\n        humidity\n        feels\n        createdAt\n        updatedAt\n        station {\n            name\n            email\n            createdAt\n            updatedAt\n            address {\n                city\n                country\n                street\n                zip\n            }\n            coordinates {\n                height\n                latitude\n                longitude\n            }\n            config {\n                temperature\n                temperature2\n            }\n        }\n    }\n}",
+                "variables": "{\n    \"hash\": \"c8b34a2f7daf21d794560e4dce9ed5f82f5d3acc\",\n    \"timestamp\": 1624342714,\n    \"temperature\": [22.7, 22.53],\n    \"humidity\": 60.0,\n    \"feels\": 22.61\n}"
               }
             },
             "url": {
@@ -214,7 +213,7 @@
             "body": {
               "mode": "graphql",
               "graphql": {
-                "query": "mutation createStation($station: StationInput!) {\n    createStation(station: $station) {\n        id\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
+                "query": "mutation createStation($station: StationInput!) {\n    createStation(station: $station) {\n        name\n        email\n        createdAt\n        updatedAt\n        address {\n            city\n            country\n            street\n            zip\n        }\n        coordinates {\n            height\n            latitude\n            longitude\n        }\n        config {\n            temperature\n            temperature2\n        }\n    }\n}",
                 "variables": "{\n    \"station\": {\n        \"name\": \"\",\n        \"email\": \"\",\n        \"address\": {\n            \"city\": \"\",\n            \"country\": \"\",\n            \"street\": \"\",\n            \"zip\": \"\"\n        },\n        \"coordinates\": {\n            \"height\": 0,\n            \"latitude\": 0,\n            \"longitude\": 0\n        },\n        \"config\": {\n            \"temperature\": \"OUT\",\n            \"temperature2\": \"OUT\"\n        }\n    }\n}"
               }
             },
@@ -227,15 +226,13 @@
           "response": []
         }
       ],
-      "description": "Collection of mutations for wetter.vorchdorf.media's GraphQL API",
-      "protocolProfileBehavior": {}
+      "description": "Collection of mutations for wetter.vorchdorf.media's GraphQL API"
     }
   ],
   "event": [
     {
       "listen": "prerequest",
       "script": {
-        "id": "efc6bb1b-ff51-42b6-84e8-48bd4d0a4b12",
         "type": "text/javascript",
         "exec": [""]
       }
@@ -243,7 +240,6 @@
     {
       "listen": "test",
       "script": {
-        "id": "fddca94f-694b-4cd0-854a-56d30cfb3688",
         "type": "text/javascript",
         "exec": [""]
       }
@@ -251,25 +247,24 @@
   ],
   "variable": [
     {
-      "id": "39614a6c-1849-4503-b582-54a9a245b3be",
       "key": "URL",
       "value": "https://wetter.vorchdorf.media/api/graphql"
     },
     {
-      "id": "24317aff-1b9f-44be-acc4-e531ec46ff18",
       "key": "ADMIN_USER",
       "value": ""
     },
     {
-      "id": "7ca2f83b-9a7c-4ad7-b3a7-422f0a3471c3",
       "key": "ADMIN_PASSWORD",
       "value": ""
     },
     {
-      "id": "ff11c201-6bea-4827-870c-d52ae1585dbd",
+      "key": "STATION_NAME",
+      "value": ""
+    },
+    {
       "key": "STATION_ID",
       "value": ""
     }
-  ],
-  "protocolProfileBehavior": {}
+  ]
 }
