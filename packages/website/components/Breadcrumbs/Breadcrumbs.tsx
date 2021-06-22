@@ -4,32 +4,36 @@ import { useMemo } from 'preact/hooks';
 
 import styles from 'components/Breadcrumbs/Breadcrumbs.module.css';
 import dynamic from 'next/dynamic';
+import { getUrl } from 'utils/constants';
+import { underscoreToBlank } from 'utils/helpers';
 
 const Breadcrumbs = (): JSX.Element => {
-  const { asPath } = useRouter();
-  const segments = useMemo(
-    () =>
-      asPath &&
-      asPath
-        .split('/')
-        .filter(segment => !!segment)
-        .reduce(
-          (breadcrumbs, current) => {
-            const prev = breadcrumbs[breadcrumbs.length - 1];
-            return breadcrumbs.concat([
-              {
-                url:
-                  prev.url === '/'
-                    ? prev.url + current
-                    : `${prev.url}/${current}`,
-                label: current,
-              },
-            ]);
-          },
-          [{ url: '/', label: '/' }]
-        ),
-    [asPath]
-  );
+  const { asPath = '' } = useRouter();
+
+  const segments = useMemo((): { url: string; label: string }[] => {
+    const { pathname } = new URL(asPath, getUrl());
+    return pathname.length > 0
+      ? pathname
+          .split('/')
+          .filter(segment => !!segment)
+          .map(underscoreToBlank)
+          .reduce(
+            (breadcrumbs, current) => {
+              const prev = breadcrumbs[breadcrumbs.length - 1];
+              return breadcrumbs.concat([
+                {
+                  url:
+                    prev.url === '/'
+                      ? prev.url + current
+                      : `${prev.url}/${current}`,
+                  label: current,
+                },
+              ]);
+            },
+            [{ url: '/', label: '/' }]
+          )
+      : [];
+  }, [asPath]);
 
   const HomeIcon = dynamic(() => import('assets/icons/home.svg'));
 
