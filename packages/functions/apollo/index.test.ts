@@ -62,7 +62,12 @@ describe('Apollo GraphQL Server', () => {
       createStation = station.data.createStation;
       errors = station.errors;
 
-      ENTRY_DATA.station = createStation.name;
+      const stationModel = await Station.findOne(
+        { name: createStation.name },
+        '_id'
+      );
+
+      ENTRY_DATA.station = stationModel._id;
       ENTRY_HASH = generateHash({ ...(ENTRY_DATA as any) });
     });
 
