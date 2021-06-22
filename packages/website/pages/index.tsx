@@ -11,7 +11,7 @@ import Divider from 'components/Divider';
 import StationForm from 'components/StationForm/StationForm';
 import { GET_INDEX_PAGE_QUERY } from 'utils/queries';
 import { DAY } from 'utils/constants';
-import { formatNumber } from 'utils/helpers';
+import { blankToUnderscore, formatNumber } from 'utils/helpers';
 
 import styles from 'assets/styles/index.module.css';
 
@@ -44,6 +44,14 @@ const Index = ({
       />
     ),
   });
+
+  const extremeHighestStation = blankToUnderscore(
+    data?.highest?.station?.name ?? ''
+  );
+  const extremeLowestStation = blankToUnderscore(
+    data?.lowest?.station?.name ?? ''
+  );
+
   const ArduinoGraphic = dynamic(() => import('assets/graphics/arduino.svg'));
   const ArrowUpRightIcon = dynamic(
     () => import('assets/icons/arrow-up-right.svg')
@@ -103,7 +111,7 @@ const Index = ({
               variant="secondary"
             />
           ) : (
-            <Link href={'/stations/' + data?.highest?.station?.id}>
+            <Link href={'/stations/' + extremeHighestStation}>
               <a title={visitHighest}>
                 <SingleCard className={styles.loaded} variant="secondary">
                   <span role="heading" aria-level={4}>
@@ -133,7 +141,7 @@ const Index = ({
               variant="primary"
             />
           ) : (
-            <Link href={'/stations/' + data?.lowest?.station?.id}>
+            <Link href={'/stations/' + extremeLowestStation}>
               <a title={visitLowest}>
                 <SingleCard className={styles.loaded} variant="primary">
                   <span role="heading" aria-level={4}>
