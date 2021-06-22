@@ -11,13 +11,15 @@
     "packages/*"
   ],
   "scripts": {
-    "prestart": "netlify build --context branch-deploy --debug",
-    "start": "netlify dev -p 3000",
-    "dev": "lerna run dev --parallel",
+    "prestart:functions": "yarn workspace functions build",
+    "prestart:lerna": "lerna bootstrap",
+    "prestart:website": "yarn workspace website netlify build --context branch-deploy --debug",
+    "prestart": "run-s prestart:**",
+    "start": "yarn workspace website netlify dev -p 8888",
     "prebuild": "rm -rf packages/website/out_publish && rm -rf packages/website/out_functions",
     "build": "lerna run build",
     "test:packages": "lerna run test --parallel",
-    "test:jest": "jest --coverage --maxWorkers 4",
+    "test:jest": "jest --coverage --runInBand --forceExit",
     "test": "run-s test:**"
   },
   "devDependencies": {

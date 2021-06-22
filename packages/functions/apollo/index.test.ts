@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApolloServerTestClient } from 'apollo-server-testing';
 import * as day from 'dayjs';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 import {
   CREATE_ENTRY,
@@ -36,6 +36,10 @@ describe('Apollo GraphQL Server', () => {
     let createStation: StationSchema;
     let errors: unknown;
 
+    afterAll(async () => {
+      await mongoose.connection.close();
+    });
+
     beforeAll(async () => {
       await connect();
       client = createTestServer({
@@ -58,7 +62,12 @@ describe('Apollo GraphQL Server', () => {
       createStation = station.data.createStation;
       errors = station.errors;
 
-      ENTRY_DATA.station = createStation.id;
+      const stationModel = await Station.findOne(
+        { name: createStation.name },
+        '_id'
+      );
+
+      ENTRY_DATA.station = stationModel._id;
       ENTRY_HASH = generateHash({ ...(ENTRY_DATA as any) });
     });
 
@@ -74,7 +83,7 @@ describe('Apollo GraphQL Server', () => {
         errors,
       } = await client.query({
         query: GET_STATION,
-        variables: { id: createStation.id },
+        variables: { name: createStation.name },
       });
 
       expect(errors).not.toBeDefined();
@@ -106,6 +115,10 @@ describe('Apollo GraphQL Server', () => {
     let ENTRY_HASH: string;
     let client: ApolloServerTestClient;
     let station: Document;
+
+    afterAll(async () => {
+      await mongoose.connection.close();
+    });
 
     beforeAll(async () => {
       await connect();
@@ -144,7 +157,7 @@ describe('Apollo GraphQL Server', () => {
 
       expect(errors).not.toBeDefined();
       expect(createEntry.hash).toEqual(ENTRY_HASH);
-      expect(createEntry.station.id).toEqual(station._id);
+      expect(createEntry.station.name).toEqual(station.get('name'));
     });
 
     it('fetches latest Entry', async () => {
@@ -153,7 +166,7 @@ describe('Apollo GraphQL Server', () => {
         errors,
       } = await client.query({
         query: GET_ENTRY,
-        variables: { station: station._id },
+        variables: { station: station.get('name') },
       });
 
       expect(errors).not.toBeDefined();
@@ -168,7 +181,7 @@ describe('Apollo GraphQL Server', () => {
         errors,
       } = await client.query({
         query: GET_ENTRIES,
-        variables: { station: station.id, from },
+        variables: { station: station.get('name'), from },
       });
 
       expect(errors).not.toBeDefined();
@@ -184,7 +197,7 @@ describe('Apollo GraphQL Server', () => {
         errors,
       } = await client.query({
         query: GET_ENTRIES,
-        variables: { station: station.id, from, to },
+        variables: { station: station.get('name'), from, to },
       });
 
       expect(errors).not.toBeDefined();
@@ -204,6 +217,10 @@ describe('Apollo GraphQL Server', () => {
 
   describe('with unauthenticated user', () => {
     let client: ApolloServerTestClient;
+
+    afterAll(async () => {
+      await mongoose.connection.close();
+    });
 
     beforeAll(async () => {
       await connect();

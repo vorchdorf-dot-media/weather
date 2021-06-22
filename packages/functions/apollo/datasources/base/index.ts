@@ -8,11 +8,15 @@ import { RandomObject } from '../../../utils/definitions';
 abstract class MongooseDataSource<
   TProps extends RandomObject
 > extends DataSource {
-  protected model: Model<Document>;
+  protected _model: Model<Document>;
   protected connection: () => Promise<Mongoose>;
   protected populate: { path: string }[];
 
   public name: string;
+
+  public get model(): Model<Document> {
+    return this._model;
+  }
 
   constructor(
     name: string,
@@ -21,7 +25,7 @@ abstract class MongooseDataSource<
   ) {
     super();
     this.connection = connection;
-    this.model = model;
+    this._model = model;
     this.name = name;
     this.populate = populate;
   }
@@ -108,7 +112,7 @@ abstract class MongooseDataSource<
           `Failed to fetch ${this.name} entry with ID: ${id}! Not found.`
         );
       }
-      return result.toJSON();
+      return result.toJSON() as TProps;
     } catch (e) {
       console.error(e);
       throw new Error(`No ${this.name} entry found with ID: ${id}.`);
@@ -123,7 +127,7 @@ abstract class MongooseDataSource<
           `No ${this.name} entry found using filter: ${JSON.stringify(filter)}`
         );
       }
-      return result.toJSON();
+      return result.toJSON() as TProps;
     } catch (e) {
       console.error(e);
       throw new Error(`No ${this.name} entry found using given filters.`);
@@ -138,7 +142,7 @@ abstract class MongooseDataSource<
           `No ${this.name} data found using filter: ${JSON.stringify(filter)}`
         );
       }
-      return result.map(r => r.toJSON());
+      return result.map(r => r.toJSON()) as TProps[];
     } catch (e) {
       console.error(e);
       throw new Error(`Failed to fetch data from ${this.name} entries.`);
@@ -161,7 +165,7 @@ abstract class MongooseDataSource<
         );
       }
       const result = await this.create(other as TProps);
-      return result.toJSON();
+      return result.toJSON() as TProps;
     } catch (e) {
       console.error(e);
       throw new Error(
@@ -173,7 +177,7 @@ abstract class MongooseDataSource<
   async deleteOne(id: string): Promise<TProps> {
     try {
       const result = await this.delete(id);
-      return result.toJSON();
+      return result.toJSON() as TProps;
     } catch (e) {
       console.error(e);
       throw new Error(`Failed to delete ${this.name} entry with ID: ${id}.`);
@@ -183,7 +187,14 @@ abstract class MongooseDataSource<
   async updateOne(props: RandomObject): Promise<TProps> {
     try {
       const result = await this.update(props);
-      return result.toJSON();
+      if (!result) {
+        throw new Error(
+          `Failed to update ${this.name} entry with data: ${JSON.stringify(
+            props
+          )}!`
+        );
+      }
+      return result.toJSON() as TProps;
     } catch (e) {
       console.error(e);
       throw new Error(

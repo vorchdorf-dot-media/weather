@@ -8,3 +8,9 @@ export const formatNumber = (
     minimumFractionDigits: 2,
     ...options,
   }).format(number);
+
+export const blankToUnderscore = (value: string): string =>
+  value.replace(/\s/, '_');
+
+export const underscoreToBlank = (value: string): string =>
+  value.replace(/_/, ' ');

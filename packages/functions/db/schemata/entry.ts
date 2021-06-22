@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 import { customAlphabet } from 'nanoid';
 
 import { BASE_58, ID_LONG } from '../../utils/definitions';
@@ -6,7 +6,7 @@ import { StationSchema } from './station';
 
 const nanoid = customAlphabet(BASE_58, ID_LONG);
 
-export interface EntrySchema {
+export type EntrySchema = {
   [key: string]: unknown;
   id?: string;
   createdAt?: Date;
@@ -18,9 +18,9 @@ export interface EntrySchema {
   temperature2?: number;
   humidity?: number;
   feels?: number;
-}
+};
 
-export const EntrySchema: Schema<EntrySchema> = new Schema(
+export const EntrySchema: Schema<Document<EntrySchema>> = new Schema(
   {
     _id: {
       default: () => nanoid(),
@@ -67,4 +67,4 @@ EntrySchema.path('updatedAt').get(
   (value: number) => value && new Date(value).toISOString()
 );
 
-export default model('Entry', EntrySchema);
+export default model<Document<EntrySchema>>('Entry', EntrySchema);

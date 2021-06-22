@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 import connect from '../';
 import Station, { StationSchema } from './station';
@@ -9,7 +9,11 @@ const STATION_DATA: StationSchema = {
 };
 
 describe('Station', () => {
-  let station: Document;
+  let station: Document<StationSchema>;
+
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
 
   beforeAll(async () => {
     await connect();
@@ -25,10 +29,10 @@ describe('Station', () => {
   });
 
   it('returns JSON object', () => {
-    const obj = station.toJSON();
+    const obj = station;
 
-    expect(typeof obj.createdAt).toEqual('string');
-    expect(typeof obj.updatedAt).toEqual('string');
+    expect(typeof obj.get('createdAt')).toEqual('string');
+    expect(typeof obj.get('updatedAt')).toEqual('string');
     expect(obj.id).toEqual(station._id);
   });
 });

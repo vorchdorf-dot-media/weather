@@ -16,7 +16,7 @@ import type { StationSchema } from 'functions/dist/db/schemata/station';
 
 import Divider from 'components/Divider';
 import { DAY } from 'utils/constants';
-import { formatNumber } from 'utils/helpers';
+import { formatNumber, underscoreToBlank } from 'utils/helpers';
 
 import styles from 'assets/styles/station.module.css';
 
@@ -79,7 +79,7 @@ const Station = ({
 
   const [stationData, reexecuteQuery] = useQuery({
     query: GET_STATION_PAGE_QUERY,
-    variables: { station: station.id, from },
+    variables: { station: station.name, from },
   });
   const { data, fetching } = stationData;
   const { max: maxEntry, min: minEntry } = data || {};
@@ -162,7 +162,7 @@ const Station = ({
                         month: '2-digit',
                         year: 'numeric',
                       }).format(
-                        Date.parse((station?.createdAt as unknown) as string)
+                        Date.parse(station?.createdAt as unknown as string)
                       )}
                     </strong>
                     <span>
@@ -214,7 +214,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   const dictionary = (await import(`locales/${locale}.json`)).default;
   try {
     const { data, error } = await client
-      .query(GET_LATEST_ENTRY, { station })
+      .query(GET_LATEST_ENTRY, {
+        station: underscoreToBlank(station as string),
+      })
       .toPromise();
     if (error) {
       throw new Error(error.message);

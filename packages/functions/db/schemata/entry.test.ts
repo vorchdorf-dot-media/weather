@@ -1,5 +1,5 @@
 import { createHash } from 'crypto';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 import connect from '..';
 import { Entry, Station } from '.';
@@ -22,6 +22,10 @@ const payload: EntryInput = {
 describe('Entry', () => {
   let entry: Document;
   let station: Document;
+
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
 
   beforeAll(async () => {
     await connect();

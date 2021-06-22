@@ -3,10 +3,24 @@ import { Document } from 'mongoose';
 import { Entry } from '../../../db/schemata';
 import { EntrySchema } from '../../../db/schemata/entry';
 import MongooseDataSource from '../base';
+import StationDataSource from '../station';
 
 class EntryDataSource extends MongooseDataSource<EntrySchema> {
+  private stations: StationDataSource;
+
   constructor() {
     super('Entry', Entry, [{ path: 'station' }]);
+    this.stations = new StationDataSource();
+  }
+
+  private async getStationID(station: string): Promise<string> {
+    const result = await this.stations.model.findOne({ name: station }, '_id');
+    if (!result) {
+      throw new Error(
+        `Failed to fetch Station entry with name: ${station}! Not found.`
+      );
+    }
+    return result._id;
   }
 
   async count({
@@ -18,15 +32,18 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
     from?: string;
     to?: string;
   }): Promise<number> {
-    const filter = []
-      .concat(
-        station ? [{ station }] : null,
-        from ? [{ timestamp: { $gt: new Date(from) } }] : null,
-        to ? [{ timestamp: { $lte: new Date(to) } }] : null
-      )
-      .filter(f => !!f);
-
+    let filter: { [key: string]: string }[];
     try {
+      const stationID = station && (await this.getStationID(station));
+
+      filter = []
+        .concat(
+          stationID ? [{ station: stationID }] : null,
+          from ? [{ timestamp: { $gt: new Date(from) } }] : null,
+          to ? [{ timestamp: { $lte: new Date(to) } }] : null
+        )
+        .filter(f => !!f);
+
       const result = await this.model.countDocuments({ $and: filter });
       return result;
     } catch (e) {
@@ -41,17 +58,18 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
 
   async getLatest(station: string): Promise<EntrySchema> {
     try {
+      const stationID = await this.getStationID(station);
       const [entry] = (await this.model
-        .find({ station })
+        .find({ station: stationID })
         .sort({ timestamp: 'desc' })
         .limit(1)
-        .then(this.populateModel.bind(this))) as Document[];
+        .then(this.populateModel.bind(this))) as Document<EntrySchema>[];
       if (!entry) {
         throw new Error(
           `Failed to fetch latest ${this.name} entry from station ID: ${station}.`
         );
       }
-      return entry.toJSON();
+      return entry.toJSON() as EntrySchema;
     } catch (e) {
       console.error(e);
       throw new Error(`Failed to fetch latest ${this.name} data entry.`);
@@ -64,18 +82,19 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
     to: string | number = Date.now()
   ): Promise<EntrySchema[]> {
     try {
+      const stationID = await this.getStationID(station);
       const results = (await this.model
         .find({
           $and: [
-            { station },
+            { station: stationID },
             { timestamp: { $gt: new Date(from) } },
             { timestamp: { $lte: new Date(to) } },
           ],
         })
         .sort({ timestamp: 'desc' })
-        .then(this.populateModel.bind(this))) as Document[];
+        .then(this.populateModel.bind(this))) as Document<EntrySchema>[];
 
-      return results.map(r => r.toJSON());
+      return results.map(r => r.toJSON()) as EntrySchema[];
     } catch (e) {
       console.error(e);
       throw new Error(`Failed to fetch data from ${this.name} entries.`);
@@ -93,9 +112,10 @@ class EntryDataSource extends MongooseDataSource<EntrySchema> {
     to?: string;
     low?: boolean;
   }): Promise<EntrySchema> {
+    const stationID = station && (await this.getStationID(station));
     const filter = []
       .concat(
-        station && { station },
+        stationID && { station: stationID },
         from && { timestamp: { $gt: new Date(from) } },
         to && { timestamp: { $lte: new Date(to) } }
       )
